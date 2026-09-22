@@ -1,0 +1,46 @@
+{
+  "written_at": "2026-08-12T12:40:28.628164+00:00",
+  "reader_seconds": {
+    "median": 38.9,
+    "winsorized": 66.37,
+    "untreated": 108.02
+  },
+  "sets": {
+    "injected": {
+      "leading_model": "qwen3.5:9b",
+      "criterion": {
+        "c3_dominated": false,
+        "dominating_configuration": "",
+        "treatments_agree": true,
+        "by_treatment": {
+          "reader_minutes_median_per_1k": "",
+          "reader_minutes_winsorized_per_1k": "",
+          "reader_minutes_untreated_per_1k": ""
+        },
+        "beats_random_triage": true,
+        "random_triage_upper_bound_recall": 0.8311,
+        "c3_recall": 0.9144,
+        "model_stage_pays": true,
+        "verdict": "C3 is undominated and beats a random triage; the model stage pays"
+      }
+    },
+    "natural": {
+      "leading_model": "qwen3.5:9b",
+      "criterion": {
+        "c3_dominated": false,
+        "dominating_configuration": "",
+        "treatments_agree": true,
+        "by_treatment": {
+          "reader_minutes_median_per_1k": "",
+          "reader_minutes_winsorized_per_1k": "",
+          "reader_minutes_untreated_per_1k": ""
+        },
+        "beats_random_triage": false,
+        "random_triage_upper_bound_recall": 0.2759,
+        "c3_recall": 0.1379,
+        "model_stage_pays": false,
+        "verdict": "C3 is undominated but does not beat a random triage of the same volume; the model stage sorts nothing and does not pay"
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+city,country,language,maturity,records,without_coordinate,named,phone,opening_hours,website,address,records_per_km2,extracted_on
+Vancouver,CA,english,mature,14782,0,14782,5482,5758,6751,6657,47.05,2026-08-02
+London,GB,english,mature,62165,0,62165,14464,11206,23115,39181,197.88,2026-08-02
+Cork,IE,english,mature,4507,0,4507,1405,810,1570,1844,14.35,2026-08-02
+Cebu,PH,english,developing,8091,0,8091,583,864,336,1285,25.75,2026-08-02
+Nairobi,KE,english,developing,14203,0,14203,1336,2490,483,2980,45.21,2026-08-02
+Accra,GH,english,developing,9432,0,9432,2114,1779,713,2694,30.02,2026-08-02
+Munich,DE,non_english,mature,29393,0,29393,11187,15992,13907,15406,93.56,2026-08-02
+Rotterdam,NL,non_english,mature,11631,0,11631,3817,3187,5925,7807,37.02,2026-08-02
+Brno,CZ,non_english,mature,10544,0,10544,2630,5733,3881,3225,33.56,2026-08-02
+Cuenca,EC,non_english,developing,8636,0,8636,661,923,349,871,27.49,2026-08-02
+Surabaya,ID,non_english,developing,7373,0,7373,312,667,385,1045,23.47,2026-08-02
+İzmir,TR,non_english,developing,7867,0,7867,1309,500,545,553,25.04,2026-08-02

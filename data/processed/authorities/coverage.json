@@ -1,0 +1,77 @@
+{
+  "measured_on": "2026-08-03",
+  "match_radius_m": 100,
+  "corpus_records": 188624,
+  "sources": {
+    "geonames_poi": {
+      "entries": 5128,
+      "licence": "CC-BY-4.0",
+      "covered": 43554,
+      "coverage": 0.230904,
+      "ci_low": 0.229008,
+      "ci_high": 0.232811
+    },
+    "wikidata_poi": {
+      "entries": 7002,
+      "licence": "CC0-1.0",
+      "covered": 62946,
+      "coverage": 0.333712,
+      "ci_low": 0.331587,
+      "ci_high": 0.335843
+    }
+  },
+  "union": {
+    "covered": 78103,
+    "coverage": 0.414067
+  },
+  "natural_set": {
+    "geonames_poi": {
+      "A": {
+        "covered": 37,
+        "records": 200,
+        "coverage": 0.185,
+        "ci_low": 0.137302,
+        "ci_high": 0.244571
+      },
+      "B": {
+        "covered": 34,
+        "records": 200,
+        "coverage": 0.17,
+        "ci_low": 0.124279,
+        "ci_high": 0.228159
+      }
+    },
+    "wikidata_poi": {
+      "A": {
+        "covered": 49,
+        "records": 200,
+        "coverage": 0.245,
+        "ci_low": 0.190569,
+        "ci_high": 0.309042
+      },
+      "B": {
+        "covered": 55,
+        "records": 200,
+        "coverage": 0.275,
+        "ci_low": 0.217797,
+        "ci_high": 0.340683
+      }
+    },
+    "any_authority": {
+      "A": {
+        "covered": 67,
+        "records": 200,
+        "coverage": 0.335,
+        "ci_low": 0.273241,
+        "ci_high": 0.402978
+      },
+      "B": {
+        "covered": 70,
+        "records": 200,
+        "coverage": 0.35,
+        "ci_low": 0.287288,
+        "ci_high": 0.418365
+      }
+    }
+  }
+}

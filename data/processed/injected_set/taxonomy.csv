@@ -1,0 +1,8 @@
+code,name,kind,settled_by,items
+M1,name belonging to another place,semantic,neither settles it,300
+M2,phone country code wrong for the city,semantic,a reference lookup settles it,100
+M3,address city inconsistent with coordinates,semantic,a reference lookup settles it,100
+S1,malformed phone number,syntactic,a format rule settles it,100
+S2,malformed opening hours,syntactic,a format rule settles it,100
+S3,malformed web address,syntactic,a format rule settles it,100
+S4,out-of-range value,syntactic,a format rule settles it,100

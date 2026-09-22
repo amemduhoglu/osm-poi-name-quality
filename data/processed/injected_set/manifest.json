@@ -1,0 +1,141 @@
+{
+  "built_on": "2026-08-02",
+  "seed": 42,
+  "corpus_extraction_date": "2026-08-02",
+  "items": 1800,
+  "corrupted": 900,
+  "clean": 900,
+  "classes": {
+    "M1": 300,
+    "M2": 100,
+    "M3": 100,
+    "S1": 100,
+    "S2": 100,
+    "S3": 100,
+    "S4": 100
+  },
+  "allocation": {
+    "M1": {
+      "Vancouver": 25,
+      "London": 25,
+      "Cork": 25,
+      "Cebu": 25,
+      "Nairobi": 25,
+      "Accra": 25,
+      "Munich": 25,
+      "Rotterdam": 25,
+      "Brno": 25,
+      "Cuenca": 25,
+      "Surabaya": 25,
+      "İzmir": 25
+    },
+    "M2": {
+      "Vancouver": 9,
+      "London": 9,
+      "Cork": 8,
+      "Cebu": 8,
+      "Nairobi": 9,
+      "Accra": 8,
+      "Munich": 8,
+      "Rotterdam": 8,
+      "Brno": 8,
+      "Cuenca": 8,
+      "Surabaya": 9,
+      "İzmir": 8
+    },
+    "M3": {
+      "Vancouver": 8,
+      "London": 9,
+      "Cork": 9,
+      "Cebu": 9,
+      "Nairobi": 8,
+      "Accra": 8,
+      "Munich": 8,
+      "Rotterdam": 8,
+      "Brno": 8,
+      "Cuenca": 8,
+      "Surabaya": 8,
+      "İzmir": 9
+    },
+    "S1": {
+      "Vancouver": 8,
+      "London": 9,
+      "Cork": 8,
+      "Cebu": 8,
+      "Nairobi": 8,
+      "Accra": 8,
+      "Munich": 9,
+      "Rotterdam": 8,
+      "Brno": 9,
+      "Cuenca": 8,
+      "Surabaya": 9,
+      "İzmir": 8
+    },
+    "S2": {
+      "Vancouver": 9,
+      "London": 9,
+      "Cork": 8,
+      "Cebu": 9,
+      "Nairobi": 8,
+      "Accra": 8,
+      "Munich": 8,
+      "Rotterdam": 8,
+      "Brno": 8,
+      "Cuenca": 8,
+      "Surabaya": 8,
+      "İzmir": 9
+    },
+    "S3": {
+      "Vancouver": 9,
+      "London": 8,
+      "Cork": 8,
+      "Cebu": 9,
+      "Nairobi": 8,
+      "Accra": 8,
+      "Munich": 8,
+      "Rotterdam": 8,
+      "Brno": 9,
+      "Cuenca": 9,
+      "Surabaya": 8,
+      "İzmir": 8
+    },
+    "S4": {
+      "Vancouver": 8,
+      "London": 8,
+      "Cork": 8,
+      "Cebu": 9,
+      "Nairobi": 8,
+      "Accra": 8,
+      "Munich": 9,
+      "Rotterdam": 8,
+      "Brno": 9,
+      "Cuenca": 8,
+      "Surabaya": 8,
+      "İzmir": 9
+    }
+  },
+  "category_tokens": 1262,
+  "pairing": {
+    "match_on": [
+      "city",
+      "field_signature"
+    ],
+    "item_keys": [
+      "name",
+      "category",
+      "addr:city",
+      "addr:street",
+      "addr:housenumber",
+      "phone",
+      "opening_hours",
+      "website"
+    ]
+  },
+  "references": {
+    "source": "libphonenumber",
+    "package": "phonenumbers",
+    "version": "9.0.36",
+    "licence": "Apache-2.0"
+  },
+  "items_with_preexisting_flag": 157
+}

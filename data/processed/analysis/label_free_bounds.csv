@@ -1,0 +1,13 @@
+model,pooled,records,flagged,flag_rate,most_wrong_names,precision_at_most
+openbmb/minicpm5:q4_K_M,True,623,382,0.6132,188.6,0.4938
+qwen3.5:2b-q4_K_M,True,623,616,0.9888,188.6,0.3062
+phi4-mini:latest,True,623,162,0.26,188.6,1.0
+qwen3.5:4b,True,623,330,0.5297,188.6,0.5716
+llama3.1:8b,True,623,0,0.0,188.6,
+qwen3.5:9b,True,623,76,0.122,188.6,1.0
+gemma4:e2b,True,623,505,0.8106,188.6,0.3735
+gemma4:12b,True,623,68,0.1091,188.6,1.0
+phi4:latest,True,623,67,0.1075,188.6,1.0
+gemma4:e4b,True,623,352,0.565,188.6,0.5358
+granite4.1:3b,False,623,136,0.2183,188.6,1.0
+granite4.1:8b,False,623,255,0.4093,188.6,0.7397

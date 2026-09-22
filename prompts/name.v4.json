@@ -1,0 +1,40 @@
+{
+  "version": 4,
+  "task": "name",
+  "purpose": "Ask the residual question with entries retrieved from the open authorities shown after the record.",
+  "note": "Identical to version 1 in its system message, instruction, views, exemplars and schema. The one addition is the evidence block after the record, so a difference from version 1 is the retrieval's. The evidence comes from the open point-of-interest authorities alone, never from the corpus, and the exemplars carry no evidence block because they are hand-written and nothing is added to them.",
+  "system": "You inspect records from a public map database and judge whether the name they carry belongs to them. Answer only with the JSON object the schema describes.",
+  "instruction": "Decide whether the name shown plausibly belongs to this establishment at this location, or whether it belongs to some other place. Answer with the JSON object alone.",
+  "views": {
+    "full": "Here is the record.",
+    "name_only": "Here is the record's name, and nothing else about it.",
+    "tags_only": "Here is everything the record shows except its name.",
+    "neither": "Here is the record's position, and nothing else about it."
+  },
+  "exemplar_intro": "Two worked examples follow. They are invented records, not entries from the database.",
+  "exemplar_ids": [
+    "E1",
+    "E2"
+  ],
+  "evidence_intro": "Entries retrieved for this record from open reference databases follow. They are not part of the record and they are incomplete: a place missing from them is not evidence either way.",
+  "evidence_nearest": "Entries within {radius_m} m of the record's position:",
+  "evidence_similar": "Entries within {radius_km} km whose names are closest to the record's name:",
+  "evidence_none": "(none)",
+  "response_schema": {
+    "type": "object",
+    "properties": {
+      "verdict": {
+        "type": "string",
+        "enum": [
+          "belongs",
+          "wrong"
+        ],
+        "description": "belongs when the name plausibly belongs to this establishment, wrong when it belongs to some other place"
+      }
+    },
+    "required": [
+      "verdict"
+    ],
+    "additionalProperties": false
+  }
+}

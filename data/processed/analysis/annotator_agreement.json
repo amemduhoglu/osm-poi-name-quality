@@ -1,0 +1,26 @@
+{
+  "all_three_labels": {
+    "items": 250,
+    "observed_agreement": 0.836,
+    "cohen_kappa": 0.5377,
+    "cohen_kappa_low": 0.4083,
+    "cohen_kappa_high": 0.6671,
+    "gwet_ac1": 0.801,
+    "gwet_ac1_low": 0.7385,
+    "gwet_ac1_high": 0.8569
+  },
+  "both_definite": {
+    "items": 218,
+    "observed_agreement": 0.945,
+    "cohen_kappa": 0.7464,
+    "cohen_kappa_low": 0.6069,
+    "cohen_kappa_high": 0.8859,
+    "gwet_ac1": 0.9297,
+    "gwet_ac1_low": 0.8842,
+    "gwet_ac1_high": 0.9658
+  },
+  "wrong_labels": {
+    "reader_a": 27,
+    "reader_b": 43
+  }
+}

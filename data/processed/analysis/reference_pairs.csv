@@ -1,0 +1,17 @@
+reference,against,against_role,against_parameters_b,measure,reference_balanced_accuracy,other_balanced_accuracy,reference_flag_rate,other_flag_rate,reference_only_correct,other_only_correct,p_value,odds_ratio,accuracy_difference,difference_low,difference_high,difference_low_at_threshold,difference_high_at_threshold,clustered_p_value,clusters,separable,leads_at_threshold
+Qwen 3.5 397B,Phi-4,largest in the pool,14.7,residual class,0.8367,0.7567,0.4433,0.3767,79,31,5.344887082264566e-06,2.5483870967741935,0.08,0.055,0.1017,0.0383,0.1117,0.0001,12,True,True
+Qwen 3.5 397B,Qwen 3.5 9B,best in the pool,9.7,residual class,0.8367,0.8033,0.4433,0.4367,60,40,0.05688793364098089,1.5,0.0333,0.0067,0.0633,-0.0083,0.085,0.0126,12,False,False
+Qwen 3.5 397B,Phi-4,largest in the pool,14.7,natural set,0.5324,0.5592,0.1161,0.1384,13,12,1.0,1.0833333333333333,0.0045,-0.0348,0.0423,-0.0622,0.0651,0.917,12,False,False
+Qwen 3.5 397B,Gemma 4 e4b,best in the pool,8.0,natural set,0.5324,0.6012,0.1161,0.5134,77,18,7.252322160518573e-10,4.277777777777778,0.2634,0.2212,0.3077,0.1981,0.3364,0.0001,12,True,True
+GLM 5.2,Phi-4,largest in the pool,14.7,residual class,0.8467,0.7567,0.39,0.3767,79,25,1.0540017368882998e-07,3.16,0.09,0.0567,0.1217,0.0383,0.1433,0.0001,12,True,True
+GLM 5.2,Qwen 3.5 9B,best in the pool,9.7,residual class,0.8467,0.8033,0.39,0.4367,56,30,0.0066739231422248664,1.8666666666666667,0.0433,0.0117,0.075,-0.005,0.0967,0.0056,12,False,False
+GLM 5.2,Phi-4,largest in the pool,14.7,natural set,0.521,0.5592,0.067,0.1384,13,5,0.09625244140625,2.6,0.0357,0.0043,0.0655,-0.0206,0.0877,0.0492,12,False,False
+GLM 5.2,Gemma 4 e4b,best in the pool,8.0,natural set,0.521,0.6012,0.067,0.5134,84,18,2.2569999817319074e-11,4.666666666666667,0.2946,0.2578,0.3286,0.2332,0.3522,0.0001,12,True,True
+Claude Opus 5,Phi-4,largest in the pool,14.7,residual class,0.8767,0.7567,0.4167,0.3767,93,21,5.312398934140967e-12,4.428571428571429,0.12,0.0917,0.1433,0.0733,0.1533,0.0001,12,True,True
+Claude Opus 5,Qwen 3.5 9B,best in the pool,9.7,residual class,0.8767,0.8033,0.4167,0.4367,70,26,8.049550377189253e-06,2.6923076923076925,0.0733,0.0433,0.1067,0.025,0.13,0.0001,12,True,True
+Claude Opus 5,Phi-4,largest in the pool,14.7,natural set,0.5242,0.5592,0.0268,0.1384,22,7,0.008130058646202087,3.142857142857143,0.067,0.0308,0.1038,0.0047,0.1299,0.0008,12,False,False
+Claude Opus 5,Gemma 4 e4b,best in the pool,8.0,natural set,0.5242,0.6012,0.0268,0.5134,91,18,6.366602155148437e-13,5.055555555555555,0.3259,0.2824,0.3707,0.2534,0.3991,0.0001,12,True,True
+GPT-5.6 Sol,Phi-4,largest in the pool,14.7,residual class,0.8717,0.7567,0.435,0.3767,94,25,1.341699446247938e-10,3.76,0.115,0.0817,0.1483,0.06,0.1667,0.0001,12,True,True
+GPT-5.6 Sol,Qwen 3.5 9B,best in the pool,9.7,residual class,0.8717,0.8033,0.435,0.4367,69,28,3.803794805755345e-05,2.4642857142857144,0.0683,0.0383,0.11,0.025,0.145,0.0001,12,True,True
+GPT-5.6 Sol,Phi-4,largest in the pool,14.7,natural set,0.5389,0.5592,0.0357,0.1384,22,7,0.008130058646202087,3.142857142857143,0.067,0.0329,0.0968,0.0047,0.1106,0.0006,12,False,False
+GPT-5.6 Sol,Gemma 4 e4b,best in the pool,8.0,natural set,0.5389,0.6012,0.0357,0.5134,92,19,1.123612188223784e-12,4.842105263157895,0.3259,0.2851,0.3654,0.2613,0.3898,0.0001,12,True,True

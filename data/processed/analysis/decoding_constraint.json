@@ -1,0 +1,18 @@
+{
+  "m1_name_full_v1_unconstrained": {
+    "models": 12,
+    "median_rejected_rate": 0.1316,
+    "maximum_rejected_rate": 1.0,
+    "minimum_rejected_rate": 0.0,
+    "models_rejecting_every_answer": 1,
+    "models_with_a_readable_rejected_answer": 3
+  },
+  "natural_name_v1_unconstrained": {
+    "models": 12,
+    "median_rejected_rate": 0.122,
+    "maximum_rejected_rate": 1.0,
+    "minimum_rejected_rate": 0.0,
+    "models_rejecting_every_answer": 1,
+    "models_with_a_readable_rejected_answer": 3
+  }
+}

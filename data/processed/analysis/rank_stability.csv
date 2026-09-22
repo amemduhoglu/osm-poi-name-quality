@@ -1,0 +1,27 @@
+run,system,name,youdens_j,top_share,rank_low,rank_high,systems
+natural_name_v1,gemma4-e4b,Gemma 4 e4b,0.2025,0.419,1.0,7.02,16
+natural_name_v1,qwen3.5-4b,Qwen 3.5 4B,0.176,0.3018,1.0,13.0,16
+natural_name_v1,gemma4-e2b,Gemma 4 e2b,0.1721,0.0988,1.0,6.0,16
+natural_name_v1,phi4-latest,Phi-4,0.1183,0.0735,1.0,10.0,16
+natural_name_v1,granite4.1-8b,Granite 4.1 8B,0.1229,0.066,1.0,13.0,16
+natural_name_v1,phi4-mini-latest,Phi-4 mini,0.0334,0.031,1.0,15.0,16
+natural_name_v1,reference-openai-gpt-5.6-sol,GPT-5.6 Sol,0.0778,0.0065,2.0,13.0,16
+natural_name_v1,reference-z-ai-glm-5.2,GLM 5.2,0.0419,0.002,4.0,14.0,16
+natural_name_v1,reference-qwen-qwen3.5-397b-a17b,Qwen 3.5 397B,0.0647,0.001,2.49,14.0,16
+natural_name_v1,reference-anthropic-claude-opus-5,Claude Opus 5,0.0485,0.0005,5.0,13.0,16
+natural_name_v1,gemma4-12b,Gemma 4 12B,-0.0387,0.0,9.0,16.0,16
+natural_name_v1,granite4.1-3b,Granite 4.1 3B,-0.0019,0.0,5.0,16.0,16
+natural_name_v1,llama3.1-8b,Llama 3.1 8B,0.0,0.0,8.0,15.0,16
+natural_name_v1,openbmb-minicpm5-q4_K_M,MiniCPM 5 1B,-0.1927,0.0,9.0,16.0,16
+natural_name_v1,qwen3.5-2b-q4_K_M,Qwen 3.5 2B,0.0103,0.0,7.0,14.0,16
+natural_name_v1,qwen3.5-9b,Qwen 3.5 9B,-0.0057,0.0,6.0,16.0,16
+natural_name_v1_replay_0326,qwen3.5-4b,Qwen 3.5 4B,0.1554,0.405,1.0,9.0,10
+natural_name_v1_replay_0326,gemma4-e4b,Gemma 4 e4b,0.1526,0.403,1.0,6.0,10
+natural_name_v1_replay_0326,gemma4-e2b,Gemma 4 e2b,0.1376,0.083,1.0,7.0,10
+natural_name_v1_replay_0326,phi4-mini-latest,Phi-4 mini,0.018,0.0512,1.0,9.0,10
+natural_name_v1_replay_0326,phi4-latest,Phi-4,0.0545,0.0495,1.0,9.0,10
+natural_name_v1_replay_0326,qwen3.5-9b,Qwen 3.5 9B,0.0149,0.0067,2.0,9.0,10
+natural_name_v1_replay_0326,gemma4-12b,Gemma 4 12B,-0.049,0.001,4.0,10.0,10
+natural_name_v1_replay_0326,qwen3.5-2b-q4_K_M,Qwen 3.5 2B,0.0154,0.0005,3.0,8.0,10
+natural_name_v1_replay_0326,llama3.1-8b,Llama 3.1 8B,0.0,0.0,5.0,9.0,10
+natural_name_v1_replay_0326,openbmb-minicpm5-q4_K_M,MiniCPM 5 1B,-0.1583,0.0,6.0,10.0,10

@@ -1,0 +1,31 @@
+{
+  "examples": 300,
+  "trainable_parameters": 21233664,
+  "steps": 114,
+  "micro_batch": 1,
+  "gradient_accumulation": 8,
+  "loss_first": 0.4126,
+  "loss_last": 0.0002,
+  "seconds": 588.2,
+  "peak_device_memory_gb": 9.897,
+  "device": "NVIDIA GeForce RTX 5060 Ti",
+  "versions": {
+    "torch": "2.11.0+cu128",
+    "transformers": "5.17.0",
+    "peft": "0.20.0"
+  },
+  "settings": {
+    "base_tag": "qwen3.5:4b",
+    "base_weights": "https://huggingface.co/Qwen/Qwen3.5-4B",
+    "base_licence": "Apache-2.0",
+    "train_split": "train",
+    "rank": 16,
+    "alpha": 32,
+    "dropout": 0.05,
+    "target_modules": ".*language_model.*\\.(q_proj|k_proj|v_proj|o_proj|gate_proj|up_proj|down_proj)",
+    "epochs": 3,
+    "learning_rate": 0.0002,
+    "batch_size": 8,
+    "seed": 42
+  }
+}

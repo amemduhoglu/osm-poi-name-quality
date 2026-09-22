@@ -1,0 +1,31 @@
+{
+  "source": "OpenStreetMap",
+  "licence": "ODbL",
+  "script": "Latin",
+  "poi_keys": [
+    "amenity",
+    "shop",
+    "tourism",
+    "leisure",
+    "office",
+    "craft",
+    "healthcare"
+  ],
+  "radius_m": 10000,
+  "endpoint": "https://overpass-api.de/api/interpreter",
+  "extraction_dates": {
+    "Vancouver": "2026-08-02",
+    "London": "2026-08-02",
+    "Cork": "2026-08-02",
+    "Cebu": "2026-08-02",
+    "Nairobi": "2026-08-02",
+    "Accra": "2026-08-02",
+    "Munich": "2026-08-02",
+    "Rotterdam": "2026-08-02",
+    "Brno": "2026-08-02",
+    "Cuenca": "2026-08-02",
+    "Surabaya": "2026-08-02",
+    "İzmir": "2026-08-02"
+  },
+  "records": 188624
+}

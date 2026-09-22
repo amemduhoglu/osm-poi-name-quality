@@ -1,0 +1,21 @@
+{
+  "chosen_at": "2026-09-12T23:53:37+00:00",
+  "rule": "best_and_median_deployable_on_control_dev",
+  "run": "m1c_name_full_v1",
+  "split": "dev",
+  "replay_filter_applied": true,
+  "eligible": {
+    "gemma4:e2b": 0.05,
+    "gemma4:e4b": 0.3,
+    "llama3.1:8b": 0.0,
+    "openbmb/minicpm5:q4_K_M": 0.0,
+    "phi4-mini:latest": 0.1167,
+    "qwen3.5:2b-q4_K_M": 0.0,
+    "qwen3.5:4b": 0.3833,
+    "qwen3.5:9b": 0.5
+  },
+  "chosen": {
+    "best": "qwen3.5:9b",
+    "median": "gemma4:e2b"
+  }
+}

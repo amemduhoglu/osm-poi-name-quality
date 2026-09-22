@@ -1,0 +1,141 @@
+{
+  "run": "m1_name_full_v1",
+  "pairs_kept": 154,
+  "pairs_whole": 300,
+  "dropped_because": "the clean twin carries a category-indicative token, which no injected name does, or is shorter than the donor's minimum name length, which no injected name is",
+  "not_repaired": "the donor keeps its own record, so an injected name is repeated in its city by construction",
+  "rows": [
+    {
+      "model": "openbmb/minicpm5:q4_K_M",
+      "parameters_b": 1.1,
+      "items_whole": 600,
+      "youdens_j_whole": -0.0033,
+      "balanced_accuracy_whole": 0.4983,
+      "items_matched": 308,
+      "youdens_j_matched": -0.0325,
+      "balanced_accuracy_matched": 0.4838,
+      "youdens_j_change": -0.0291
+    },
+    {
+      "model": "qwen3.5:2b-q4_K_M",
+      "parameters_b": 2.3,
+      "items_whole": 600,
+      "youdens_j_whole": 0.0033,
+      "balanced_accuracy_whole": 0.5017,
+      "items_matched": 308,
+      "youdens_j_matched": 0.0065,
+      "balanced_accuracy_matched": 0.5032,
+      "youdens_j_change": 0.0032
+    },
+    {
+      "model": "granite4.1:3b",
+      "parameters_b": 3.4,
+      "items_whole": 600,
+      "youdens_j_whole": 0.3267,
+      "balanced_accuracy_whole": 0.6633,
+      "items_matched": 308,
+      "youdens_j_matched": 0.3117,
+      "balanced_accuracy_matched": 0.6558,
+      "youdens_j_change": -0.015
+    },
+    {
+      "model": "phi4-mini:latest",
+      "parameters_b": 3.8,
+      "items_whole": 600,
+      "youdens_j_whole": 0.2767,
+      "balanced_accuracy_whole": 0.6383,
+      "items_matched": 308,
+      "youdens_j_matched": 0.2403,
+      "balanced_accuracy_matched": 0.6201,
+      "youdens_j_change": -0.0364
+    },
+    {
+      "model": "qwen3.5:4b",
+      "parameters_b": 4.7,
+      "items_whole": 600,
+      "youdens_j_whole": 0.4467,
+      "balanced_accuracy_whole": 0.7233,
+      "items_matched": 308,
+      "youdens_j_matched": 0.3312,
+      "balanced_accuracy_matched": 0.6656,
+      "youdens_j_change": -0.1155
+    },
+    {
+      "model": "llama3.1:8b",
+      "parameters_b": 8.0,
+      "items_whole": 600,
+      "youdens_j_whole": 0.0,
+      "balanced_accuracy_whole": 0.5,
+      "items_matched": 308,
+      "youdens_j_matched": 0.0,
+      "balanced_accuracy_matched": 0.5,
+      "youdens_j_change": 0.0
+    },
+    {
+      "model": "granite4.1:8b",
+      "parameters_b": 8.8,
+      "items_whole": 600,
+      "youdens_j_whole": 0.4833,
+      "balanced_accuracy_whole": 0.7417,
+      "items_matched": 308,
+      "youdens_j_matched": 0.4156,
+      "balanced_accuracy_matched": 0.7078,
+      "youdens_j_change": -0.0677
+    },
+    {
+      "model": "qwen3.5:9b",
+      "parameters_b": 9.7,
+      "items_whole": 600,
+      "youdens_j_whole": 0.6067,
+      "balanced_accuracy_whole": 0.8033,
+      "items_matched": 308,
+      "youdens_j_matched": 0.5584,
+      "balanced_accuracy_matched": 0.7792,
+      "youdens_j_change": -0.0482
+    },
+    {
+      "model": "gemma4:e2b",
+      "parameters_b": 5.1,
+      "items_whole": 600,
+      "youdens_j_whole": 0.1233,
+      "balanced_accuracy_whole": 0.5617,
+      "items_matched": 308,
+      "youdens_j_matched": 0.1234,
+      "balanced_accuracy_matched": 0.5617,
+      "youdens_j_change": 0.0
+    },
+    {
+      "model": "gemma4:12b",
+      "parameters_b": 11.9,
+      "items_whole": 600,
+      "youdens_j_whole": 0.5833,
+      "balanced_accuracy_whole": 0.7917,
+      "items_matched": 308,
+      "youdens_j_matched": 0.5065,
+      "balanced_accuracy_matched": 0.7532,
+      "youdens_j_change": -0.0768
+    },
+    {
+      "model": "phi4:latest",
+      "parameters_b": 14.7,
+      "items_whole": 600,
+      "youdens_j_whole": 0.5133,
+      "balanced_accuracy_whole": 0.7567,
+      "items_matched": 308,
+      "youdens_j_matched": 0.4481,
+      "balanced_accuracy_matched": 0.724,
+      "youdens_j_change": -0.0653
+    },
+    {
+      "model": "gemma4:e4b",
+      "parameters_b": 8.0,
+      "items_whole": 600,
+      "youdens_j_whole": 0.47,
+      "balanced_accuracy_whole": 0.735,
+      "items_matched": 308,
+      "youdens_j_matched": 0.3571,
+      "balanced_accuracy_matched": 0.6786,
+      "youdens_j_change": -0.1129
+    }
+  ]
+}

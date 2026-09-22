@@ -1,0 +1,109 @@
+{
+  "rows": [
+    {
+      "class": "all",
+      "clean_items": 900,
+      "flagged": 75,
+      "explained": 75,
+      "unexplained": 0,
+      "flag_rate": 0.0833,
+      "flag_rate_low": 0.067,
+      "flag_rate_high": 0.1032,
+      "false_flag_rate": 0.0,
+      "false_flag_rate_low": 0.0,
+      "false_flag_rate_high": 0.0043
+    },
+    {
+      "class": "M1",
+      "clean_items": 300,
+      "flagged": 9,
+      "explained": 9,
+      "unexplained": 0,
+      "flag_rate": 0.03,
+      "flag_rate_low": 0.0159,
+      "flag_rate_high": 0.056,
+      "false_flag_rate": 0.0,
+      "false_flag_rate_low": 0.0,
+      "false_flag_rate_high": 0.0126
+    },
+    {
+      "class": "M2",
+      "clean_items": 100,
+      "flagged": 10,
+      "explained": 10,
+      "unexplained": 0,
+      "flag_rate": 0.1,
+      "flag_rate_low": 0.0552,
+      "flag_rate_high": 0.1744,
+      "false_flag_rate": 0.0,
+      "false_flag_rate_low": 0.0,
+      "false_flag_rate_high": 0.037
+    },
+    {
+      "class": "M3",
+      "clean_items": 100,
+      "flagged": 10,
+      "explained": 10,
+      "unexplained": 0,
+      "flag_rate": 0.1,
+      "flag_rate_low": 0.0552,
+      "flag_rate_high": 0.1744,
+      "false_flag_rate": 0.0,
+      "false_flag_rate_low": 0.0,
+      "false_flag_rate_high": 0.037
+    },
+    {
+      "class": "S1",
+      "clean_items": 100,
+      "flagged": 16,
+      "explained": 16,
+      "unexplained": 0,
+      "flag_rate": 0.16,
+      "flag_rate_low": 0.101,
+      "flag_rate_high": 0.2442,
+      "false_flag_rate": 0.0,
+      "false_flag_rate_low": 0.0,
+      "false_flag_rate_high": 0.037
+    },
+    {
+      "class": "S2",
+      "clean_items": 100,
+      "flagged": 8,
+      "explained": 8,
+      "unexplained": 0,
+      "flag_rate": 0.08,
+      "flag_rate_low": 0.0411,
+      "flag_rate_high": 0.15,
+      "false_flag_rate": 0.0,
+      "false_flag_rate_low": 0.0,
+      "false_flag_rate_high": 0.037
+    },
+    {
+      "class": "S3",
+      "clean_items": 100,
+      "flagged": 16,
+      "explained": 16,
+      "unexplained": 0,
+      "flag_rate": 0.16,
+      "flag_rate_low": 0.101,
+      "flag_rate_high": 0.2442,
+      "false_flag_rate": 0.0,
+      "false_flag_rate_low": 0.0,
+      "false_flag_rate_high": 0.037
+    },
+    {
+      "class": "S4",
+      "clean_items": 100,
+      "flagged": 6,
+      "explained": 6,
+      "unexplained": 0,
+      "flag_rate": 0.06,
+      "flag_rate_low": 0.0278,
+      "flag_rate_high": 0.1248,
+      "false_flag_rate": 0.0,
+      "false_flag_rate_low": 0.0,
+      "false_flag_rate_high": 0.037
+    }
+  ],
+  "note": "A flag on an untouched record is explained when every check it raised is a violation the record already held when it was drawn. An explained flag is the rule finding a real defect in an unlabelled negative, not a false alarm."
+}

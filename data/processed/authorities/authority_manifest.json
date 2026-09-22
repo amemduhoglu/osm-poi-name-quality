@@ -1,0 +1,83 @@
+{
+  "built_on": "2026-08-03",
+  "disc_radius_km": 10.0,
+  "match_radius_m": 100,
+  "sources": {
+    "geonames_poi": {
+      "url_template": "https://download.geonames.org/export/dump/{country}.zip",
+      "licence": "CC-BY-4.0",
+      "feature_classes": [
+        "S",
+        "L"
+      ],
+      "access_dates": {
+        "CA": "2026-08-03",
+        "GB": "2026-08-03",
+        "IE": "2026-08-03",
+        "PH": "2026-08-03",
+        "KE": "2026-08-03",
+        "GH": "2026-08-03",
+        "DE": "2026-08-03",
+        "NL": "2026-08-03",
+        "CZ": "2026-08-03",
+        "EC": "2026-08-03",
+        "ID": "2026-08-03",
+        "TR": "2026-08-03"
+      },
+      "entries": 5128
+    },
+    "wikidata_poi": {
+      "url": "https://query.wikidata.org/sparql",
+      "licence": "CC0-1.0",
+      "radius_km": 10.0,
+      "classes": [
+        "Q33506",
+        "Q7075",
+        "Q16917",
+        "Q3914",
+        "Q3918",
+        "Q27686",
+        "Q11707",
+        "Q30022",
+        "Q16970",
+        "Q32815",
+        "Q22698",
+        "Q11315",
+        "Q180846",
+        "Q13107184",
+        "Q22687",
+        "Q35054",
+        "Q55488",
+        "Q928830",
+        "Q494829",
+        "Q1248784",
+        "Q24354",
+        "Q41253",
+        "Q483110",
+        "Q43501",
+        "Q167346",
+        "Q1007870",
+        "Q570116",
+        "Q23413"
+      ],
+      "access_date": "2026-08-03",
+      "entries_per_city": {
+        "Vancouver": 336,
+        "London": 3385,
+        "Cork": 146,
+        "Cebu": 239,
+        "Nairobi": 82,
+        "Accra": 187,
+        "Munich": 807,
+        "Rotterdam": 746,
+        "Brno": 320,
+        "Cuenca": 106,
+        "Surabaya": 744,
+        "İzmir": 297
+      },
+      "entries": 7395
+    }
+  },
+  "registers": [],
+  "entries": 12130
+}

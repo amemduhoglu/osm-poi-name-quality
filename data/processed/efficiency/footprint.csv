@@ -1,0 +1,13 @@
+tag,family,configured_parameters_b,metadata_parameters_b,quantization,context_length,configured_weights_gb,footprint_gb,device_memory_gb,offloaded,expected_class,measured_class,as_expected,diagnostic_detect_total_sec,diagnostic_detect_output_tokens_per_sec,diagnostic_name_total_sec,diagnostic_name_output_tokens_per_sec,problem
+openbmb/minicpm5:q4_K_M,minicpm5,1.1,1.1,Q4_K_M,131072,0.69,0.714,0.714,False,deployable,deployable,True,0.189,320.616,0.189,399.27,
+qwen3.5:2b-q4_K_M,qwen35,2.3,2.3,Q4_K_M,262144,1.95,1.587,1.587,False,deployable,deployable,True,0.448,141.477,0.418,211.121,
+granite4.1:3b,granite41,3.4,3.4,Q4_K_M,131072,2.1,2.502,2.502,False,deployable,deployable,True,0.231,134.853,0.251,156.009,
+phi4-mini:latest,phi4,3.8,3.8,Q4_K_M,131072,2.5,3.088,3.088,False,deployable,deployable,True,0.367,114.635,0.393,142.52,
+qwen3.5:4b,qwen35,4.7,4.7,Q4_K_M,262144,3.4,3.128,3.128,False,deployable,deployable,True,0.48,90.93,0.615,115.053,
+llama3.1:8b,llama31,8.0,8.0,Q4_K_M,131072,4.9,5.272,5.272,False,deployable,deployable,True,0.456,68.447,0.504,76.163,
+granite4.1:8b,granite41,8.8,8.8,Q4_K_M,131072,5.3,5.892,5.892,False,deployable,deployable,True,0.352,74.182,0.454,77.984,
+qwen3.5:9b,qwen35,9.7,9.7,Q4_K_M,262144,6.6,5.49,5.49,False,deployable,deployable,True,0.49,68.387,0.729,74.317,
+gemma4:e2b,gemma4,5.1,5.1,Q4_K_M,131072,7.2,1.708,1.708,False,deployable,deployable,True,0.493,118.714,0.549,162.012,
+gemma4:12b,gemma4,11.9,11.9,Q4_K_M,262144,7.6,8.063,8.063,False,deployable,reference,False,1.08,47.693,1.361,53.081,
+phi4:latest,phi4,14.7,14.7,Q4_K_M,16384,9.1,9.735,9.735,False,reference,reference,True,0.514,44.639,0.643,48.73,
+gemma4:e4b,gemma4,8.0,8.0,Q4_K_M,131072,9.6,3.226,3.226,False,reference,deployable,False,0.566,81.193,0.603,100.654,

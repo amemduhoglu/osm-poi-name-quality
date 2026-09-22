@@ -1,0 +1,207 @@
+{
+  "by_class": {
+    "M1-corrupted": {
+      "items": 300,
+      "flagged": 14,
+      "field_hit": 0
+    },
+    "M1-clean": {
+      "items": 300,
+      "flagged": 9
+    },
+    "M2-corrupted": {
+      "items": 100,
+      "flagged": 100,
+      "field_hit": 100
+    },
+    "M2-clean": {
+      "items": 100,
+      "flagged": 10
+    },
+    "M3-corrupted": {
+      "items": 100,
+      "flagged": 100,
+      "field_hit": 100
+    },
+    "M3-clean": {
+      "items": 100,
+      "flagged": 10
+    },
+    "S1-clean": {
+      "items": 100,
+      "flagged": 16
+    },
+    "S1-corrupted": {
+      "items": 100,
+      "flagged": 100,
+      "field_hit": 100
+    },
+    "S2-corrupted": {
+      "items": 100,
+      "flagged": 100,
+      "field_hit": 100
+    },
+    "S2-clean": {
+      "items": 100,
+      "flagged": 8
+    },
+    "S3-clean": {
+      "items": 100,
+      "flagged": 16
+    },
+    "S3-corrupted": {
+      "items": 100,
+      "flagged": 100,
+      "field_hit": 100
+    },
+    "S4-clean": {
+      "items": 100,
+      "flagged": 6
+    },
+    "S4-corrupted": {
+      "items": 100,
+      "flagged": 100,
+      "field_hit": 100
+    }
+  },
+  "by_check": {
+    "opening_hours_syntax": {
+      "flag": 167,
+      "clean_flag": 33,
+      "pass": 603,
+      "corrupted_pass": 251,
+      "clean_pass": 352,
+      "corrupted_flag": 134
+    },
+    "address_city": {
+      "pass": 829,
+      "clean_pass": 461,
+      "corrupted_pass": 368,
+      "flag": 135,
+      "corrupted_flag": 114,
+      "clean_flag": 21
+    },
+    "website_syntax": {
+      "pass": 655,
+      "clean_pass": 378,
+      "corrupted_pass": 277,
+      "flag": 105,
+      "corrupted_flag": 103,
+      "clean_flag": 2
+    },
+    "phone_syntax": {
+      "pass": 720,
+      "clean_pass": 407,
+      "corrupted_pass": 313,
+      "flag": 122,
+      "corrupted_flag": 108,
+      "clean_flag": 14
+    },
+    "phone_country_code": {
+      "pass": 605,
+      "clean_pass": 368,
+      "corrupted_pass": 237,
+      "flag": 101,
+      "corrupted_flag": 101,
+      "abstain": 136,
+      "corrupted_abstain": 83,
+      "clean_abstain": 53
+    },
+    "value_range": {
+      "pass": 294,
+      "corrupted_pass": 99,
+      "clean_pass": 195,
+      "flag": 112,
+      "corrupted_flag": 104,
+      "clean_flag": 8
+    }
+  },
+  "category_token_by_class": {
+    "M1-corrupted": {
+      "abstain": 300
+    },
+    "M1-clean": {
+      "pass": 105,
+      "abstain": 169,
+      "flag": 26
+    },
+    "M2-corrupted": {
+      "abstain": 60,
+      "pass": 32,
+      "flag": 8
+    },
+    "M2-clean": {
+      "abstain": 56,
+      "pass": 30,
+      "flag": 14
+    },
+    "M3-corrupted": {
+      "pass": 32,
+      "abstain": 59,
+      "flag": 9
+    },
+    "M3-clean": {
+      "abstain": 49,
+      "pass": 41,
+      "flag": 10
+    },
+    "S1-clean": {
+      "flag": 9,
+      "abstain": 50,
+      "pass": 41
+    },
+    "S1-corrupted": {
+      "pass": 38,
+      "abstain": 54,
+      "flag": 8
+    },
+    "S2-corrupted": {
+      "flag": 14,
+      "pass": 31,
+      "abstain": 55
+    },
+    "S2-clean": {
+      "pass": 37,
+      "abstain": 56,
+      "flag": 7
+    },
+    "S3-clean": {
+      "abstain": 47,
+      "pass": 38,
+      "flag": 15
+    },
+    "S3-corrupted": {
+      "pass": 35,
+      "abstain": 51,
+      "flag": 14
+    },
+    "S4-clean": {
+      "abstain": 51,
+      "flag": 10,
+      "pass": 39
+    },
+    "S4-corrupted": {
+      "abstain": 55,
+      "pass": 39,
+      "flag": 6
+    }
+  },
+  "corpus_coverage": {
+    "geonames": {
+      "covered": 188623,
+      "records": 188624,
+      "rate": 1.0
+    },
+    "wikidata": {
+      "covered": 188620,
+      "records": 188624,
+      "rate": 1.0
+    },
+    "union": {
+      "covered": 188623,
+      "records": 188624,
+      "rate": 1.0
+    }
+  },
+  "address_city_radius_km": 25
+}

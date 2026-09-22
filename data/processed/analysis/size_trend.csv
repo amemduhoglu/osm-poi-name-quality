@@ -1,0 +1,7 @@
+fit,estimator,variance,models,items,clusters,slope_per_doubling,slope_low,slope_high,statistic,df,p_value,positive_trend
+pooled,weighted_least_squares,cluster_robust_by_city,12,7200,12,0.0776,0.068,0.0871,17.9134,11,1.7367997070046903e-09,True
+model_level,ordinary_least_squares,model_level,12,0,12,0.0776,0.0241,0.1311,3.2306,10,0.009012289780547151,False
+rank,spearman_rank,model_level,12,0,12,0.7986,,,0.7986,10,0.0018404248554876527,False
+pooled_gate_passing,weighted_least_squares,cluster_robust_by_city,9,5400,12,0.0764,0.0604,0.0925,10.4796,11,4.620187712918456e-07,True
+model_level_gate_passing,ordinary_least_squares,model_level,9,0,9,0.0764,0.0135,0.1394,2.8712,7,0.02395047724879805,False
+rank_gate_passing,spearman_rank,model_level,9,0,9,0.8167,,,0.8167,7,0.0072247852463587885,False

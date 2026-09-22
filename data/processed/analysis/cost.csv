@@ -1,0 +1,13 @@
+model,family,parameters_b,footprint_gb,deployable,measured_class,median_sec_per_record,records_per_hour,median_tokens_per_sec,youdens_j,flag_rate
+openbmb/minicpm5:q4_K_M,minicpm5,1.1,0.714,True,deployable,0.169,21302,399.33,-0.0033,0.645
+qwen3.5:2b-q4_K_M,qwen35,2.3,1.587,True,deployable,0.386,9326,217.4,0.0033,0.9917
+gemma4:e2b,gemma4,5.1,1.708,True,deployable,0.545,6606,168.28,0.1233,0.8283
+granite4.1:3b,granite41,3.4,2.502,True,deployable,0.168,21429,156.36,0.3267,0.33
+phi4-mini:latest,phi4,3.8,3.088,True,deployable,0.29,12414,142.73,0.2767,0.435
+qwen3.5:4b,qwen35,4.7,3.128,True,deployable,0.533,6754,117.81,0.4467,0.6833
+gemma4:e4b,gemma4,8.0,3.226,True,deployable,0.557,6463,105.75,0.47,0.7017
+llama3.1:8b,llama31,8.0,5.272,True,deployable,0.341,10557,75.96,0.0,0.0
+qwen3.5:9b,qwen35,9.7,5.49,True,deployable,0.56,6429,80.02,0.6067,0.4367
+granite4.1:8b,granite41,8.8,5.892,True,deployable,0.274,13139,78.25,0.4833,0.585
+gemma4:12b,gemma4,11.9,8.063,False,reference,0.801,4494,53.86,0.5833,0.405
+phi4:latest,phi4,14.7,9.735,False,reference,0.378,9524,48.74,0.5133,0.3767

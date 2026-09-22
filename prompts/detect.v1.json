@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "task": "detect",
+  "purpose": "Ask whether a record carries a wrong value, and which field carries it.",
+  "note": "The prompt states the task and nothing about the data. It does not say how many items are wrong, what share of them are wrong, which error classes exist, how the set was built, or how often a field is the answer. A model told that half the set is corrupted could score well without reading a record, which is exactly the failure the input-dependence gate looks for.",
+  "system": "You inspect records from a public map database and judge whether the values they carry are correct. Answer only with the JSON object the schema describes.",
+  "instruction": "Here is one record. Decide whether every value it shows is correct for this establishment at this location, or whether one value is wrong. If one value is wrong, name the field it is in. Answer with the JSON object alone.",
+  "exemplar_intro": "Four worked examples follow. They are invented records, not entries from the database.",
+  "exemplar_ids": ["E1", "E2", "E3", "E4"],
+  "response_schema": {
+    "type": "object",
+    "properties": {
+      "verdict": {
+        "type": "string",
+        "enum": ["clean", "wrong"],
+        "description": "clean when every value shown is correct, wrong when one value is not"
+      },
+      "field": {
+        "type": ["string", "null"],
+        "enum": ["name", "category", "addr:city", "addr:street", "addr:housenumber", "phone", "opening_hours", "website", "capacity", "building:levels", "level", "height", "rooms", "beds", "min_age", "max_age", "stars", "width", "seats", null],
+        "description": "the field carrying the wrong value, or null when the verdict is clean"
+      }
+    },
+    "required": ["verdict", "field"],
+    "additionalProperties": false
+  }
+}

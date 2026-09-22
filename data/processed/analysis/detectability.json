@@ -1,0 +1,23 @@
+{
+  "measured_at": "2026-09-13T06:46:32+00:00",
+  "replicates": 2000,
+  "seed": 42,
+  "runs": {
+    "natural_name_v1": {
+      "items": 224,
+      "positives": 29,
+      "cities": 12,
+      "alpha": 0.001,
+      "min_discordant_pairs": 11,
+      "min_detectable_recall_difference": 0.3793
+    },
+    "natural_name_v1_replay_0326": {
+      "items": 224,
+      "positives": 29,
+      "cities": 12,
+      "alpha": 0.001,
+      "min_discordant_pairs": 11,
+      "min_detectable_recall_difference": 0.3793
+    }
+  }
+}

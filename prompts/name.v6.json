@@ -1,0 +1,36 @@
+{
+  "version": 6,
+  "task": "name",
+  "purpose": "Instruction variant for prompt selection: asks for the kind of place the name implies before the decision.",
+  "note": "Identical to version 1 except for the instruction, so a difference between versions is the wording's. Written for prompt selection on the control development split; it says nothing about how often a name is wrong or how any set was built.",
+  "system": "You inspect records from a public map database and judge whether the name they carry belongs to them. Answer only with the JSON object the schema describes.",
+  "instruction": "First consider what kind of establishment the name shown suggests, then compare that with the category and the other fields of the record. Decide whether the name plausibly belongs to this establishment at this location, or whether it belongs to some other place. Answer with the JSON object alone.",
+  "views": {
+    "full": "Here is the record.",
+    "name_only": "Here is the record's name, and nothing else about it.",
+    "tags_only": "Here is everything the record shows except its name.",
+    "neither": "Here is the record's position, and nothing else about it."
+  },
+  "exemplar_intro": "Two worked examples follow. They are invented records, not entries from the database.",
+  "exemplar_ids": [
+    "E1",
+    "E2"
+  ],
+  "response_schema": {
+    "type": "object",
+    "properties": {
+      "verdict": {
+        "type": "string",
+        "enum": [
+          "belongs",
+          "wrong"
+        ],
+        "description": "belongs when the name plausibly belongs to this establishment, wrong when it belongs to some other place"
+      }
+    },
+    "required": [
+      "verdict"
+    ],
+    "additionalProperties": false
+  }
+}

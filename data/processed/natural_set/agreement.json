@@ -1,0 +1,213 @@
+{
+  "measured_on": "2026-08-09",
+  "readers": [
+    "reader_b",
+    "reader_a"
+  ],
+  "protocol_version": "1",
+  "items_in_natural_set": 250,
+  "items_labelled_by_both": 250,
+  "complete": true,
+  "overall": {
+    "items": 250,
+    "observed_agreement": 0.836,
+    "expected_agreement": 0.645264,
+    "kappa": 0.537684,
+    "standard_error": 0.066016,
+    "ci_low": 0.408295,
+    "ci_high": 0.667074
+  },
+  "mutual_accuracy": {
+    "items": 218,
+    "directions": {
+      "reader_a_against_reader_b": {
+        "positives": 28,
+        "balanced_accuracy": 0.861842,
+        "ci_low": 0.768521,
+        "ci_high": 0.923916
+      },
+      "reader_b_against_reader_a": {
+        "positives": 26,
+        "balanced_accuracy": 0.885617,
+        "ci_low": 0.790584,
+        "ci_high": 0.940044
+      }
+    }
+  },
+  "by_stratum": {
+    "A": {
+      "items": 126,
+      "observed_agreement": 0.849206,
+      "expected_agreement": 0.671013,
+      "kappa": 0.541643,
+      "standard_error": 0.096902,
+      "ci_low": 0.351718,
+      "ci_high": 0.731568
+    },
+    "B": {
+      "items": 124,
+      "observed_agreement": 0.822581,
+      "expected_agreement": 0.621098,
+      "kappa": 0.531754,
+      "standard_error": 0.090542,
+      "ci_low": 0.354294,
+      "ci_high": 0.709214
+    }
+  },
+  "by_city": {
+    "Accra": {
+      "items": 18,
+      "observed_agreement": 0.722222,
+      "expected_agreement": 0.395062,
+      "kappa": 0.540816,
+      "standard_error": 0.174517,
+      "ci_low": 0.19877,
+      "ci_high": 0.882863
+    },
+    "Brno": {
+      "items": 22,
+      "observed_agreement": 1.0,
+      "expected_agreement": 0.913223,
+      "kappa": 1.0,
+      "standard_error": 0.0,
+      "ci_low": 1.0,
+      "ci_high": 1.0
+    },
+    "Cebu": {
+      "items": 17,
+      "observed_agreement": 0.647059,
+      "expected_agreement": 0.484429,
+      "kappa": 0.315436,
+      "standard_error": 0.224807,
+      "ci_low": -0.125178,
+      "ci_high": 0.75605
+    },
+    "Cork": {
+      "items": 22,
+      "observed_agreement": 0.909091,
+      "expected_agreement": 0.830579,
+      "kappa": 0.463415,
+      "standard_error": 0.361766,
+      "ci_low": -0.245633,
+      "ci_high": 1.0
+    },
+    "Cuenca": {
+      "items": 25,
+      "observed_agreement": 0.84,
+      "expected_agreement": 0.472,
+      "kappa": 0.69697,
+      "standard_error": 0.138866,
+      "ci_low": 0.424797,
+      "ci_high": 0.969142
+    },
+    "London": {
+      "items": 23,
+      "observed_agreement": 0.956522,
+      "expected_agreement": 0.837429,
+      "kappa": 0.732558,
+      "standard_error": 0.261563,
+      "ci_low": 0.219903,
+      "ci_high": 1.0
+    },
+    "Munich": {
+      "items": 20,
+      "observed_agreement": 0.9,
+      "expected_agreement": 0.815,
+      "kappa": 0.459459,
+      "standard_error": 0.362606,
+      "ci_low": -0.251234,
+      "ci_high": 1.0
+    },
+    "Nairobi": {
+      "items": 19,
+      "observed_agreement": 0.421053,
+      "expected_agreement": 0.3241,
+      "kappa": 0.143443,
+      "standard_error": 0.167582,
+      "ci_low": -0.185013,
+      "ci_high": 0.471898
+    },
+    "Rotterdam": {
+      "items": 19,
+      "observed_agreement": 0.894737,
+      "expected_agreement": 0.725762,
+      "kappa": 0.616162,
+      "standard_error": 0.256733,
+      "ci_low": 0.112975,
+      "ci_high": 1.0
+    },
+    "Surabaya": {
+      "items": 16,
+      "observed_agreement": 0.9375,
+      "expected_agreement": 0.824219,
+      "kappa": 0.644444,
+      "standard_error": 0.344265,
+      "ci_low": -0.030303,
+      "ci_high": 1.0
+    },
+    "Vancouver": {
+      "items": 26,
+      "observed_agreement": 0.961538,
+      "expected_agreement": 0.961538,
+      "kappa": 0.0,
+      "standard_error": 0.980581,
+      "ci_low": -1.0,
+      "ci_high": 1.0
+    },
+    "İzmir": {
+      "items": 23,
+      "observed_agreement": 0.73913,
+      "expected_agreement": 0.597353,
+      "kappa": 0.352113,
+      "standard_error": 0.227397,
+      "ci_low": -0.093577,
+      "ci_high": 0.797802
+    }
+  },
+  "label_counts": {
+    "reader_b": {
+      "belongs": 201,
+      "wrong": 43,
+      "cannot_say": 6
+    },
+    "reader_a": {
+      "belongs": 194,
+      "cannot_say": 29,
+      "wrong": 27
+    }
+  },
+  "confusion": {
+    "belongs|belongs": 185,
+    "belongs|cannot_say": 11,
+    "belongs|wrong": 5,
+    "cannot_say|belongs": 2,
+    "cannot_say|cannot_say": 3,
+    "cannot_say|wrong": 1,
+    "wrong|belongs": 7,
+    "wrong|cannot_say": 15,
+    "wrong|wrong": 21
+  },
+  "disagreements": {
+    "items": 41,
+    "share": 0.164,
+    "ci_low": 0.123251,
+    "ci_high": 0.214918
+  },
+  "sources_consulted": {
+    "reader_b": {
+      "google maps": 250,
+      "web search": 5
+    },
+    "reader_a": {
+      "google maps": 248,
+      "web search": 37,
+      "register or directory": 3,
+      "street imagery": 3,
+      "own website": 4
+    }
+  },
+  "items_with_no_source": {
+    "reader_b": 0,
+    "reader_a": 0
+  }
+}

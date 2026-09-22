@@ -1,0 +1,7 @@
+set,split,threshold_kind,threshold,n,flagged,recall,recall_low,recall_high,balanced_accuracy,youden_j,abstentions
+injected,reported,calibrated,0.4663,480,221,0.4815,0.4194,0.5441,0.5213,0.0427,0
+injected,reported,oracle,0.4747,480,249,0.5473,0.4845,0.6087,0.5289,0.0579,0
+natural,stratum_a,calibrated,0.4663,113,53,0.75,0.4677,0.9111,0.6572,0.3144,0
+natural,stratum_a,oracle,0.4698,113,56,0.8333,0.552,0.953,0.6889,0.3779,0
+natural,stratum_b,calibrated,0.4663,111,44,0.2941,0.1328,0.5313,0.4396,-0.1208,0
+natural,stratum_b,oracle,0.5543,111,88,0.8824,0.6566,0.9671,0.5529,0.1058,0

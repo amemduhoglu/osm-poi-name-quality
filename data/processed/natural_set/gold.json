@@ -1,0 +1,76 @@
+{
+  "built_at": "2026-08-06T12:19:33.986373+00:00",
+  "protocol_version": "1",
+  "labelled": {
+    "items": 250,
+    "labels": {
+      "belongs": 195,
+      "cannot_say": 26,
+      "wrong": 29
+    },
+    "by_stratum": {
+      "A": {
+        "items": 126,
+        "wrong": 12
+      },
+      "B": {
+        "items": 124,
+        "wrong": 17
+      }
+    }
+  },
+  "label_source": {
+    "agreed": 209,
+    "adjudicated": 41
+  },
+  "adjudicated": {
+    "items": 224,
+    "labels": {
+      "belongs": 195,
+      "wrong": 29
+    },
+    "by_stratum": {
+      "A": {
+        "items": 113,
+        "wrong": 12
+      },
+      "B": {
+        "items": 111,
+        "wrong": 17
+      }
+    }
+  },
+  "decidable_core": {
+    "items": 206,
+    "labels": {
+      "belongs": 185,
+      "wrong": 21
+    },
+    "by_stratum": {
+      "A": {
+        "items": 104,
+        "wrong": 8
+      },
+      "B": {
+        "items": 102,
+        "wrong": 13
+      }
+    }
+  },
+  "cannot_say": {
+    "items": 26,
+    "labels": {
+      "cannot_say": 26
+    },
+    "by_stratum": {
+      "A": {
+        "items": 13,
+        "wrong": 0
+      },
+      "B": {
+        "items": 13,
+        "wrong": 0
+      }
+    }
+  }
+}

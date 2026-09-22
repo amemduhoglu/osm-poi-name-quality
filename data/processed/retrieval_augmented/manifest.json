@@ -1,0 +1,27 @@
+{
+  "built_at": "2026-09-12T23:56:18+00:00",
+  "settings": {
+    "prompt_version": 4,
+    "sources": [
+      "geonames_poi",
+      "wikidata_poi"
+    ],
+    "nearest": {
+      "radius_m": 100,
+      "max_entries": 5
+    },
+    "similar_names": {
+      "radius_km": 10,
+      "max_entries": 3
+    },
+    "encoder": "bge-m3",
+    "model_rule": "best_and_median_deployable_on_control_dev"
+  },
+  "items": {
+    "residual_control": 600,
+    "natural": 250,
+    "natural_extension": 623
+  },
+  "texts_embedded": 12764,
+  "with_nearest_entry": 470
+}

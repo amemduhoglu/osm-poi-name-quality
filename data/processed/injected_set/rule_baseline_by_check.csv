@@ -1,0 +1,7 @@
+check,pass,flag,abstain,clean_flag,corrupted_flag
+address_city,829,135,0,21,114
+opening_hours_syntax,603,167,0,33,134
+phone_country_code,605,101,136,0,101
+phone_syntax,720,122,0,14,108
+value_range,294,112,0,8,104
+website_syntax,655,105,0,2,103

@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "purpose": "Generated demonstration records for the few-shot prompt.",
+  "note": "Composed by scripts/build_exemplars.py from fixed lists and a fixed seed. Every value is invented and every label follows from the composition; no model wrote or labelled any of them.",
+  "exemplars": [
+    {
+      "id": "G1",
+      "source": "generated",
+      "label": "wrong",
+      "field": "name",
+      "reason": "The name describes another kind of place than the category.",
+      "record": {
+        "name": "Velilmwick Demitasse Room",
+        "category": "amenity=dentist",
+        "addr:city": "Quanholt",
+        "addr:street": "Quothcombe Row",
+        "addr:housenumber": "5",
+        "opening_hours": "Mo-Fr 08:10-17:40",
+        "lat": -48.40681,
+        "lon": -130.4036
+      }
+    },
+    {
+      "id": "G2",
+      "source": "generated",
+      "label": "wrong",
+      "field": "name",
+      "reason": "The name describes another kind of place than the category.",
+      "record": {
+        "name": "Velennholt Folio House",
+        "category": "leisure=fitness_centre",
+        "addr:city": "Brilmcombe",
+        "addr:street": "Breycombe Walk",
+        "addr:housenumber": "37",
+        "opening_hours": "Mo-Fr 08:10-17:40",
+        "lat": -48.42343,
+        "lon": -125.75711
+      }
+    },
+    {
+      "id": "G3",
+      "source": "generated",
+      "label": "wrong",
+      "field": "name",
+      "reason": "The name describes another kind of place than the category.",
+      "record": {
+        "name": "Quowmere Lodgings",
+        "category": "shop=hairdresser",
+        "addr:city": "Quothcombe",
+        "addr:street": "Wrardale Yard",
+        "addr:housenumber": "70",
+        "opening_hours": "Mo-Fr 08:10-17:40",
+        "lat": -44.63442,
+        "lon": -132.68638
+      }
+    },
+    {
+      "id": "G4",
+      "source": "generated",
+      "label": "clean",
+      "field": null,
+      "reason": "The name describes the kind of place the record is.",
+      "record": {
+        "name": "Skilmholt Joinery Rooms",
+        "category": "shop=furniture",
+        "addr:city": "Skeymere",
+        "addr:street": "Queystead Lane",
+        "addr:housenumber": "61",
+        "opening_hours": "Tu-Sa 09:20-18:50",
+        "lat": -48.15026,
+        "lon": -122.84296
+      }
+    },
+    {
+      "id": "G5",
+      "source": "generated",
+      "label": "clean",
+      "field": null,
+      "reason": "The name describes the kind of place the record is.",
+      "record": {
+        "name": "Wrilmmoor Crustworks",
+        "category": "shop=bakery",
+        "addr:city": "Glarmere",
+        "addr:street": "Brilmholt Row",
+        "addr:housenumber": "31",
+        "opening_hours": "Mo-Fr 08:10-17:40",
+        "lat": -47.59937,
+        "lon": -131.33861
+      }
+    },
+    {
+      "id": "G6",
+      "source": "generated",
+      "label": "clean",
+      "field": null,
+      "reason": "The name describes the kind of place the record is.",
+      "record": {
+        "name": "Brilmdale Demitasse Room",
+        "category": "amenity=cafe",
+        "addr:city": "Glilmmere",
+        "addr:street": "Skuthholt Row",
+        "addr:housenumber": "29",
+        "opening_hours": "We-Su 10:35-19:15",
+        "lat": -45.11816,
+        "lon": -133.8358
+      }
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+run,model,name,split,invalid,items,positives,recall,false_positive_rate,flag_rate,balanced_accuracy,youdens_j,youdens_j_low,youdens_j_high
+m1c_name_full_v1,openbmb/minicpm5:q4_K_M,MiniCPM 5 1B,all,0,600,300,0.6167,0.63,0.6233,0.4933,-0.0133,-0.0903,0.0639
+m1c_name_full_v1,openbmb/minicpm5:q4_K_M,MiniCPM 5 1B,train,0,300,150,0.5867,0.6133,0.6,0.4867,-0.0267,-0.1358,0.0833
+m1c_name_full_v1,openbmb/minicpm5:q4_K_M,MiniCPM 5 1B,dev,0,120,60,0.6167,0.6167,0.6167,0.5,0.0,-0.1692,0.1692
+m1c_name_full_v1,openbmb/minicpm5:q4_K_M,MiniCPM 5 1B,test,0,180,90,0.6667,0.6667,0.6667,0.5,0.0,-0.1356,0.1356
+m1c_name_full_v1,qwen3.5:2b-q4_K_M,Qwen 3.5 2B,all,0,600,300,0.9833,0.9733,0.9783,0.505,0.01,-0.0154,0.0368
+m1c_name_full_v1,qwen3.5:2b-q4_K_M,Qwen 3.5 2B,train,0,300,150,0.9933,0.9667,0.98,0.5133,0.0267,-0.009,0.0693
+m1c_name_full_v1,qwen3.5:2b-q4_K_M,Qwen 3.5 2B,dev,0,120,60,0.9667,0.9667,0.9667,0.5,0.0,-0.0839,0.0839
+m1c_name_full_v1,qwen3.5:2b-q4_K_M,Qwen 3.5 2B,test,0,180,90,0.9778,0.9889,0.9833,0.4944,-0.0111,-0.0671,0.0406
+m1c_name_full_v1,phi4-mini:latest,Phi-4 mini,all,0,600,300,0.4833,0.2833,0.3833,0.6,0.2,0.1226,0.2741
+m1c_name_full_v1,phi4-mini:latest,Phi-4 mini,train,0,300,150,0.5067,0.2933,0.4,0.6067,0.2133,0.1027,0.3168
+m1c_name_full_v1,phi4-mini:latest,Phi-4 mini,dev,0,120,60,0.4167,0.3,0.3583,0.5583,0.1167,-0.0539,0.2782
+m1c_name_full_v1,phi4-mini:latest,Phi-4 mini,test,0,180,90,0.4889,0.2556,0.3722,0.6167,0.2333,0.0923,0.3619
+m1c_name_full_v1,qwen3.5:4b,Qwen 3.5 4B,all,0,600,300,0.8933,0.52,0.7067,0.6867,0.3733,0.3046,0.4373
+m1c_name_full_v1,qwen3.5:4b,Qwen 3.5 4B,train,0,300,150,0.8933,0.56,0.7267,0.6667,0.3333,0.236,0.4227
+m1c_name_full_v1,qwen3.5:4b,Qwen 3.5 4B,dev,0,120,60,0.9167,0.5333,0.725,0.6917,0.3833,0.2285,0.5164
+m1c_name_full_v1,qwen3.5:4b,Qwen 3.5 4B,test,0,180,90,0.8778,0.4444,0.6611,0.7167,0.4333,0.3009,0.5448
+m1c_name_full_v1,llama3.1:8b,Llama 3.1 8B,all,0,600,300,0.0,0.0,0.0,0.5,0.0,-0.0126,0.0126
+m1c_name_full_v1,llama3.1:8b,Llama 3.1 8B,train,0,300,150,0.0,0.0,0.0,0.5,0.0,-0.025,0.025
+m1c_name_full_v1,llama3.1:8b,Llama 3.1 8B,dev,0,120,60,0.0,0.0,0.0,0.5,0.0,-0.0602,0.0602
+m1c_name_full_v1,llama3.1:8b,Llama 3.1 8B,test,0,180,90,0.0,0.0,0.0,0.5,0.0,-0.0409,0.0409
+m1c_name_full_v1,qwen3.5:9b,Qwen 3.5 9B,all,0,600,300,0.6967,0.1467,0.4217,0.775,0.55,0.4798,0.6108
+m1c_name_full_v1,qwen3.5:9b,Qwen 3.5 9B,train,0,300,150,0.7067,0.18,0.4433,0.7633,0.5267,0.4229,0.6122
+m1c_name_full_v1,qwen3.5:9b,Qwen 3.5 9B,dev,0,120,60,0.6667,0.1667,0.4167,0.75,0.5,0.3302,0.629
+m1c_name_full_v1,qwen3.5:9b,Qwen 3.5 9B,test,0,180,90,0.7,0.0778,0.3889,0.8111,0.6222,0.4967,0.7159
+m1c_name_full_v1,gemma4:e2b,Gemma 4 e2b,all,0,600,300,0.9,0.81,0.855,0.545,0.09,0.0338,0.1463
+m1c_name_full_v1,gemma4:e2b,Gemma 4 e2b,train,0,300,150,0.92,0.8733,0.8967,0.5233,0.0467,-0.0235,0.1178
+m1c_name_full_v1,gemma4:e2b,Gemma 4 e2b,dev,0,120,60,0.8167,0.7667,0.7917,0.525,0.05,-0.0961,0.1939
+m1c_name_full_v1,gemma4:e2b,Gemma 4 e2b,test,0,180,90,0.9222,0.7333,0.8278,0.5944,0.1889,0.0795,0.296
+m1c_name_full_v1,gemma4:12b,Gemma 4 12B,all,0,600,300,0.6633,0.1033,0.3833,0.78,0.56,0.492,0.6191
+m1c_name_full_v1,gemma4:12b,Gemma 4 12B,train,0,300,150,0.68,0.0867,0.3833,0.7967,0.5933,0.4971,0.6712
+m1c_name_full_v1,gemma4:12b,Gemma 4 12B,dev,0,120,60,0.6167,0.15,0.3833,0.7333,0.4667,0.2983,0.5986
+m1c_name_full_v1,gemma4:12b,Gemma 4 12B,test,0,180,90,0.6667,0.1,0.3833,0.7833,0.5667,0.4372,0.6669
+m1c_name_full_v1,phi4:latest,Phi-4,all,0,600,300,0.5567,0.05,0.3033,0.7533,0.5067,0.4422,0.5651
+m1c_name_full_v1,phi4:latest,Phi-4,train,0,300,150,0.56,0.0333,0.2967,0.7633,0.5267,0.4362,0.6059
+m1c_name_full_v1,phi4:latest,Phi-4,dev,0,120,60,0.4667,0.0667,0.2667,0.7,0.4,0.2481,0.5308
+m1c_name_full_v1,phi4:latest,Phi-4,test,0,180,90,0.6111,0.0667,0.3389,0.7722,0.5444,0.419,0.6452
+m1c_name_full_v1,gemma4:e4b,Gemma 4 e4b,all,0,600,300,0.9333,0.5433,0.7383,0.695,0.39,0.3249,0.4511
+m1c_name_full_v1,gemma4:e4b,Gemma 4 e4b,train,0,300,150,0.9333,0.54,0.7367,0.6967,0.3933,0.3,0.4786
+m1c_name_full_v1,gemma4:e4b,Gemma 4 e4b,dev,0,120,60,0.9167,0.6167,0.7667,0.65,0.3,0.1513,0.435
+m1c_name_full_v1,gemma4:e4b,Gemma 4 e4b,test,0,180,90,0.9444,0.5,0.7222,0.7222,0.4444,0.3226,0.5504
+m1c_name_neither_v1,openbmb/minicpm5:q4_K_M,MiniCPM 5 1B,all,0,600,300,0.0,0.0,0.0,0.5,0.0,-0.0126,0.0126
+m1c_name_neither_v1,openbmb/minicpm5:q4_K_M,MiniCPM 5 1B,train,0,300,150,0.0,0.0,0.0,0.5,0.0,-0.025,0.025
+m1c_name_neither_v1,openbmb/minicpm5:q4_K_M,MiniCPM 5 1B,dev,0,120,60,0.0,0.0,0.0,0.5,0.0,-0.0602,0.0602
+m1c_name_neither_v1,openbmb/minicpm5:q4_K_M,MiniCPM 5 1B,test,0,180,90,0.0,0.0,0.0,0.5,0.0,-0.0409,0.0409
+m1c_name_neither_v1,qwen3.5:2b-q4_K_M,Qwen 3.5 2B,all,0,600,300,0.0,0.0,0.0,0.5,0.0,-0.0126,0.0126
+m1c_name_neither_v1,qwen3.5:2b-q4_K_M,Qwen 3.5 2B,train,0,300,150,0.0,0.0,0.0,0.5,0.0,-0.025,0.025
+m1c_name_neither_v1,qwen3.5:2b-q4_K_M,Qwen 3.5 2B,dev,0,120,60,0.0,0.0,0.0,0.5,0.0,-0.0602,0.0602
+m1c_name_neither_v1,qwen3.5:2b-q4_K_M,Qwen 3.5 2B,test,0,180,90,0.0,0.0,0.0,0.5,0.0,-0.0409,0.0409
+m1c_name_neither_v1,phi4-mini:latest,Phi-4 mini,all,0,600,300,0.0833,0.0833,0.0833,0.5,0.0,-0.0452,0.0452
+m1c_name_neither_v1,phi4-mini:latest,Phi-4 mini,train,0,300,150,0.0867,0.0867,0.0867,0.5,0.0,-0.0662,0.0662
+m1c_name_neither_v1,phi4-mini:latest,Phi-4 mini,dev,0,120,60,0.1,0.1,0.1,0.5,0.0,-0.1147,0.1147
+m1c_name_neither_v1,phi4-mini:latest,Phi-4 mini,test,0,180,90,0.0667,0.0667,0.0667,0.5,0.0,-0.0797,0.0797
+m1c_name_neither_v1,qwen3.5:4b,Qwen 3.5 4B,all,0,600,300,0.0,0.0,0.0,0.5,0.0,-0.0126,0.0126
+m1c_name_neither_v1,qwen3.5:4b,Qwen 3.5 4B,train,0,300,150,0.0,0.0,0.0,0.5,0.0,-0.025,0.025
+m1c_name_neither_v1,qwen3.5:4b,Qwen 3.5 4B,dev,0,120,60,0.0,0.0,0.0,0.5,0.0,-0.0602,0.0602
+m1c_name_neither_v1,qwen3.5:4b,Qwen 3.5 4B,test,0,180,90,0.0,0.0,0.0,0.5,0.0,-0.0409,0.0409
+m1c_name_neither_v1,llama3.1:8b,Llama 3.1 8B,all,0,600,300,0.0,0.0,0.0,0.5,0.0,-0.0126,0.0126
+m1c_name_neither_v1,llama3.1:8b,Llama 3.1 8B,train,0,300,150,0.0,0.0,0.0,0.5,0.0,-0.025,0.025
+m1c_name_neither_v1,llama3.1:8b,Llama 3.1 8B,dev,0,120,60,0.0,0.0,0.0,0.5,0.0,-0.0602,0.0602
+m1c_name_neither_v1,llama3.1:8b,Llama 3.1 8B,test,0,180,90,0.0,0.0,0.0,0.5,0.0,-0.0409,0.0409
+m1c_name_neither_v1,qwen3.5:9b,Qwen 3.5 9B,all,0,600,300,0.0,0.0,0.0,0.5,0.0,-0.0126,0.0126
+m1c_name_neither_v1,qwen3.5:9b,Qwen 3.5 9B,train,0,300,150,0.0,0.0,0.0,0.5,0.0,-0.025,0.025
+m1c_name_neither_v1,qwen3.5:9b,Qwen 3.5 9B,dev,0,120,60,0.0,0.0,0.0,0.5,0.0,-0.0602,0.0602
+m1c_name_neither_v1,qwen3.5:9b,Qwen 3.5 9B,test,0,180,90,0.0,0.0,0.0,0.5,0.0,-0.0409,0.0409
+m1c_name_neither_v1,gemma4:e2b,Gemma 4 e2b,all,0,600,300,1.0,1.0,1.0,0.5,0.0,-0.0126,0.0126
+m1c_name_neither_v1,gemma4:e2b,Gemma 4 e2b,train,0,300,150,1.0,1.0,1.0,0.5,0.0,-0.025,0.025
+m1c_name_neither_v1,gemma4:e2b,Gemma 4 e2b,dev,0,120,60,1.0,1.0,1.0,0.5,0.0,-0.0602,0.0602
+m1c_name_neither_v1,gemma4:e2b,Gemma 4 e2b,test,0,180,90,1.0,1.0,1.0,0.5,0.0,-0.0409,0.0409
+m1c_name_neither_v1,gemma4:12b,Gemma 4 12B,all,0,600,300,0.0,0.0,0.0,0.5,0.0,-0.0126,0.0126
+m1c_name_neither_v1,gemma4:12b,Gemma 4 12B,train,0,300,150,0.0,0.0,0.0,0.5,0.0,-0.025,0.025
+m1c_name_neither_v1,gemma4:12b,Gemma 4 12B,dev,0,120,60,0.0,0.0,0.0,0.5,0.0,-0.0602,0.0602
+m1c_name_neither_v1,gemma4:12b,Gemma 4 12B,test,0,180,90,0.0,0.0,0.0,0.5,0.0,-0.0409,0.0409
+m1c_name_neither_v1,phi4:latest,Phi-4,all,0,600,300,0.0,0.0,0.0,0.5,0.0,-0.0126,0.0126
+m1c_name_neither_v1,phi4:latest,Phi-4,train,0,300,150,0.0,0.0,0.0,0.5,0.0,-0.025,0.025
+m1c_name_neither_v1,phi4:latest,Phi-4,dev,0,120,60,0.0,0.0,0.0,0.5,0.0,-0.0602,0.0602
+m1c_name_neither_v1,phi4:latest,Phi-4,test,0,180,90,0.0,0.0,0.0,0.5,0.0,-0.0409,0.0409
+m1c_name_neither_v1,gemma4:e4b,Gemma 4 e4b,all,0,600,300,1.0,0.97,0.985,0.515,0.03,0.011,0.056
+m1c_name_neither_v1,gemma4:e4b,Gemma 4 e4b,train,0,300,150,1.0,0.9733,0.9867,0.5133,0.0267,-0.0031,0.0666
+m1c_name_neither_v1,gemma4:e4b,Gemma 4 e4b,dev,0,120,60,1.0,0.9667,0.9833,0.5167,0.0333,-0.0315,0.1136
+m1c_name_neither_v1,gemma4:e4b,Gemma 4 e4b,test,0,180,90,1.0,0.9667,0.9833,0.5167,0.0333,-0.0131,0.0935
+m1c_name_name_only_v1,openbmb/minicpm5:q4_K_M,MiniCPM 5 1B,all,0,600,300,0.0,0.0033,0.0017,0.4983,-0.0033,-0.0186,0.0096
+m1c_name_name_only_v1,openbmb/minicpm5:q4_K_M,MiniCPM 5 1B,train,0,300,150,0.0,0.0067,0.0033,0.4967,-0.0067,-0.0368,0.0189
+m1c_name_name_only_v1,openbmb/minicpm5:q4_K_M,MiniCPM 5 1B,dev,0,120,60,0.0,0.0,0.0,0.5,0.0,-0.0602,0.0602
+m1c_name_name_only_v1,openbmb/minicpm5:q4_K_M,MiniCPM 5 1B,test,0,180,90,0.0,0.0,0.0,0.5,0.0,-0.0409,0.0409
+m1c_name_name_only_v1,qwen3.5:2b-q4_K_M,Qwen 3.5 2B,all,0,600,300,0.1067,0.1233,0.115,0.4917,-0.0167,-0.0684,0.0349
+m1c_name_name_only_v1,qwen3.5:2b-q4_K_M,Qwen 3.5 2B,train,0,300,150,0.12,0.1533,0.1367,0.4833,-0.0333,-0.1122,0.0454
+m1c_name_name_only_v1,qwen3.5:2b-q4_K_M,Qwen 3.5 2B,dev,0,120,60,0.1,0.05,0.075,0.525,0.05,-0.0521,0.1567
+m1c_name_name_only_v1,qwen3.5:2b-q4_K_M,Qwen 3.5 2B,test,0,180,90,0.0889,0.1222,0.1056,0.4833,-0.0333,-0.1273,0.0598
+m1c_name_name_only_v1,phi4-mini:latest,Phi-4 mini,all,0,600,300,0.0533,0.0667,0.06,0.4933,-0.0133,-0.053,0.0258
+m1c_name_name_only_v1,phi4-mini:latest,Phi-4 mini,train,0,300,150,0.06,0.0733,0.0667,0.4933,-0.0133,-0.0735,0.046
+m1c_name_name_only_v1,phi4-mini:latest,Phi-4 mini,dev,0,120,60,0.0333,0.0667,0.05,0.4833,-0.0333,-0.129,0.0566
+m1c_name_name_only_v1,phi4-mini:latest,Phi-4 mini,test,0,180,90,0.0556,0.0556,0.0556,0.5,0.0,-0.075,0.075
+m1c_name_name_only_v1,qwen3.5:4b,Qwen 3.5 4B,all,0,600,300,0.2867,0.2767,0.2817,0.505,0.01,-0.0618,0.0817
+m1c_name_name_only_v1,qwen3.5:4b,Qwen 3.5 4B,train,0,300,150,0.2867,0.3067,0.2967,0.49,-0.02,-0.1223,0.0828
+m1c_name_name_only_v1,qwen3.5:4b,Qwen 3.5 4B,dev,0,120,60,0.3,0.2833,0.2917,0.5083,0.0167,-0.1435,0.1757
+m1c_name_name_only_v1,qwen3.5:4b,Qwen 3.5 4B,test,0,180,90,0.2778,0.2222,0.25,0.5278,0.0556,-0.0709,0.1798
+m1c_name_name_only_v1,llama3.1:8b,Llama 3.1 8B,all,0,600,300,0.0,0.0,0.0,0.5,0.0,-0.0126,0.0126
+m1c_name_name_only_v1,llama3.1:8b,Llama 3.1 8B,train,0,300,150,0.0,0.0,0.0,0.5,0.0,-0.025,0.025
+m1c_name_name_only_v1,llama3.1:8b,Llama 3.1 8B,dev,0,120,60,0.0,0.0,0.0,0.5,0.0,-0.0602,0.0602
+m1c_name_name_only_v1,llama3.1:8b,Llama 3.1 8B,test,0,180,90,0.0,0.0,0.0,0.5,0.0,-0.0409,0.0409
+m1c_name_name_only_v1,qwen3.5:9b,Qwen 3.5 9B,all,0,600,300,0.0067,0.0267,0.0167,0.49,-0.02,-0.0455,0.0017
+m1c_name_name_only_v1,qwen3.5:9b,Qwen 3.5 9B,train,0,300,150,0.0,0.02,0.01,0.49,-0.02,-0.0571,0.0082
+m1c_name_name_only_v1,qwen3.5:9b,Qwen 3.5 9B,dev,0,120,60,0.0167,0.0333,0.025,0.4917,-0.0167,-0.0981,0.0592
+m1c_name_name_only_v1,qwen3.5:9b,Qwen 3.5 9B,test,0,180,90,0.0111,0.0333,0.0222,0.4889,-0.0222,-0.0831,0.0316
+m1c_name_name_only_v1,gemma4:e2b,Gemma 4 e2b,all,0,600,300,0.8767,0.9167,0.8967,0.48,-0.04,-0.0896,0.0091
+m1c_name_name_only_v1,gemma4:e2b,Gemma 4 e2b,train,0,300,150,0.88,0.9067,0.8933,0.4867,-0.0267,-0.0986,0.0448
+m1c_name_name_only_v1,gemma4:e2b,Gemma 4 e2b,dev,0,120,60,0.8333,0.95,0.8917,0.4417,-0.1167,-0.235,-0.0027
+m1c_name_name_only_v1,gemma4:e2b,Gemma 4 e2b,test,0,180,90,0.9,0.9111,0.9056,0.4944,-0.0111,-0.1013,0.0787
+m1c_name_name_only_v1,gemma4:12b,Gemma 4 12B,all,0,600,300,0.1,0.08,0.09,0.51,0.02,-0.0265,0.0668
+m1c_name_name_only_v1,gemma4:12b,Gemma 4 12B,train,0,300,150,0.1,0.06,0.08,0.52,0.04,-0.0232,0.1048
+m1c_name_name_only_v1,gemma4:12b,Gemma 4 12B,dev,0,120,60,0.0833,0.1,0.0917,0.4917,-0.0167,-0.1286,0.0944
+m1c_name_name_only_v1,gemma4:12b,Gemma 4 12B,test,0,180,90,0.1111,0.1,0.1056,0.5056,0.0111,-0.0824,0.1049
+m1c_name_name_only_v1,phi4:latest,Phi-4,all,0,600,300,0.0233,0.0133,0.0183,0.505,0.01,-0.0137,0.0354
+m1c_name_name_only_v1,phi4:latest,Phi-4,train,0,300,150,0.0267,0.02,0.0233,0.5033,0.0067,-0.0339,0.0487
+m1c_name_name_only_v1,phi4:latest,Phi-4,dev,0,120,60,0.0,0.0,0.0,0.5,0.0,-0.0602,0.0602
+m1c_name_name_only_v1,phi4:latest,Phi-4,test,0,180,90,0.0333,0.0111,0.0222,0.5111,0.0222,-0.0316,0.0831
+m1c_name_name_only_v1,gemma4:e4b,Gemma 4 e4b,all,0,600,300,0.5167,0.5467,0.5317,0.485,-0.03,-0.109,0.0496
+m1c_name_name_only_v1,gemma4:e4b,Gemma 4 e4b,train,0,300,150,0.5333,0.5067,0.52,0.5133,0.0267,-0.0854,0.1378
+m1c_name_name_only_v1,gemma4:e4b,Gemma 4 e4b,dev,0,120,60,0.4833,0.6667,0.575,0.4083,-0.1833,-0.3447,-0.0068
+m1c_name_name_only_v1,gemma4:e4b,Gemma 4 e4b,test,0,180,90,0.5111,0.5333,0.5222,0.4889,-0.0222,-0.1645,0.1213
+m1c_name_fewshot_v3,qwen3.5:9b,Qwen 3.5 9B,all,0,600,300,0.2067,0.01,0.1083,0.5983,0.1967,0.1506,0.2465
+m1c_name_fewshot_v3,qwen3.5:9b,Qwen 3.5 9B,train,0,300,150,0.2,0.02,0.11,0.59,0.18,0.1127,0.2524
+m1c_name_fewshot_v3,qwen3.5:9b,Qwen 3.5 9B,dev,0,120,60,0.15,0.0,0.075,0.575,0.15,0.0584,0.2611
+m1c_name_fewshot_v3,qwen3.5:9b,Qwen 3.5 9B,test,0,180,90,0.2556,0.0,0.1278,0.6278,0.2556,0.1668,0.3544
+m1c_name_fewshot_v3,gemma4:e2b,Gemma 4 e2b,all,0,600,300,0.81,0.7967,0.8033,0.5067,0.0133,-0.0504,0.0769
+m1c_name_fewshot_v3,gemma4:e2b,Gemma 4 e2b,train,0,300,150,0.84,0.8333,0.8367,0.5033,0.0067,-0.0777,0.0909
+m1c_name_fewshot_v3,gemma4:e2b,Gemma 4 e2b,dev,0,120,60,0.8167,0.7833,0.8,0.5167,0.0333,-0.1106,0.1759
+m1c_name_fewshot_v3,gemma4:e2b,Gemma 4 e2b,test,0,180,90,0.7556,0.7444,0.75,0.5056,0.0111,-0.1147,0.1365
+m1c_name_selected_v6,qwen3.5:9b,Qwen 3.5 9B,all,0,600,300,0.82,0.2167,0.5183,0.8017,0.6033,0.5344,0.6615
+m1c_name_selected_v6,qwen3.5:9b,Qwen 3.5 9B,train,0,300,150,0.82,0.2267,0.5233,0.7967,0.5933,0.4925,0.6733
+m1c_name_selected_v6,qwen3.5:9b,Qwen 3.5 9B,dev,0,120,60,0.8,0.2333,0.5167,0.7833,0.5667,0.3978,0.6874
+m1c_name_selected_v6,qwen3.5:9b,Qwen 3.5 9B,test,0,180,90,0.8333,0.1889,0.5111,0.8222,0.6444,0.5149,0.7367
+m1c_name_selected_v10,gemma4:e2b,Gemma 4 e2b,all,0,600,300,0.5367,0.3867,0.4617,0.575,0.15,0.0703,0.2271
+m1c_name_selected_v10,gemma4:e2b,Gemma 4 e2b,train,0,300,150,0.5733,0.4133,0.4933,0.58,0.16,0.0469,0.2675
+m1c_name_selected_v10,gemma4:e2b,Gemma 4 e2b,dev,0,120,60,0.45,0.3167,0.3833,0.5667,0.1333,-0.0398,0.2958
+m1c_name_selected_v10,gemma4:e2b,Gemma 4 e2b,test,0,180,90,0.5333,0.3889,0.4611,0.5722,0.1444,-0.0009,0.2815
+m1c_name_rag_v4,qwen3.5:9b,Qwen 3.5 9B,all,0,600,300,0.91,0.51,0.71,0.7,0.4,0.3324,0.4626
+m1c_name_rag_v4,qwen3.5:9b,Qwen 3.5 9B,train,0,300,150,0.8933,0.5467,0.72,0.6733,0.3467,0.2489,0.4359
+m1c_name_rag_v4,qwen3.5:9b,Qwen 3.5 9B,dev,0,120,60,0.95,0.6167,0.7833,0.6667,0.3333,0.1912,0.464
+m1c_name_rag_v4,qwen3.5:9b,Qwen 3.5 9B,test,0,180,90,0.9111,0.3778,0.6444,0.7667,0.5333,0.4047,0.6361
+m1c_name_rag_v4,gemma4:e2b,Gemma 4 e2b,all,0,600,300,1.0,0.9833,0.9917,0.5083,0.0167,0.0008,0.0384
+m1c_name_rag_v4,gemma4:e2b,Gemma 4 e2b,train,0,300,150,1.0,0.9867,0.9933,0.5067,0.0133,-0.0134,0.0473
+m1c_name_rag_v4,gemma4:e2b,Gemma 4 e2b,dev,0,120,60,1.0,0.9667,0.9833,0.5167,0.0333,-0.0315,0.1136
+m1c_name_rag_v4,gemma4:e2b,Gemma 4 e2b,test,0,180,90,1.0,0.9889,0.9944,0.5056,0.0111,-0.0308,0.0603

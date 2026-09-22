@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "task": "name",
+  "purpose": "The residual question asked a second way, so that its scores are reported as conditional on the prompt.",
+  "note": "This variant differs from version 1 in one stated way: it says what kind of error the question is about, which version 1 leaves for the exemplars to show. It still says nothing about how many names are wrong, how the set was built, or what a wrong name tends to look like in this data.",
+  "system": "You inspect records from a public map database and judge whether the name they carry belongs to them. Answer only with the JSON object the schema describes.",
+  "instruction": "A record's name is wrong when it is the name of some other place rather than of the establishment at this location. It is not wrong for being unusual, generic, abbreviated, or in a language other than English. Decide whether the name shown plausibly belongs to this establishment at this location. Answer with the JSON object alone.",
+  "views": {
+    "full": "Here is the record.",
+    "name_only": "Here is the record's name, and nothing else about it.",
+    "tags_only": "Here is everything the record shows except its name.",
+    "neither": "Here is the record's position, and nothing else about it."
+  },
+  "exemplar_intro": "Two worked examples follow. They are invented records, not entries from the database.",
+  "exemplar_ids": ["E1", "E2"],
+  "response_schema": {
+    "type": "object",
+    "properties": {
+      "verdict": {
+        "type": "string",
+        "enum": ["belongs", "wrong"],
+        "description": "belongs when the name plausibly belongs to this establishment, wrong when it belongs to some other place"
+      }
+    },
+    "required": ["verdict"],
+    "additionalProperties": false
+  }
+}

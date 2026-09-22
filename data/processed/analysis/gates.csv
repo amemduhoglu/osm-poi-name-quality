@@ -1,0 +1,62 @@
+model,gate,task,comparison,statistic,value,low,high,p_value,passes
+gemma4:12b,baseline_dominance,detection task,detection against the rule baseline,odds ratio of the discordant pairs,0.4101,,,2.8849567809044667e-30,False
+gemma4:12b,flag_rate_correction,residual question,"residual question, flagging 0.405 of records",Youden's J,0.5833,0.5154,0.6416,,True
+gemma4:12b,input_dependence,residual question,full record against position alone,Youden's J with the record taken away,0.0,,,6.534096786652105e-32,True
+gemma4:e2b,baseline_dominance,detection task,detection against the rule baseline,odds ratio of the discordant pairs,0.1448,,,2.0850327338908355e-82,False
+gemma4:e2b,flag_rate_correction,residual question,"residual question, flagging 0.828 of records",Youden's J,0.1233,0.0633,0.1828,,True
+gemma4:e2b,input_dependence,residual question,full record against position alone,Youden's J with the record taken away,-0.0033,,,0.000247115841064573,True
+gemma4:e4b,baseline_dominance,detection task,detection against the rule baseline,odds ratio of the discordant pairs,0.2723,,,1.5254073747097964e-41,False
+gemma4:e4b,flag_rate_correction,residual question,"residual question, flagging 0.702 of records",Youden's J,0.47,0.4043,0.53,,True
+gemma4:e4b,input_dependence,residual question,full record against position alone,Youden's J with the record taken away,0.0067,,,1.8404446754230994e-28,True
+granite4.1:3b,baseline_dominance,detection task,detection against the rule baseline,odds ratio of the discordant pairs,0.349,,,1.0263550109320378e-51,False
+granite4.1:3b,flag_rate_correction,residual question,"residual question, flagging 0.330 of records",Youden's J,0.3267,0.2539,0.3945,,True
+granite4.1:3b,input_dependence,residual question,full record against position alone,Youden's J with the record taken away,-0.03,,,1.2086556800847565e-12,True
+granite4.1:8b,baseline_dominance,detection task,detection against the rule baseline,odds ratio of the discordant pairs,0.1962,,,7.845214206490882e-62,False
+granite4.1:8b,flag_rate_correction,residual question,"residual question, flagging 0.585 of records",Youden's J,0.4833,0.4107,0.5477,,True
+granite4.1:8b,input_dependence,residual question,full record against position alone,Youden's J with the record taken away,0.0067,,,3.425889636253616e-19,True
+llama3.1:8b,baseline_dominance,detection task,detection against the rule baseline,odds ratio of the discordant pairs,0.1221,,,4.015180135928186e-106,False
+llama3.1:8b,flag_rate_correction,residual question,"residual question, flagging 0.000 of records",Youden's J,0.0,-0.0126,0.0126,,False
+llama3.1:8b,input_dependence,residual question,full record against position alone,Youden's J with the record taken away,0.0,,,1.0,False
+openbmb/minicpm5:q4_K_M,baseline_dominance,detection task,detection against the rule baseline,odds ratio of the discordant pairs,0.1731,,,2.806303461092103e-92,False
+openbmb/minicpm5:q4_K_M,flag_rate_correction,residual question,"residual question, flagging 0.645 of records",Youden's J,-0.0033,-0.0795,0.0729,,False
+openbmb/minicpm5:q4_K_M,input_dependence,residual question,full record against position alone,Youden's J with the record taken away,0.0,,,1.0,False
+phi4-mini:latest,baseline_dominance,detection task,detection against the rule baseline,odds ratio of the discordant pairs,0.1844,,,2.4415753455519024e-77,False
+phi4-mini:latest,flag_rate_correction,residual question,"residual question, flagging 0.435 of records",Youden's J,0.2767,0.1985,0.35,,True
+phi4-mini:latest,input_dependence,residual question,full record against position alone,Youden's J with the record taken away,0.0,,,6.957583111427506e-07,True
+phi4:latest,baseline_dominance,detection task,detection against the rule baseline,odds ratio of the discordant pairs,0.2347,,,3.8331404448181217e-54,False
+phi4:latest,flag_rate_correction,residual question,"residual question, flagging 0.377 of records",Youden's J,0.5133,0.4436,0.5749,,True
+phi4:latest,input_dependence,residual question,full record against position alone,Youden's J with the record taken away,0.0,,,1.80315567856954e-26,True
+qwen3.5:2b-q4_K_M,baseline_dominance,detection task,detection against the rule baseline,odds ratio of the discordant pairs,0.3604,,,3.568802933984691e-51,False
+qwen3.5:2b-q4_K_M,flag_rate_correction,residual question,"residual question, flagging 0.992 of records",Youden's J,0.0033,-0.0152,0.0229,,False
+qwen3.5:2b-q4_K_M,input_dependence,residual question,full record against position alone,Youden's J with the record taken away,0.0,,,1.0,False
+qwen3.5:4b,baseline_dominance,detection task,detection against the rule baseline,odds ratio of the discordant pairs,0.4416,,,4.137996616612139e-28,False
+qwen3.5:4b,flag_rate_correction,residual question,"residual question, flagging 0.683 of records",Youden's J,0.4467,0.3784,0.5088,,True
+qwen3.5:4b,input_dependence,residual question,full record against position alone,Youden's J with the record taken away,0.0,,,3.427549697359443e-11,True
+qwen3.5:9b,baseline_dominance,detection task,detection against the rule baseline,odds ratio of the discordant pairs,0.1914,,,7.310464657387034e-81,False
+qwen3.5:9b,flag_rate_correction,residual question,"residual question, flagging 0.437 of records",Youden's J,0.6067,0.5388,0.6641,,True
+qwen3.5:9b,input_dependence,residual question,full record against position alone,Youden's J with the record taken away,0.0,,,9.408698424187161e-32,True
+openbmb/minicpm5:q4_K_M,baseline_dominance,"residual question, control test items",against the string and dictionary screen,odds ratio of the discordant pairs,0.9836,,,1.0,False
+openbmb/minicpm5:q4_K_M,baseline_dominance,"residual question, the natural set",against the string and dictionary screen,odds ratio of the discordant pairs,0.1356,,,1.0167485039666578e-10,False
+qwen3.5:2b-q4_K_M,baseline_dominance,"residual question, control test items",against the string and dictionary screen,odds ratio of the discordant pairs,0.9773,,,0.9395993719521454,False
+qwen3.5:2b-q4_K_M,baseline_dominance,"residual question, the natural set",against the string and dictionary screen,odds ratio of the discordant pairs,0.1304,,,1.953190833147217e-16,False
+granite4.1:3b,baseline_dominance,"residual question, control test items",against the string and dictionary screen,odds ratio of the discordant pairs,2.15,,,0.005152397042092064,False
+granite4.1:3b,baseline_dominance,"residual question, the natural set",against the string and dictionary screen,odds ratio of the discordant pairs,0.5833,,,0.359283447265625,False
+phi4-mini:latest,baseline_dominance,"residual question, control test items",against the string and dictionary screen,odds ratio of the discordant pairs,1.8333,,,0.02052693371370707,False
+phi4-mini:latest,baseline_dominance,"residual question, the natural set",against the string and dictionary screen,odds ratio of the discordant pairs,0.5263,,,0.13604594767093658,False
+qwen3.5:4b,baseline_dominance,"residual question, control test items",against the string and dictionary screen,odds ratio of the discordant pairs,1.9744,,,0.0005340946135287203,True
+qwen3.5:4b,baseline_dominance,"residual question, the natural set",against the string and dictionary screen,odds ratio of the discordant pairs,0.303,,,0.0006061066312668117,False
+llama3.1:8b,baseline_dominance,"residual question, control test items",against the string and dictionary screen,odds ratio of the discordant pairs,0.5,,,1.0,False
+llama3.1:8b,baseline_dominance,"residual question, the natural set",against the string and dictionary screen,odds ratio of the discordant pairs,,,,0.00390625,False
+granite4.1:8b,baseline_dominance,"residual question, control test items",against the string and dictionary screen,odds ratio of the discordant pairs,1.881,,,0.0009830284971268928,True
+granite4.1:8b,baseline_dominance,"residual question, the natural set",against the string and dictionary screen,odds ratio of the discordant pairs,0.4286,,,0.042773945257067694,False
+qwen3.5:9b,baseline_dominance,"residual question, control test items",against the string and dictionary screen,odds ratio of the discordant pairs,7.875,,,1.0271364278048329e-11,True
+qwen3.5:9b,baseline_dominance,"residual question, the natural set",against the string and dictionary screen,odds ratio of the discordant pairs,0.7143,,,0.5412561893463135,False
+gemma4:e2b,baseline_dominance,"residual question, control test items",against the string and dictionary screen,odds ratio of the discordant pairs,1.2462,,,0.21431491737771177,False
+gemma4:e2b,baseline_dominance,"residual question, the natural set",against the string and dictionary screen,odds ratio of the discordant pairs,0.169,,,2.394644905698785e-11,False
+gemma4:12b,baseline_dominance,"residual question, control test items",against the string and dictionary screen,odds ratio of the discordant pairs,6.0,,,8.004823399455647e-10,True
+gemma4:12b,baseline_dominance,"residual question, the natural set",against the string and dictionary screen,odds ratio of the discordant pairs,1.0,,,1.0,False
+phi4:latest,baseline_dominance,"residual question, control test items",against the string and dictionary screen,odds ratio of the discordant pairs,7.8571,,,2.4300843108615577e-10,True
+phi4:latest,baseline_dominance,"residual question, the natural set",against the string and dictionary screen,odds ratio of the discordant pairs,1.0,,,1.0,False
+gemma4:e4b,baseline_dominance,"residual question, control test items",against the string and dictionary screen,odds ratio of the discordant pairs,1.8667,,,0.0007558902724563365,True
+gemma4:e4b,baseline_dominance,"residual question, the natural set",against the string and dictionary screen,odds ratio of the discordant pairs,0.3333,,,0.0004095414537825804,False
+,label_stability,the label set,"natural set, two readers working a fixed protocol",Cohen's kappa,0.5377,0.4083,0.6671,,

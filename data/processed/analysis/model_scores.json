@@ -1,0 +1,36 @@
+{
+  "scored_at": "2026-08-09T10:42:12.693552+00:00",
+  "confidence": 0.95,
+  "interval": "wilson",
+  "detection_summary": "youdens_j",
+  "paired_test": "exact_mcnemar",
+  "runs_scored": [
+    "injected_detect_v1",
+    "injected_detect_v2",
+    "m1_name_full_v1",
+    "m1_name_full_v1_unconstrained",
+    "m1_name_full_v2",
+    "m1_name_name_only_held_v1",
+    "m1_name_name_only_v1",
+    "m1_name_neither_v1",
+    "m1_name_tags_only_held_v1",
+    "m1_name_tags_only_v1",
+    "natural_name_v1",
+    "natural_name_v1_unconstrained",
+    "natural_name_v2"
+  ],
+  "models_scored": [
+    "gemma4:12b",
+    "gemma4:e2b",
+    "gemma4:e4b",
+    "granite4.1:3b",
+    "granite4.1:8b",
+    "llama3.1:8b",
+    "openbmb/minicpm5:q4_K_M",
+    "phi4-mini:latest",
+    "phi4:latest",
+    "qwen3.5:2b-q4_K_M",
+    "qwen3.5:4b",
+    "qwen3.5:9b"
+  ]
+}

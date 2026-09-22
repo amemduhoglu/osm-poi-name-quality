@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "task": "detect",
+  "purpose": "The same task, asked a second way, so that a score can be reported as conditional on the prompt rather than as a property of a model.",
+  "note": "This variant differs from version 1 in two stated ways and in nothing else: it names the fields a record can show before showing one, and it tells the reader that a record with nothing wrong is an ordinary answer. Neither addition tells the model anything about the data. It still does not say how many items are wrong, what share of them are wrong, or which error classes exist.",
+  "system": "You inspect records from a public map database and judge whether the values they carry are correct. Answer only with the JSON object the schema describes.",
+  "instruction": "A record may show any of these fields: name, category, address city, address street, address house number, phone, opening hours, web address, one numeric tag such as capacity or building levels, and a coordinate. Read the record below and decide whether every value it shows is correct for this establishment at this location, or whether one value is wrong. A record with nothing wrong in it is an ordinary answer and should be reported as such. If one value is wrong, name the field it is in. Answer with the JSON object alone.",
+  "exemplar_intro": "Four worked examples follow. They are invented records, not entries from the database.",
+  "exemplar_ids": ["E1", "E2", "E3", "E4"],
+  "response_schema": {
+    "type": "object",
+    "properties": {
+      "verdict": {
+        "type": "string",
+        "enum": ["clean", "wrong"],
+        "description": "clean when every value shown is correct, wrong when one value is not"
+      },
+      "field": {
+        "type": ["string", "null"],
+        "enum": ["name", "category", "addr:city", "addr:street", "addr:housenumber", "phone", "opening_hours", "website", "capacity", "building:levels", "level", "height", "rooms", "beds", "min_age", "max_age", "stars", "width", "seats", null],
+        "description": "the field carrying the wrong value, or null when the verdict is clean"
+      }
+    },
+    "required": ["verdict", "field"],
+    "additionalProperties": false
+  }
+}

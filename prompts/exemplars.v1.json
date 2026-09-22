@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "purpose": "Hand-written demonstration records for the scored prompts.",
+  "note": "Every field here is invented. No value is taken from the corpus, from the injected set or from the natural set, so that no item can be answered by recalling an exemplar. The prompt template that surrounds these records is settled in Phase 5 and is versioned beside them; this file holds the records and their labels only.",
+  "exemplars": [
+    {
+      "id": "E1",
+      "label": "clean",
+      "field": null,
+      "reason": "Every value is well formed and consistent with the position.",
+      "record": {
+        "name": "Quillfeather Bindery",
+        "category": "craft=bookbinder",
+        "addr:city": "Marrowdene",
+        "addr:street": "Tallow Row",
+        "addr:housenumber": "17",
+        "phone": "+299 421 7788",
+        "opening_hours": "We-Su 11:15-19:45",
+        "website": "https://quillfeather-bindery.example",
+        "lat": 61.11111,
+        "lon": -44.22222
+      }
+    },
+    {
+      "id": "E2",
+      "label": "wrong",
+      "field": "name",
+      "reason": "The name belongs to a different establishment elsewhere in the same settlement.",
+      "record": {
+        "name": "Saltmarsh Aviary",
+        "category": "amenity=dentist",
+        "addr:city": "Marrowdene",
+        "addr:street": "Cinder Lane",
+        "addr:housenumber": "3",
+        "opening_hours": "Th-Sa 07:45-13:20",
+        "lat": 61.13131,
+        "lon": -44.24242
+      }
+    },
+    {
+      "id": "E3",
+      "label": "wrong",
+      "field": "opening_hours",
+      "reason": "The value is not written in the opening-hours syntax.",
+      "record": {
+        "name": "Thimblewick Grocers",
+        "category": "shop=convenience",
+        "addr:city": "Marrowdene",
+        "addr:street": "Ferryman Steps",
+        "opening_hours": "every day until the bread runs out",
+        "website": "https://thimblewick.example",
+        "lat": 61.15151,
+        "lon": -44.26262
+      }
+    },
+    {
+      "id": "E4",
+      "label": "wrong",
+      "field": "addr:city",
+      "reason": "The address names a settlement far from the record's position.",
+      "record": {
+        "name": "Harrowgate Kilns",
+        "category": "craft=pottery",
+        "addr:city": "Vellum Reach",
+        "addr:street": "Ashen Way",
+        "addr:housenumber": "42",
+        "phone": "+299 421 3355",
+        "lat": 61.17171,
+        "lon": -44.28282
+      }
+    }
+  ]
+}

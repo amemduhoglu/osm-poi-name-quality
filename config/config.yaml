@@ -1,0 +1,1928 @@
+# Single source of truth for every experiment parameter in this study.
+#
+# Nothing below may be hardcoded in a script: read it through poi_audit.config.
+# Figure style and export numbers are not experiment parameters and live in the
+# style layer (poi_audit/figstyle.py) instead, so that each number has one home.
+#
+# Secrets are never stored here. Names ending in _env hold the name of an
+# environment variable, read from .env at runtime.
+
+project:
+  name: poi-name-audit
+  seed: 42
+
+paths:
+  data_raw: data/raw
+  data_interim: data/interim
+  data_processed: data/processed
+  responses: data/responses
+  logs: logs
+  figures: paper/figures
+  tables: paper/tables
+
+# The efficiency profile was planned into a PostgreSQL schema and is written to
+# files instead: it is the one output a reader of the deposit has to be able to
+# reproduce without standing up a server, and it is a few thousand rows. The
+# responses go to JSONL as they arrive and the per-model summary to CSV.
+
+# ---------------------------------------------------------------------------
+# Corpus
+# Twelve cities, two by two on language and data maturity, Latin script held
+# constant. The city list and the extraction date are part of the corpus
+# definition and are written here when the extraction runs. Maturity is measured, never
+# assumed, and the selected list is filled in by hand from the rule's proposal.
+# ---------------------------------------------------------------------------
+corpus:
+  source: OpenStreetMap
+  licence: ODbL
+  script: Latin
+  extraction_date: 2026-08-02
+  design_cells:
+    language: [english, non_english]
+    maturity: [mature, developing]
+  cities_per_cell: 3
+  # The twelve selected by the rule in candidate_selection, written here by hand
+  # after the proposal was read. Maturity is the measured assignment, not the
+  # hypothesis. The measurement that produced them is in
+  # data/processed/candidate_city_counts.csv.
+  cities:
+    - {city: Vancouver, country: CA, lat: 49.2827, lon: -123.1207,
+       language: english, maturity: mature}
+    - {city: London, country: GB, lat: 51.5074, lon: -0.1278,
+       language: english, maturity: mature}
+    - {city: Cork, country: IE, lat: 51.8985, lon: -8.4756,
+       language: english, maturity: mature}
+    - {city: Cebu, country: PH, lat: 10.3157, lon: 123.8854,
+       language: english, maturity: developing}
+    - {city: Nairobi, country: KE, lat: -1.2864, lon: 36.8172,
+       language: english, maturity: developing}
+    - {city: Accra, country: GH, lat: 5.6037, lon: -0.187,
+       language: english, maturity: developing}
+    - {city: Munich, country: DE, lat: 48.1351, lon: 11.582,
+       language: non_english, maturity: mature}
+    - {city: Rotterdam, country: NL, lat: 51.9244, lon: 4.4777,
+       language: non_english, maturity: mature}
+    - {city: Brno, country: CZ, lat: 49.1951, lon: 16.6068,
+       language: non_english, maturity: mature}
+    - {city: Cuenca, country: EC, lat: -2.9001, lon: -79.0059,
+       language: non_english, maturity: developing}
+    - {city: Surabaya, country: ID, lat: -7.2575, lon: 112.7521,
+       language: non_english, maturity: developing}
+    - {city: İzmir, country: TR, lat: 38.4237, lon: 27.1428,
+       language: non_english, maturity: developing}
+
+  # A point of interest is an element carrying any of these keys. The set is
+  # fixed here so that the candidate measurement and the corpus extraction
+  # count the same thing.
+  poi_keys: [amenity, shop, tourism, leisure, office, craft, healthcare]
+
+  # Candidate measurement
+  #
+  # Every candidate below is measured, then twelve are selected by the rule that
+  # follows. The thresholds and the counting geometry were fixed before any
+  # candidate was measured and are unchanged since the pilot.
+  #
+  # Counts are taken inside a disc of fixed radius around the city centre
+  # rather than inside an administrative boundary, because boundary area varies
+  # by two orders of magnitude between countries and would make density
+  # incomparable across the design cells.
+  candidate_selection:
+    radius_m: 10000
+    overpass_url: https://overpass-api.de/api/interpreter
+    overpass_timeout_sec: 300
+    pause_between_cities_sec: 5
+
+    # Each metric counts point-of-interest elements satisfying its filters.
+    # A candidate failing any threshold is eliminated before the density
+    # ranking. Thresholds carry a factor of about ten over the per-city item
+    # quota, so that no class draws a near-exhaustive sample of a rare tag.
+    metrics:
+      named:
+        require_all: [name]
+        threshold: 3000
+      phone:
+        require_all: [name]
+        require_any: [phone, "contact:phone"]
+        threshold: 200
+      opening_hours:
+        require_all: [name, opening_hours]
+        threshold: 100
+      website:
+        require_all: [name]
+        require_any: [website, "contact:website"]
+        threshold: 100
+      address:
+        require_all: [name, "addr:city", "addr:street"]
+        threshold: 100
+
+    # Maturity is assigned from measured attribute completeness: the mean of
+    # the shares of named points of interest carrying a phone number, opening
+    # hours, a web address and a street address. The hypothesis recorded
+    # against each candidate is written down only so that a wrong one is
+    # visible in the output.
+    #
+    # This replaces a first rule that ranked candidates by the count of named
+    # points of interest per square kilometre. That rule was fixed before the
+    # measurement and applied, and it placed Lima and Quito in the mature cell
+    # and Utrecht in the developing one: it measures how dense a city is, not
+    # how completely its records are attributed, and the design's maturity axis
+    # means the second. The study also needs records that carry the fields its
+    # error classes corrupt, which is the same quantity. The superseded ranking
+    # and the selection it produced are recorded in the progress file, because
+    # the rule was changed after its numbers were seen and that has to stay
+    # visible. The elimination thresholds are untouched.
+    ranking_metric: attribute_completeness
+    completeness_metrics: [phone, opening_hours, website, address]
+    country_diversity_required: true
+
+  # The density map's measurement parameters are under `figures.f1`, which is
+  # where the figure generator reads them. They were briefly written here as
+  # well, at a different cell size, which left one number with two homes and two
+  # values; the copy is gone and the figure's block is the only one.
+
+  # Candidate pool
+  #
+  # Built mechanically so that no city's presence depends on what an earlier
+  # measurement showed: a fixed list of countries, and the three largest cities
+  # of each by urban population. Cities are never added one at a time.
+  #
+  # The country list is the one the pilot used, minus Australia. No point of
+  # interest in the Melbourne disc carries addr:city, because the country tags
+  # addresses with addr:suburb instead; its cities cannot carry the
+  # address-consistency error class, and that is a property of the tagging
+  # convention rather than of the data. The pilot and what it settled are in
+  # data/processed/pilot.
+  #
+  # The language of a country is a design fact and is written here. Maturity is
+  # not: the hypothesis recorded against each city exists only so that a wrong
+  # one is visible in the output, and the cells are filled from measurement.
+  candidates:
+    - {city: London, country: GB, lat: 51.5074, lon: -0.1278,
+       language: english, hypothesis_maturity: mature}
+    - {city: Birmingham, country: GB, lat: 52.4862, lon: -1.8904,
+       language: english, hypothesis_maturity: mature}
+    - {city: Manchester, country: GB, lat: 53.4808, lon: -2.2426,
+       language: english, hypothesis_maturity: mature}
+    - {city: Dublin, country: IE, lat: 53.3498, lon: -6.2603,
+       language: english, hypothesis_maturity: mature}
+    - {city: Cork, country: IE, lat: 51.8985, lon: -8.4756,
+       language: english, hypothesis_maturity: mature}
+    - {city: Limerick, country: IE, lat: 52.6638, lon: -8.6267,
+       language: english, hypothesis_maturity: mature}
+    - {city: Toronto, country: CA, lat: 43.6532, lon: -79.3832,
+       language: english, hypothesis_maturity: mature}
+    # Language is a property of the city, not of the country: Montreal's points
+    # of interest are named in French.
+    - {city: Montreal, country: CA, lat: 45.5019, lon: -73.5674,
+       language: non_english, hypothesis_maturity: mature}
+    - {city: Vancouver, country: CA, lat: 49.2827, lon: -123.1207,
+       language: english, hypothesis_maturity: mature}
+    - {city: Auckland, country: NZ, lat: -36.8485, lon: 174.7633,
+       language: english, hypothesis_maturity: mature}
+    - {city: Wellington, country: NZ, lat: -41.2866, lon: 174.7756,
+       language: english, hypothesis_maturity: mature}
+    - {city: Christchurch, country: NZ, lat: -43.5321, lon: 172.6362,
+       language: english, hypothesis_maturity: mature}
+    - {city: Nairobi, country: KE, lat: -1.2864, lon: 36.8172,
+       language: english, hypothesis_maturity: developing}
+    - {city: Mombasa, country: KE, lat: -4.0435, lon: 39.6682,
+       language: english, hypothesis_maturity: developing}
+    - {city: Kisumu, country: KE, lat: -0.0917, lon: 34.768,
+       language: english, hypothesis_maturity: developing}
+    - {city: Accra, country: GH, lat: 5.6037, lon: -0.187,
+       language: english, hypothesis_maturity: developing}
+    - {city: Kumasi, country: GH, lat: 6.6885, lon: -1.6244,
+       language: english, hypothesis_maturity: developing}
+    - {city: Tamale, country: GH, lat: 9.4008, lon: -0.8393,
+       language: english, hypothesis_maturity: developing}
+    - {city: Lagos, country: NG, lat: 6.5244, lon: 3.3792,
+       language: english, hypothesis_maturity: developing}
+    - {city: Kano, country: NG, lat: 12.0022, lon: 8.592,
+       language: english, hypothesis_maturity: developing}
+    - {city: Ibadan, country: NG, lat: 7.3775, lon: 3.947,
+       language: english, hypothesis_maturity: developing}
+    - {city: Kampala, country: UG, lat: 0.3476, lon: 32.5825,
+       language: english, hypothesis_maturity: developing}
+    - {city: Gulu, country: UG, lat: 2.7746, lon: 32.299,
+       language: english, hypothesis_maturity: developing}
+    - {city: Mbarara, country: UG, lat: -0.6072, lon: 30.6545,
+       language: english, hypothesis_maturity: developing}
+    - {city: Manila, country: PH, lat: 14.5995, lon: 120.9842,
+       language: english, hypothesis_maturity: developing}
+    - {city: Cebu, country: PH, lat: 10.3157, lon: 123.8854,
+       language: english, hypothesis_maturity: developing}
+    - {city: Davao, country: PH, lat: 7.1907, lon: 125.4553,
+       language: english, hypothesis_maturity: developing}
+    - {city: Berlin, country: DE, lat: 52.52, lon: 13.405,
+       language: non_english, hypothesis_maturity: mature}
+    - {city: Hamburg, country: DE, lat: 53.5511, lon: 9.9937,
+       language: non_english, hypothesis_maturity: mature}
+    - {city: Munich, country: DE, lat: 48.1351, lon: 11.582,
+       language: non_english, hypothesis_maturity: mature}
+    - {city: Amsterdam, country: NL, lat: 52.3676, lon: 4.9041,
+       language: non_english, hypothesis_maturity: mature}
+    - {city: Rotterdam, country: NL, lat: 51.9244, lon: 4.4777,
+       language: non_english, hypothesis_maturity: mature}
+    - {city: The Hague, country: NL, lat: 52.0705, lon: 4.3007,
+       language: non_english, hypothesis_maturity: mature}
+    - {city: Warsaw, country: PL, lat: 52.2297, lon: 21.0122,
+       language: non_english, hypothesis_maturity: mature}
+    - {city: Kraków, country: PL, lat: 50.0647, lon: 19.945,
+       language: non_english, hypothesis_maturity: mature}
+    - {city: Łódź, country: PL, lat: 51.7592, lon: 19.456,
+       language: non_english, hypothesis_maturity: mature}
+    - {city: Prague, country: CZ, lat: 50.0755, lon: 14.4378,
+       language: non_english, hypothesis_maturity: mature}
+    - {city: Brno, country: CZ, lat: 49.1951, lon: 16.6068,
+       language: non_english, hypothesis_maturity: mature}
+    - {city: Ostrava, country: CZ, lat: 49.8209, lon: 18.2625,
+       language: non_english, hypothesis_maturity: mature}
+    - {city: Paris, country: FR, lat: 48.8566, lon: 2.3522,
+       language: non_english, hypothesis_maturity: mature}
+    - {city: Marseille, country: FR, lat: 43.2965, lon: 5.3698,
+       language: non_english, hypothesis_maturity: mature}
+    - {city: Lyon, country: FR, lat: 45.764, lon: 4.8357,
+       language: non_english, hypothesis_maturity: mature}
+    - {city: İstanbul, country: TR, lat: 41.0082, lon: 28.9784,
+       language: non_english, hypothesis_maturity: developing}
+    - {city: Ankara, country: TR, lat: 39.9334, lon: 32.8597,
+       language: non_english, hypothesis_maturity: developing}
+    - {city: İzmir, country: TR, lat: 38.4237, lon: 27.1428,
+       language: non_english, hypothesis_maturity: developing}
+    - {city: Lima, country: PE, lat: -12.0464, lon: -77.0428,
+       language: non_english, hypothesis_maturity: developing}
+    - {city: Arequipa, country: PE, lat: -16.409, lon: -71.5375,
+       language: non_english, hypothesis_maturity: developing}
+    - {city: Trujillo, country: PE, lat: -8.1116, lon: -79.0288,
+       language: non_english, hypothesis_maturity: developing}
+    - {city: Quito, country: EC, lat: -0.1807, lon: -78.4678,
+       language: non_english, hypothesis_maturity: developing}
+    - {city: Guayaquil, country: EC, lat: -2.1894, lon: -79.8891,
+       language: non_english, hypothesis_maturity: developing}
+    - {city: Cuenca, country: EC, lat: -2.9001, lon: -79.0059,
+       language: non_english, hypothesis_maturity: developing}
+    - {city: Jakarta, country: ID, lat: -6.2088, lon: 106.8456,
+       language: non_english, hypothesis_maturity: developing}
+    - {city: Surabaya, country: ID, lat: -7.2575, lon: 112.7521,
+       language: non_english, hypothesis_maturity: developing}
+    - {city: Bandung, country: ID, lat: -6.9175, lon: 107.6191,
+       language: non_english, hypothesis_maturity: developing}
+    - {city: Ho Chi Minh City, country: VN, lat: 10.8231, lon: 106.6297,
+       language: non_english, hypothesis_maturity: developing}
+    - {city: Hanoi, country: VN, lat: 21.0285, lon: 105.8542,
+       language: non_english, hypothesis_maturity: developing}
+    - {city: Da Nang, country: VN, lat: 16.0544, lon: 108.2022,
+       language: non_english, hypothesis_maturity: developing}
+
+# ---------------------------------------------------------------------------
+# Injected item set
+# Sizes are fixed by the study plan. The corrupted total equals the clean total
+# so that the false-positive rate is estimated as precisely as recall.
+# ---------------------------------------------------------------------------
+injected_set:
+  total: 1800
+  classes:
+    M1:
+      description: name belonging to another place
+      kind: semantic
+      settled_by: none
+      items: 300
+    M2:
+      description: phone country code wrong for the city
+      kind: semantic
+      settled_by: reference_lookup
+      items: 100
+    M3:
+      description: address city inconsistent with coordinates
+      kind: semantic
+      settled_by: reference_lookup
+      items: 100
+    S1:
+      description: malformed phone number
+      kind: syntactic
+      settled_by: format_rule
+      items: 100
+    S2:
+      description: malformed opening hours
+      kind: syntactic
+      settled_by: format_rule
+      items: 100
+    S3:
+      description: malformed web address
+      kind: syntactic
+      settled_by: format_rule
+      items: 100
+    S4:
+      description: out-of-range value
+      kind: syntactic
+      settled_by: format_rule
+      items: 100
+  clean_items: 900
+  construction:
+    corruption_values_drawn_per_item: true
+    exemplars_share_values_with_items: false
+
+    # Items are allocated equally across the twelve cities. A class whose count
+    # does not divide by twelve distributes its remainder to cities drawn from
+    # the configured seed, and the draw is written into the item manifest.
+    items_per_city_equal: true
+
+    # Every corrupted item is paired with a clean one drawn from the same city
+    # and the same field-presence signature, so that which fields a record
+    # carries says nothing about whether it was corrupted. Both members of a
+    # pair are drawn together from the same stratum, which makes an exact match
+    # available by construction rather than by search.
+    pairing:
+      match_on: [city, field_signature]
+      # The keys whose presence forms the signature and whose values form the
+      # item shown to a model. A corruption changes a value and never adds or
+      # removes a key, so the signature is unchanged by the corruption.
+      item_keys: [name, category, "addr:city", "addr:street", "addr:housenumber",
+                  phone, opening_hours, website]
+
+    # M1: the name of another place, drawn from the same city.
+    #
+    # The donor comes from a different primary category, which is how the error
+    # occurs in the wild. That admits one leak: a donor name carrying a
+    # category-indicative token ("Pharmacy", "Eczanesi", "Baeckerei") would be
+    # settled by a token rule rather than by place-name knowledge, and the
+    # residual class is meant to survive every rule. Such donors are excluded,
+    # and the token rule is scored against the finished set anyway so that the
+    # exclusion is reported as a measurement rather than assumed.
+    #
+    # The donor stays inside the city so that language, script and local naming
+    # convention are held constant: no corruption value restates a corpus factor.
+    m1:
+      donor_same_city: true
+      donor_same_category: false
+      donor_min_distance_m: 2000
+      donor_name_unique_in_city: true
+      donor_excludes_brand_names: true
+      donor_excludes_category_tokens: true
+      donor_min_name_chars: 6
+      # A token counts as category-indicative when it appears at least this
+      # often in the corpus and this large a share of its occurrences fall in
+      # one primary category.
+      category_token_min_count: 20
+      category_token_min_share: 0.5
+
+    # M2: the phone keeps its national number and takes another country's
+    # calling code, drawn per item from the calling codes of the world minus
+    # the city's own. The base record's phone must already parse as an
+    # international number, so that the corruption changes one component and
+    # nothing else.
+    m2:
+      require_parsable_international_phone: true
+
+    # M3: addr:city takes the name of a place in the same country at least this
+    # far away, drawn per item from the gazetteer. Same country, so that the
+    # corruption does not restate the language factor.
+    m3:
+      donor_same_country: true
+      donor_min_distance_km: 100
+
+    # S1 to S3: the malformation kind is drawn per item, and every kind breaks
+    # the value's syntax without moving it to another well-formed value.
+    s1:
+      malformations: [letters_inserted, digits_removed, separator_garbage,
+                      doubled_plus, plus_misplaced]
+    s2:
+      malformations: [unknown_day_token, hour_out_of_clock, missing_separator,
+                      unclosed_range, prose_instead_of_syntax]
+    s3:
+      malformations: [scheme_removed_and_broken, space_inserted, tld_removed,
+                      double_scheme, unbalanced_brackets]
+    # S4: a numeric tag is moved outside the range the rule publishes. The kind
+    # is drawn per item; the ranges themselves live under references so that the
+    # corruption and the rule read one table.
+    s4:
+      out_of_range_kinds: [negative, far_above_maximum, zero_where_positive]
+
+# ---------------------------------------------------------------------------
+# Residual control set
+#
+# Answers the second concern of the decision of 2026-09-11: the residual class
+# as first built is separable by its construction. A donor keeps its own record,
+# so every borrowed name is repeated in its city (a corpus-level shortcut reaches
+# a Youden's J of 0.74), and the donor filters were applied to the donor only, so
+# the clean half carries category tokens and short names the corrupted half never
+# can (a single-record shortcut reaches 0.49). This set removes both. The original
+# set is not changed and stays reported. Fixed on 2026-09-13 before any item of it
+# was built.
+# ---------------------------------------------------------------------------
+residual_control:
+  # Corrupted items; each has a clean partner, so the set holds twice this.
+  items: 300
+  # Each city's records are split once into a withheld and a visible part.
+  # Donor names come from the withheld part only; both members of every pair,
+  # and every instrument that reads the city's corpus, come from the visible part
+  # only. A donor name must also be unique across the whole city, so it appears
+  # nowhere in the visible part.
+  withheld_share: 0.5
+  seed: 42
+  # The donor filters of injected_set.construction.m1 (length, uniqueness in
+  # the visible part, no brand tag, no category token) are applied to the clean
+  # partner's own name as well, so the halves cannot differ on anything the
+  # construction selects on.
+  clean_half_filtered: true
+  # Records already spent on the original injected set are not reused, so the
+  # two sets share no record.
+  exclude_injected_set_records: true
+  # Train, development and test shares for the adaptation arms, drawn per pair
+  # so that the two members of a pair never fall in different splits.
+  splits: {train: 0.5, dev: 0.2, test: 0.3}
+  # The retrieval comparator's threshold is calibrated on these splits and its
+  # score is read on the test split, which is the split the article reads for
+  # every system. Fixed 2026-09-13 before the comparator scored any control item.
+  baseline_calibration_splits: [train, dev]
+  # The acceptance criterion, fixed before the set exists. Each shortcut reads
+  # the construction rather than the place: the single-record shortcut and the
+  # corpus shortcut of scripts/measure_item_artefacts.py, and the best single
+  # cut on the shown name's length in characters (an oracle, chosen on the
+  # scored items themselves, so an upper bound). If any reaches a higher
+  # Youden's J on the finished set, the set carries no capability claim and
+  # that is reported.
+  acceptance:
+    shortcuts: [single_record, corpus, name_length_oracle]
+    max_youdens_j: 0.10
+
+# ---------------------------------------------------------------------------
+# Open references
+#
+# Constraint C2: every reference here is redistributable, so the pipeline can be
+# deposited whole. Nothing commercial and nothing licensed "on request" enters
+# it at any point.
+#
+# The two lookups are what a practitioner would write, and they are the only
+# semantic checks in the baseline. Their coverage over the corpus is measured
+# rather than assumed, because a lookup that abstains on half the records
+# settles half the class.
+# ---------------------------------------------------------------------------
+references:
+  # Calling codes come from libphonenumber through its Python port. The
+  # metadata is part of the package, so no download and no access date.
+  calling_codes:
+    source: libphonenumber
+    package: phonenumbers
+    version: 9.0.36
+    licence: Apache-2.0
+
+  # Place names come from two independent authorities, kept separate so that
+  # each one's coverage is reported on its own and the union is reported beside
+  # them. GeoNames is the bulk source; Wikidata is independent of it and of
+  # OpenStreetMap, which answers the objection that a reference derived from the
+  # data under test cannot arbitrate it.
+  gazetteers:
+    geonames:
+      url: https://download.geonames.org/export/dump/cities500.zip
+      dataset: cities500
+      licence: CC-BY-4.0
+      # The access date is part of the source record and is written by the
+      # fetcher into data/processed/references/reference_manifest.json, because
+      # a script that rewrote this file would strip the comments that explain it.
+    wikidata:
+      url: https://query.wikidata.org/sparql
+      licence: CC0-1.0
+      # The settlement classes are listed rather than reached through the
+      # subclass closure of "human settlement". The closure is correct and
+      # unusable: it makes the query time out on the endpoint for a dense
+      # metropolitan area, and a reference that cannot be fetched for every city
+      # cannot be used for any of them.
+      settlement_classes: [Q515, Q3957, Q532, Q5084, Q486972, Q188509, Q123705]
+      # The radius the places are fetched within, which is wider than the radius
+      # the addr:city rule matches within on purpose. Fetching only as far as the
+      # rule matches would truncate the reference at the matching boundary, so a
+      # record near the edge of a city would be judged against a gazetteer that
+      # stops just beyond it. Fetching wider costs storage and settles nothing by
+      # itself: what a record is matched against is still the matching radius.
+      radius_km: 60
+      timeout_sec: 180
+      label_languages: [en, de, nl, cs, tr, es, id, fr, mul]
+      # The public endpoint throttles hard, and during a service outage it
+      # states a limit of one request per minute. One query per city at this
+      # spacing stays inside that, and each answer is cached, so a throttled run
+      # resumes where it stopped rather than repeating what it already has.
+      pause_between_queries_sec: 75
+
+  # A record's addr:city is consistent when it matches a gazetteer place within
+  # this distance of the record's coordinate. Names are compared with case,
+  # accents and punctuation folded away, and a gazetteer entry contributes its
+  # alternate names as well as its own.
+  #
+  # Where the radius comes from. It is not fitted to the corpus and was fixed
+  # before the lookup was scored. It has to clear the largest distance between a
+  # point of interest inside a city and the gazetteer point that stands for that
+  # city, which for a metropolitan area is a matter of tens of kilometres, and it
+  # has to stay under the spacing at which a neighbouring settlement would start
+  # to answer for a record that is not in it. Twenty-five kilometres sits inside
+  # that band. The cost of the choice is not asserted but measured: the lookup
+  # flags 21 of the 482 clean addr:city values it decides, and a radius too small
+  # for the corpus would show up there rather than being argued away.
+  address_city:
+    match_radius_km: 25
+    fold_accents: true
+
+  # One table, read by the S4 corruption and by the format rule alike, so that
+  # the range this study declares has a single home. Bounds are inclusive.
+  #
+  # Where the bounds come from. They are this study's own, not an external
+  # standard: OpenStreetMap documents these keys without publishing a numeric
+  # range for any of them, so no authority could be cited and none is. Each bound
+  # is set deliberately wide, at the point past which a value is not a rare
+  # building but a typing error, and every bound was fixed before the item set
+  # was built. Because the same table is read by the corruption that produces the
+  # out-of-range class, recall on that class is near one by construction and is
+  # reported as such rather than as a finding; the quantity the table can get
+  # wrong is the other one, the flag rate on clean values, and that is measured:
+  # 8 of the 203 clean records carrying a range-checkable tag are flagged. A
+  # table tightened to fit the corpus would show up as a higher figure there.
+  value_ranges:
+    capacity: [1, 10000]
+    "building:levels": [1, 200]
+    level: [-10, 200]
+    height: [0.5, 900]
+    rooms: [1, 5000]
+    beds: [1, 5000]
+    min_age: [0, 120]
+    max_age: [0, 120]
+    stars: [1, 7]
+    width: [0.1, 100]
+    seats: [1, 5000]
+
+# ---------------------------------------------------------------------------
+# Rule baseline
+#
+# The trivial answer the models have to beat. Four format rules and the two
+# reference lookups, each reporting a verdict per record and per field, and each
+# able to abstain. An abstention is not a pass: it is counted and reported,
+# because coverage is what separates a lookup that settles a class from one that
+# settles the part of it the reference happens to cover.
+# ---------------------------------------------------------------------------
+rule_baseline:
+  format_rules: [phone_syntax, opening_hours_syntax, website_syntax, value_range]
+  reference_lookups: [phone_country_code, address_city]
+  # Scored against the finished item set as a reported check, not as part of the
+  # baseline: it exists to show what the M1 donor exclusion is worth.
+  reported_checks: [category_token]
+  # The upper bound is the maximum length of an international telephone number
+  # under ITU-T Recommendation E.164, which is fifteen digits and is a published
+  # limit rather than a choice made here. The lower bound is a choice: five
+  # digits admits the shortest national and service numbers a mapper may record,
+  # and is set permissively so that the rule fails towards passing an unusual
+  # real number rather than towards flagging it. What that costs is measured
+  # rather than assumed: the rule flags 14 of the 421 clean phone values.
+  phone_syntax:
+    min_digits: 5
+    max_digits: 15
+  # The two schemes a browser resolves. A value carrying any other scheme is a
+  # link a reader cannot follow from the map, which is what the tag is for.
+  website_syntax:
+    schemes: [http, https]
+
+# ---------------------------------------------------------------------------
+# The retrieval baseline: the comparator the editor's letter of 2026-08-14
+# asked for. An unsupervised dense-retrieval matcher is what the toponym
+# matching and entity resolution literature reports as current practice, it
+# needs no training data this study does not hold, and it addresses the
+# residual class directly. It is scored as an instrument, exactly as the format
+# rule and the reference lookup above are, and it passes the same four gates.
+# ---------------------------------------------------------------------------
+retrieval_baseline:
+  # A multilingual encoder, open weights, served by the same local server that
+  # serves the pool, on the same card. Constraint C3 holds: nothing here is
+  # measured anywhere else.
+  encoder: bge-m3
+  encoder_licence: MIT
+  encoder_weights: https://huggingface.co/BAAI/bge-m3
+  # The radius the candidates are drawn from, matching the reference lookup's
+  # own radius (references.authorities.wikidata_poi.radius_km) so that the two
+  # instruments see the same neighbourhood.
+  radius_km: 10
+  similarity: cosine
+  # No threshold is configured here, on purpose: a reader who looks for one
+  # should find this instead of a silent gap. The threshold is calibrated on a
+  # split fixed by this seed, before any score exists, and reported on the
+  # rest, which is what keeps it from being chosen after the scores are seen.
+  # The oracle threshold (the best any single cut could reach on the scored
+  # data) is reported beside it as an upper bound the calibrated cut is
+  # measured against, not as a second candidate for the cut itself.
+  calibration_share: 0.2
+  seed: 42
+
+# ---------------------------------------------------------------------------
+# Retrieval-augmented arm
+#
+# Answers the third concern of the decision of 2026-09-11, which names retrieval
+# among the richer evidence settings left untested. The model is asked the
+# residual question with the same instruction, the same view and the same two
+# hand-written exemplars as prompt version 1, and one thing more after the
+# record: entries retrieved from the open authorities. That is the only change,
+# so a difference from version 1 is the retrieval's.
+#
+# The evidence comes from the open point-of-interest authorities alone (GeoNames
+# spots and areas, CC-BY 4.0; Wikidata, CC0), never from the corpus, so it carries
+# no trace of how either item set was built and a control-set donor cannot be
+# found through it. Two blocks: the entries nearest the record's position, and
+# the entries within the city disc whose names are closest to the record's
+# name by the retrieval baseline's encoder, each with its distance. Fixed on
+# 2026-09-13 before any evidence was retrieved or any answer existed.
+# ---------------------------------------------------------------------------
+retrieval_augmented:
+  prompt_version: 4
+  sources: [geonames_poi, wikidata_poi]
+  nearest:
+    radius_m: 100
+    max_entries: 5
+  similar_names:
+    radius_km: 10
+    max_entries: 3
+  encoder: bge-m3
+  # The models the arm runs on are chosen by a rule fixed here: the best and the
+  # median deployable model by Youden's J on the control set's development
+  # split under prompt version 1, among the models the replay kept. The
+  # development split is not scored for the article; the test split is.
+  model_rule: best_and_median_deployable_on_control_dev
+
+# ---------------------------------------------------------------------------
+# Few-shot arm and prompt selection
+#
+# Carried out on the author's behalf, decided 2026-09-13, and fixed here before
+# any answer of either arm existed. The few-shot exemplars are generated by
+# scripts/build_exemplars.py from an invented vocabulary: every name, street and
+# settlement is composed from fixed syllables, every coordinate lies in open
+# ocean, and each exemplar's label follows from how it was composed (a descriptive
+# noun matching the record's category, or one belonging to an unrelated category),
+# so no model judges any record. Version 3 is version 1 with these six added.
+#
+# Prompt selection asks nine versions (1 and eight instruction variants, 5 to 12,
+# each differing from version 1 in its instruction alone) on the control
+# development split, and keeps the highest Youden's J per model, ties to the
+# lowest version. The two models are the ones retrieval_augmented.model_rule chose.
+# ---------------------------------------------------------------------------
+few_shot:
+  prompt_version: 3
+  shots: 6
+  borrowed: 3
+  seed: 42
+prompt_selection:
+  versions: [1, 5, 6, 7, 8, 9, 10, 11, 12]
+  select_on: dev
+  measure: youdens_j
+  ties: lowest_version
+
+# ---------------------------------------------------------------------------
+# Low-rank adaptation arm
+#
+# Answers the third concern's request for an adapted language-model baseline.
+# One deployable model is adapted on the control set's training split and scored
+# on its test split and on the natural set, beside its own unadapted answers.
+# The base is fixed here rather than by the control scores, on 2026-09-13 before
+# any control score existed, because the training and conversion toolchain has to
+# support it: Qwen 3.5 4B, a middle rung of the one family with four sizes in the
+# pool, released under Apache-2.0 with its full-precision weights published.
+#
+# The adapter is trained on the published full-precision weights, converted to
+# the serving format and applied by the server to the same quantized base every
+# other score of that model comes from, so the base weights are the pool's own.
+# Training runs on the measurement card (constraint C3). The prompt is version 1
+# as rendered for the pool, and the target is the schema's answer alone.
+# ---------------------------------------------------------------------------
+lora:
+  base_tag: "qwen3.5:4b"
+  base_weights: https://huggingface.co/Qwen/Qwen3.5-4B
+  base_licence: Apache-2.0
+  train_split: train
+  rank: 16
+  alpha: 32
+  dropout: 0.05
+  # The language model's full-attention and feed-forward projections only.
+  # Narrowed on 2026-09-13 before any training step, from all-linear: that also
+  # adapts the vision tower, which no prompt here reaches, and the linear-attention
+  # projections, which the adapter conversion does not map. Checked on a random
+  # probe adapter: 256 tensors convert and the server applies them.
+  target_modules: '.*language_model.*\.(q_proj|k_proj|v_proj|o_proj|gate_proj|up_proj|down_proj)'
+  epochs: 3
+  learning_rate: 2.0e-4
+  batch_size: 8
+  seed: 42
+  # The adapted model as the server holds it: the pool's own quantized base with
+  # the converted adapter applied. It is not a pool member and no analysis over
+  # the pool reads it; the runner admits it under the redesign plan only.
+  served:
+    tag: "poi-audit/qwen3.5-4b-lora-m1c:latest"
+    name: "Qwen 3.5 4B adapted"
+    runs: [m1c_name_full_v1, natural_name_v1_replay_0326, natural_ext_name_v1]
+
+# ---------------------------------------------------------------------------
+# Natural residual set
+# Two strata with known inclusion probabilities; estimates are reported raw
+# within stratum and reweighted to the corpus.
+# ---------------------------------------------------------------------------
+natural_set:
+  # The draw. This number is not the number of labelled records and does not
+  # change: every inclusion probability in the record file was computed against
+  # a draw of this size, and the reweighting to the corpus reads them.
+  total: 400
+  # The labelled subset, decided 2026-08-06.
+  #
+  # Labelling stopped at the first 250 records of the fixed shuffled order,
+  # for annotator time and for no reason drawn from the labels. The order was
+  # shuffled once and fixed before any record was read, so the first 250 are a
+  # probability subsample of the draw rather than a convenience sample: the
+  # strata land at 126 and 124 against a design of 200 and 200, all twelve
+  # cities appear, and the per-city counts run from 16 to 26.
+  #
+  # The remaining 150 are deposited unlabelled, with the draw intact, so that
+  # the frame and the weights stay reconstructible and the stopping point is
+  # visible in the data rather than only in the text.
+  labelled:
+    records: 250
+    rule: first_n_of_fixed_order
+    decided_on: 2026-08-06
+    reason: annotator time
+    # Both readers cover the same 250. A record labelled by one reader only
+    # enters neither the kappa nor the decidable core, so a partial second
+    # reading would leave the gold standard undefined on part of the set.
+    both_readers_required: true
+  # The frame is every corpus record carrying a name, which is every record the
+  # residual class can be asked about.
+  #
+  # Both strata are allocated equally across the twelve cities rather than in
+  # proportion to city size. A proportional draw would give London a third of
+  # the sample and Cork a fortieth, which leaves the design cells the article
+  # argues from unmeasurable. The per-city inclusion probability is known and
+  # written into every record, so the corpus-level estimate is recovered by
+  # weighting rather than by the shape of the draw.
+  allocation: equal_per_city
+  strata:
+    A:
+      description: drawn at random from the corpus
+      records: 200
+    B:
+      description: enriched by a string and dictionary screen
+      records: 200
+  # Stratum A is drawn first, from the whole frame. Stratum B is drawn from the
+  # screen-positive records that A did not already take, so the two strata are
+  # disjoint and both inclusion probabilities stay exact.
+  strata_disjoint: true
+  screen:
+    kind: string_and_dictionary
+    models_permitted: false
+    # Three rules, any one of which makes a record screen-positive. All three
+    # read strings and dictionaries only: no model and no evaluated system takes
+    # part, because a screen run by a model would mean evaluating models on
+    # records a model selected.
+    #
+    # The screen is not the rule baseline and is not scored as one. Its only job
+    # is to raise the share of wrong names in stratum B, and how well it does
+    # that is measured by the labels rather than assumed.
+
+    # Stratum B is allocated equally across the three rules rather than in
+    # proportion to what each raises. Left in proportion, the token rule would
+    # supply over half of stratum B, and that is the one rule whose hits a token
+    # check can settle: an enriched stratum tilted toward errors the baseline
+    # can catch would bias the very comparison the natural set is drawn to make.
+    allocation: equal_per_rule
+    # A record raised by more than one rule is owned by the first rule listed
+    # here, so the per-rule cells are disjoint and each rule's yield is
+    # estimable on its own. The order runs from the most place-name-shaped rule
+    # to the least.
+    rule_priority: [gazetteer_place_name, duplicate_distant_name,
+                    category_token_contradiction]
+    rules:
+      # The same name also sits on a record far enough away to be a different
+      # establishment, under a different top-level point-of-interest key.
+      #
+      # Three restrictions keep the rule on names rather than on vocabulary. A
+      # name carried by many records in one city is a generic word or a chain
+      # ("Potraviny", "Pharmacy") and says nothing about any one record, so the
+      # rule asks for a name the city barely repeats. The match must differ in
+      # its top-level key rather than only in its value, because a cafe listed
+      # once as an ice cream shop is a tagging nuance and not a borrowed name.
+      # A record carrying a brand tag states that its name is a chain's, which
+      # is a naming convention rather than an error.
+      duplicate_distant_name:
+        min_distance_km: 2.0
+        require_different_category: true
+        require_different_category_key: true
+        max_records_sharing_name: 3
+        exclude_brand_tagged: true
+      # The name carries a category-indicative token that contradicts the
+      # record's own category in its top-level key. The token dictionary is the
+      # one derived from the corpus by the item builder and the rule is the one already
+      # written for the reported check, so the screen and the baseline read one
+      # definition. The key restriction separates a contradiction ("Pharmacy"
+      # on a bakery) from a sibling-value nuance (a guest house tagged hotel).
+      category_token_contradiction:
+        token_dictionary: data/processed/category_tokens.csv
+        require_different_category_key: true
+      # The name is a place name held by an open gazetteer, and no place of
+      # that name lies near the record. The radius is the one the address
+      # lookup matches on, so a name that would satisfy the address check is
+      # not raised here. Brand-tagged records are excluded for the same reason
+      # as in the duplicate rule.
+      #
+      # The match is not restricted to the record's own country, although a
+      # place name borrowed from thousands of kilometres away is the weaker
+      # candidate. Restricting it would leave Accra with no eligible record at
+      # all and Cork with three, so the rule would stop covering the twelve
+      # cities and the design cells with it. Instead, whether the matched place
+      # sits in the record's own country is written into every drawn record, so
+      # that the screen's precision is reported split by it rather than
+      # decided in advance.
+      gazetteer_place_name:
+        absent_within_km: 25
+        min_name_chars: 4
+        exclude_brand_tagged: true
+
+    # The screen as it was first written, before the restrictions above were
+    # added. It is kept and run because its counts are reported beside the
+    # final screen's: it raised 17.2% of the corpus, over half of that on the
+    # token rule, and stating what was tightened and by how much is the honest
+    # way to report a sampling instrument that changed. Nothing was labelled
+    # under it, so no result was read before it changed.
+    first_pass_rules:
+      duplicate_distant_name:
+        min_distance_km: 2.0
+        require_different_category: true
+        require_different_category_key: false
+        max_records_sharing_name: null
+        exclude_brand_tagged: false
+      category_token_contradiction:
+        token_dictionary: data/processed/category_tokens.csv
+        require_different_category_key: false
+      gazetteer_place_name:
+        absent_within_km: 25
+        min_name_chars: 4
+        exclude_brand_tagged: false
+  # ---------------------------------------------------------------------
+  # Authorities
+  #
+  # The sources a label may rest on under Branch 1, and the sources whose
+  # coverage over the corpus is measured and reported. Constraint C2 governs
+  # every one of them: nothing enters here that cannot be redistributed under
+  # CC-BY or CC0, whatever it would add.
+  #
+  # These are not the rule baseline's gazetteers and are not added to it. The
+  # baseline's lookups cover the corpus in full; these cover a small and biased
+  # fraction of it, which is why they can settle an individual item and cannot
+  # serve as a pipeline check. The article states that asymmetry and the
+  # coverage measured here is what backs it.
+  # ---------------------------------------------------------------------
+  authorities:
+    # A record is covered when an authority holds an entry within this distance
+    # of it. Coverage asks whether the authority holds the place at all;
+    # whether the name agrees is the verification outcome and not coverage.
+    match_radius_m: 100
+    geonames_poi:
+      url_template: https://download.geonames.org/export/dump/{country}.zip
+      licence: CC-BY-4.0
+      # The per-country dumps, unlike cities500, carry named facilities. Class
+      # S is spots, buildings and farms; class L is parks and areas. Class P is
+      # populated places and is left out: it is what the rule baseline's
+      # gazetteer already holds, and repeating it here would report the
+      # baseline's own coverage as an authority's.
+      feature_classes: [S, L]
+    wikidata_poi:
+      url: https://query.wikidata.org/sparql
+      licence: CC0-1.0
+      # The radius is the corpus disc, so that coverage is measured over the
+      # area the corpus was extracted from and not beyond it.
+      radius_km: 10
+      timeout_sec: 180
+      pause_between_queries_sec: 75
+      label_languages: [en, de, nl, cs, tr, es, id, fr, mul]
+      # Explicit classes rather than the subclass closure. The closure times
+      # out on the public endpoint for a dense metropolitan area, and a
+      # reference that cannot be fetched for every city cannot be used for any
+      # of them. Every identifier below was
+      # checked against its own Wikidata record before it was written here.
+      # The list covers the kinds of place the corpus keys admit.
+      classes: [Q33506, Q7075, Q16917, Q3914, Q3918, Q27686, Q11707, Q30022,
+                Q16970, Q32815, Q22698, Q11315, Q180846, Q13107184, Q22687,
+                Q35054, Q55488, Q928830, Q494829, Q1248784, Q24354, Q41253,
+                Q483110, Q43501, Q167346, Q1007870, Q570116, Q23413]
+      # A city whose class list answers too slowly is split and asked again,
+      # rather than dropped, so that no city is covered less than another for a
+      # reason that has nothing to do with the data.
+      split_on_timeout: true
+    # Municipal and national open registers, each written here only after its
+    # licence has been read and found to be CC-BY or CC0. A city with no such
+    # register keeps none: that a register exists for Munich and not for Accra
+    # is a finding about who can be audited this way, and inventing coverage
+    # for the cities that lack one would erase it.
+    registers: []
+  # ---------------------------------------------------------------------
+  # The verification pilot
+  #
+  # Everything in this block was written and committed before the pilot ran.
+  # The plan fixes the shape of the rule; what follows makes it exact, because
+  # a rule that says "a clear majority" decides nothing on the day.
+  # ---------------------------------------------------------------------
+  pilot:
+    records_per_stratum: 50
+    # An authority confirms a name when it holds an entry this close to the
+    # record whose name agrees. The radius is the coverage radius, so the pilot
+    # cannot resolve more than the coverage measurement says it could.
+    confirm_radius_m: 100
+    # Names are compared on folded tokens rather than as strings, because an
+    # authority writes "Cork Public Museum" where a mapper writes "Public
+    # Museum". Agreement is a Jaccard overlap at or above the threshold.
+    name_match:
+      kind: token_jaccard
+      threshold: 0.6
+    # An absent entry is never a refutation. These authorities hold 41% of the
+    # corpus between them, so a name they do not carry is a name they do not
+    # know, not a name that is wrong. Refutation therefore needs positive
+    # evidence of three kinds at once: the authority holds this location under
+    # another name, the record's name belongs to a place far from here, and no
+    # place of that name lies near the record.
+    refute:
+      requires_entry_at_location: true
+      requires_name_elsewhere_km: 25
+      requires_no_such_name_within_km: 25
+    # The plan's rule, made exact. Both conditions must hold for Branch 1.
+    decision_rule:
+      resolvable_share_at_least: 0.6
+      resolved_positives_at_least: 10
+    # Written here by hand from the pilot's reported outcome: 5 of 100 records
+    # resolvable against the authorities (0.050, 95% interval 0.022 to 0.112)
+    # against a threshold of 0.60, and 4 refutations against a threshold of 10.
+    # Both conditions failed, and stratum A resolved nothing at all.
+    decision: insufficient
+  # -----------------------------------------------------------------------
+  # Second phase
+  #
+  # Answers the first concern of the decision of 2026-09-11: 29 wrong names put
+  # the smallest recall difference an exact McNemar test can separate at
+  # p < 0.001 at 11/29 = 0.38. Fixed on 2026-09-13 before any record of it was
+  # drawn.
+  #
+  # Stratum C is drawn at random from each city's named records not already in
+  # the first draw, as stratum A was, so its inclusion probability is exact. It
+  # is allocated to the design cells by the shares below and equally across the
+  # three cities of each cell. The cells where the first 250 found wrong names
+  # are oversampled, because the enrichment screen raised the wrong share only
+  # from 0.106 in stratum A to 0.153 in stratum B, while the developing cells
+  # carry 0.19 to 0.20 wrong names per labelled record against 0.03 to 0.07 in
+  # the mature cells.
+  #
+  # The size is the smallest at which the expected wrong names across every
+  # labelled record reach the target. Expected counts use wrong names per
+  # labelled record (an undecided record counts as not wrong), per cell, as
+  # measured on the first 250 on this date and written here so the size is
+  # reproducible from the configuration alone. The realised count is reported,
+  # whichever way it falls.
+  # -----------------------------------------------------------------------
+  phase2:
+    stratum: C
+    target_wrong_all_labelled: 120
+    cell_shares:
+      "english, developing": 0.35
+      "non_english, developing": 0.35
+      "english, mature": 0.15
+      "non_english, mature": 0.15
+    wrong_per_labelled_record:
+      "english, developing": 0.2037
+      "non_english, developing": 0.1875
+      "english, mature": 0.0282
+      "non_english, mature": 0.0656
+    observed_wrong_first_250: 29
+    first_item_number: 401
+    seed: 42
+  labelling:
+    branch: 2  # 1 = verification against open authorities, 2 = second reader
+    authorities_must_be_redistributable: true
+    # The two annotators' identifiers. One of them is the author, who labelled
+    # under `reader_a`; the other is not on the research team. The non-author's
+    # labels alone are one of the three rules the natural set is read under, so
+    # that no result rests only on labels the author gave or adjudicated.
+    # Recorded 2026-09-13.
+    author_annotator: reader_a
+    non_author_annotator: reader_b
+  # The three label rules, fixed 2026-09-13 before any score was computed under
+  # the second and third: the adjudicated gold label; the decidable core, where
+  # both annotators independently gave the same definite label; the non-author
+  # annotator's own definite labels.
+  label_rules: [adjudicated, decidable_core, non_author]
+
+# ---------------------------------------------------------------------------
+# Figures
+#
+# Style and export numbers are not here: they live in the style layer, so that
+# each has one home. What lives here is what the figure measures, which is an
+# analysis choice and belongs with the other analysis parameters.
+# ---------------------------------------------------------------------------
+figures:
+  # F2, the boundary. One measure only: the rule baseline's recall on the
+  # corrupted half of each class.
+  #
+  # The class names and the mechanism that settles each are not repeated here.
+  # They live once, in injected_set.classes, and the figure reads them from
+  # there, so a class renamed in one place cannot disagree with itself in
+  # another. What this block adds is the order the bands are drawn in and the
+  # words that name them.
+  #
+  # No model is drawn beside the baseline, and the reason is a measurement
+  # rather than restraint. On the detection task no model rescues the residual
+  # class either: the best model by Youden's J reaches 0.16 recall on it, and
+  # the model reaching 0.80 flags 69% of every record it sees. Putting either
+  # one on this figure would flatter the pool or muddy it. The models are
+  # measured where the flag rate is controlled, which is the other figures.
+  f2:
+    source: data/processed/injected_set/rule_baseline.json
+    bands:
+      - settled_by: format_rule
+        label: a format rule settles it
+      - settled_by: reference_lookup
+        label: a reference lookup settles it
+      - settled_by: none
+        label: neither settles it
+
+  # F3, the fall from injected to natural records. Two positions on one axis,
+  # one line per model, because the quantity is a change and a table of two
+  # columns makes the reader compute it.
+  #
+  # Which models are picked out is a rule rather than a choice made after the
+  # scores were seen: the leaders of the injected ranking, whichever they turn
+  # out to be. The figure's claim is about what happens to the models a reader
+  # of an injected benchmark would have chosen, so the emphasis follows that
+  # ranking and not the size of the fall.
+  # F5, where the residual class actually is. The corpus was built two by two
+  # and the natural set was drawn to reweight to it; this is the panel that
+  # reads the design rather than describing it. The second panel sets the same
+  # rate against the coverage of the open authority the lookup consults, which
+  # is the mechanism the article recommends running before a model: where the
+  # class is common the authority is least likely to hold the place.
+  f5:
+    prevalence: data/processed/analysis/prevalence.csv
+    coverage: data/processed/authorities/coverage_by_city.csv
+    coverage_source: any_authority
+    agreement: data/processed/natural_set/agreement.json
+
+  # The composed pipeline. The configurations and the reader-time treatment are
+  # the analysis's, not the figure's, so the figure reads them from its output
+  # rather than restating them; what lives here is where that output is and
+  # which cost axis the frontier is drawn against.
+  f6:
+    source: data/processed/analysis/pipeline.csv
+    summary: data/processed/analysis/pipeline.json
+    cost: reader_minutes_median_per_1k
+    panels:
+    - item_set: injected
+      label: constructed records
+    - item_set: natural
+      label: real records
+  # Reader time and the breaks in it. The labelling instrument records the
+  # seconds between an item being opened and answered and cannot tell working
+  # from having stepped away, so the treatment is reported rather than applied
+  # silently. Panel (a) reads the labels, panel (b) the composed pipeline.
+  f7:
+    labels: data/processed/natural_set/labels
+    pipeline: data/processed/analysis/pipeline.csv
+    treatments:
+    - field: reader_minutes_median_per_1k
+      label: median
+    - field: reader_minutes_winsorized_per_1k
+      label: winsorized mean
+    - field: reader_minutes_untreated_per_1k
+      label: untreated mean
+    configurations:
+    - tag: C3
+      label: rule + reference + model
+    - tag: C4
+      label: rule + reference + person
+  f4:
+    source: data/processed/analysis/model_scores.csv
+    left:
+      run: m1_name_full_v1
+      scored_set: all
+      label: injected residual class
+    right:
+      run: natural_name_v1
+      scored_set: decidable_core
+      label: natural set, decidable core
+    emphasise_top_on_left: 2
+
+  # F4, two panels on the two questions section 5.2 asks.
+  #
+  # The left panel is the flag-rate gate drawn rather than asserted. On a set
+  # whose halves are equal, a model flagging at random reaches a recall equal
+  # to its flag rate, so the diagonal is chance and the vertical distance above
+  # it is the only part of a recall that was earned.
+  #
+  # The right panel is the size question, and it is also the picture behind the
+  # rule fixed on 2026-08-03 for when a frontier reference would be added. The
+  # rule is decided by the test, not by the picture; the picture is here because
+  # a reader should see the scatter the test was run on.
+  f3:
+    source: data/processed/analysis/model_scores.csv
+    run: m1_name_full_v1
+    scored_set: all
+    # How far from the diagonal still counts as flagging at random. The figure
+    # draws this band rather than only using it, because a marker sitting on a
+    # line cannot say which side of the line it is on, and the honest claim is
+    # not that these models fall exactly on chance but that they cannot be told
+    # apart from it. The same number selects which models the panel names.
+    chance_tolerance: 0.02
+    # The two references, drawn as the level they reach across the size panel
+    # rather than as points on its axis. One holds twenty-five times the
+    # parameters the axis runs to and the other publishes no count at all, so
+    # neither has a place on it, and neither entered the fit the panel's
+    # question was tested with. A level carries what the panel is for here,
+    # which is how far above the pool two much larger models get.
+    references:
+      source: data/processed/analysis/reference_scores.csv
+      measure: residual class, full view
+      # `names` is filled from the scored file, so the two are named in the
+      # figure without being named twice in the configuration.
+      label: 'the four reference models'
+
+  # F1, the corpus density map. Comparability is the whole point of the figure,
+  # so the bandwidth, the cell size and the radius are one set of numbers used
+  # by all twelve panels, and the density scale is shared.
+  f1:
+    # A kernel bandwidth in metres rather than in data units, so that a panel at
+    # 53 degrees north and one at 7 degrees south are smoothed by the same
+    # distance on the ground.
+    bandwidth_m: 500
+    cell_size_m: 250
+    # The colour scale is cut at this percentile of the pooled density of every
+    # panel rather than at the maximum, which one city's centre would otherwise
+    # set for all twelve. The caption states the cut and that values above it
+    # are drawn at the darkest tone.
+    scale_percentile: 99.5
+    scale_bar_km: 5
+
+# ---------------------------------------------------------------------------
+# Model pool
+# Eligibility is decided by measured memory footprint, not by parameter count.
+# The pool is written here when it is agreed; a model is never added to a run
+# without that approval.
+# ---------------------------------------------------------------------------
+models:
+  # The twelve, approved 2026-08-03 from the proposal in
+  # the pool's own selection record. Four families carry a ladder of two or
+  # more sizes so that scaling is readable within a family; MiniCPM 5 anchors
+  # the bottom of the range and Llama 3.1 enters as the most widely deployed
+  # model at its size.
+  #
+  # `parameters_b` is read from each model's own metadata rather than from its
+  # name, because the two do not agree: Gemma 4's e2b and e4b report 5.1B and
+  # 8.0B. `weights_gb` is the published artifact's size and is recorded here as
+  # provenance only. **Eligibility is decided by the measured footprint on the
+  # 16 GB card and by nothing in this file.** A model measuring at or under the
+  # deployment threshold is deployable; one above it is a reference and is named
+  # as such wherever its score appears.
+  #
+  # `expected_class` is written before the measurement so that a departure from
+  # it is visible rather than absorbed.
+  # `name` is what the article prints. The tag is the registry's word and stays
+  # in the data, the run names and the deposit, on the same rule the error
+  # classes follow: a reader of the argument meets a model by a name they could
+  # say out loud, and a reader of the data finds the tag beside every answer.
+  pool:
+    - {tag: "openbmb/minicpm5:q4_K_M", name: "MiniCPM 5 1B", family: minicpm5, parameters_b: 1.1,
+       weights_gb: 0.69, expected_class: deployable}
+    - {tag: "qwen3.5:2b-q4_K_M", name: "Qwen 3.5 2B", family: qwen35, parameters_b: 2.3,
+       weights_gb: 1.95, expected_class: deployable}
+    - {tag: "qwen3.5:4b", name: "Qwen 3.5 4B", family: qwen35, parameters_b: 4.7,
+       weights_gb: 3.4, expected_class: deployable}
+    - {tag: "qwen3.5:9b", name: "Qwen 3.5 9B", family: qwen35, parameters_b: 9.7,
+       weights_gb: 6.6, expected_class: deployable}
+    - {tag: "granite4.1:3b", name: "Granite 4.1 3B", family: granite41, parameters_b: 3.4,
+       weights_gb: 2.1, expected_class: deployable}
+    - {tag: "granite4.1:8b", name: "Granite 4.1 8B", family: granite41, parameters_b: 8.8,
+       weights_gb: 5.3, expected_class: deployable}
+    - {tag: "phi4-mini:latest", name: "Phi-4 mini", family: phi4, parameters_b: 3.8,
+       weights_gb: 2.5, expected_class: deployable}
+    - {tag: "phi4:latest", name: "Phi-4", family: phi4, parameters_b: 14.7,
+       weights_gb: 9.1, expected_class: reference}
+    - {tag: "gemma4:e2b", name: "Gemma 4 e2b", family: gemma4, parameters_b: 5.1,
+       weights_gb: 7.2, expected_class: deployable}
+    - {tag: "gemma4:e4b", name: "Gemma 4 e4b", family: gemma4, parameters_b: 8.0,
+       weights_gb: 9.6, expected_class: reference}
+    - {tag: "gemma4:12b", name: "Gemma 4 12B", family: gemma4, parameters_b: 11.9,
+       weights_gb: 7.6, expected_class: deployable}
+    - {tag: "llama3.1:8b", name: "Llama 3.1 8B", family: llama31, parameters_b: 8.0,
+       weights_gb: 4.9, expected_class: deployable}
+
+  # Qwen 3.5 at 0.8B is not in the pool, and the reason is quantization rather
+  # than size: the registry publishes no Q4_K_M build of it. Including it at
+  # Q8_0 would put one rung of the Qwen ladder at a different quantization from
+  # the other three, and a difference between the smallest and the largest could
+  # then be a difference of quantization rather than of size. A comparison
+  # changes only the component under test, so the ladder starts at 2.3B.
+  excluded:
+    - {tag: "qwen3.5:0.8b", reason: "no Q4_K_M build published; Q8_0 only"}
+
+  # Two properties recorded here so that neither is met mid-run: one model
+  # carries a vision tower it does not need, and one has a context window an
+  # order of magnitude shorter than the rest.
+  notes:
+    "gemma4:12b": "carries a 52M parameter vision tower"
+    "phi4:latest": "16k context, against 131k or more elsewhere in the pool"
+
+  serving:
+    quantization: Q4_K_M
+    temperature: 0.0
+    seed: 42
+    json_schema_constrained: true
+    max_retries: 3
+    timeout_sec: 300
+    base_url_env: OLLAMA_BASE_URL
+  # No frontier reference is run. The plan admits one conditionally ("where a
+  # frontier model appears at all"), and the two references it names are the two
+  # largest models of this pool rather than an external model. The pool already
+  # spans a factor of thirteen in parameters, which is what a frontier model
+  # would be asked about.
+  #
+  # The rule for revisiting that, fixed before the scores existed: if the
+  # analysis finds a significant positive trend of balanced accuracy with model
+  # size on the residual class (p < 0.001), the possibility that the class
+  # yields to capacity stays open and a frontier reference is added at revision
+  # and reported as such. If the trend is flat or inconclusive, none is added.
+  #
+  # 2026-08-07: the trend was measured and it fired (analysis.size_trend). A
+  # reference is therefore added and this block enables it.
+  reference_api:
+    enabled: true
+    base_url: https://openrouter.ai/api/v1
+    api_key_env: OPENROUTER_API_KEY
+    # The ceiling is a hard stop the runner enforces against the cost the
+    # providers themselves report, not an estimate checked afterwards. It
+    # covers every reference together, so adding one cannot quietly raise what
+    # the pass may spend.
+    #
+    # 2026-08-14: the editor returned the manuscript before review, asking for a
+    # state-of-the-art comparison the manuscript lacked and for the use of large
+    # language models to be addressed, and invited a revision. Two commercial
+    # frontier models are added below to answer both points at once, and the
+    # ceiling rises from 1.50 to 12.00 to hold them. The volume is known because
+    # the two open-weights references already ran it: 1,450 calls each over three
+    # runs, about 539,000 input and 11,800 output tokens, which comes to roughly
+    # 3 dollars a model at the prices recorded on each entry below. Four models
+    # near 3 dollars each stay inside 12.00 with room for a pilot and a retry,
+    # not inside something larger chosen without that arithmetic.
+    spend_ceiling_usd: 12.00
+    # The runs each reference answers, in the order it answers them. The
+    # residual class comes first because it is the run the size rule turns on;
+    # the reduced view comes second because the input-dependence gate is
+    # applied before any capability claim, and a score without it is not
+    # readable as a capability; the natural set comes last because it extends
+    # the finding rather than establishing it. A pass stopped for cost has
+    # therefore completed the runs that decide something.
+    #
+    # The detection runs are deliberately absent. The rule that admitted a
+    # reference asks about the residual class, and a reference is reported
+    # against that class rather than against every task the pool answered.
+    runs: [m1_name_full_v1, m1_name_neither_v1, natural_name_v1]
+    # The pilot is a real run under the real settings, written to the same
+    # files and kept: it measures what an item costs and whether the reasoning
+    # setting and the schema hold, and it decides whether the rest proceeds.
+    pilot_items: 20
+    # -----------------------------------------------------------------------
+    # Conditions, held identical to the pool's and to each other. A reference
+    # asked a differently decoded question would not be comparable with the
+    # models it is reported beside.
+    # -----------------------------------------------------------------------
+    options:
+      temperature: 0.0
+      seed: 42
+      max_tokens: 256
+      reasoning_enabled: false
+    # -----------------------------------------------------------------------
+    # Four references now, in two pairs.
+    #
+    # The first pair is open weights in both cases, which is what answers the
+    # objection this study raised to a frontier reference: a hosted model's
+    # version moves under its name, while a published checkpoint can be pulled
+    # and re-run.
+    #
+    # The first extends a ladder the pool already carries: same family, same
+    # generation, four sizes from 2.3B to 397B. That is what separates a rise
+    # with capacity from a rise with training recipe, which nothing in the
+    # twelve can separate, since no two of them share a recipe across a wide
+    # size range. Its parameters are reported both ways, because a mixture of
+    # experts activates a fraction of what it holds and the two numbers answer
+    # different questions.
+    #
+    # The second is from another family, so that a ceiling found here is a
+    # property of the task rather than of one lineage.
+    #
+    # Neither enters the pre-registered size-trend fit. That test was defined
+    # on the twelve before the scores existed, and adding points after reading
+    # its outcome would make it a different test. The references are reported
+    # as points beside the pool.
+    #
+    # The second pair answers the editor's letter of 2026-08-14 directly: the
+    # manuscript was returned before review, with a state-of-the-art comparison
+    # and the use of large language models named as required changes and a
+    # revision invited. Two commercial frontier models are added as evaluated
+    # references: their weights are not published and neither runs on this
+    # study's own card, so each is reported the way the two open-weights
+    # references above already are, a score beside the pool rather than a member
+    # of it.
+    #
+    # What this block used to say about the Claude and OpenAI endpoints, that
+    # they reject `temperature` and `seed` outright, held for the endpoints
+    # read when it was written and does not hold for the two named below: the
+    # catalogue read on 2026-08-14 shows each accepts one of the pair and
+    # refuses the other, not both. The `accepts` list on each entry records
+    # which, so the runner asks a reference only the parameters the catalogue
+    # says it takes rather than a fixed pair assumed to work everywhere. Two
+    # vendors rather than one, so that a refusal or a ceiling found here
+    # belongs to the task and not to a single company's API.
+    #
+    # Every provider is pinned, and the reason is the one that kept a Qwen rung
+    # out of the pool: these models are served at fp8, at fp4 and at a
+    # quantization no provider states, so a freely routed run would be answered
+    # at several and the score would be a property of the routing. Each pin is
+    # the cheapest fp8 endpoint accepting both conditions the pool was measured
+    # under, the schema constraint and a fixed seed; `require_parameters` makes
+    # a refused setting an error rather than a silently dropped one, and the
+    # provider that actually answered is written beside every answer.
+    # -----------------------------------------------------------------------
+    models:
+      - model: qwen/qwen3.5-397b-a17b
+        name: Qwen 3.5 397B
+        family: qwen35
+        # Both figures are the model card's own words, "397B in total and 17B
+        # activated", rather than a count taken off the checkpoint.
+        parameters_b: 397.0
+        active_parameters_b: 17.0
+        weights: https://huggingface.co/Qwen/Qwen3.5-397B-A17B
+        weights_licence: Apache-2.0
+        weights_checked: 2026-08-07
+        role: family ladder extension
+        # Both open-weights references are asked the pool's full options
+        # block, unlike the two commercial entries below, and this endpoint
+        # is pinned in part because it honours all four; `require_parameters`
+        # turns any of them being silently dropped into an error instead.
+        accepts: [temperature, seed, max_tokens, reasoning]
+        provider:
+          only: [deepinfra]
+          allow_fallbacks: false
+          quantizations: [fp8]
+          require_parameters: true
+      - model: z-ai/glm-5.2
+        name: GLM 5.2
+        family: glm5
+        # The model card publishes no figure, so this is read from the tensor
+        # index of the published checkpoint on 2026-08-07: 753,329,940,480
+        # parameters in bfloat16. A count that leaves out the prediction head
+        # and the indexer gives about 744B, which is the figure that circulates;
+        # the one recorded here is the whole of what the checkpoint holds, and
+        # the article says which it is.
+        parameters_b: 753.3
+        # Not published, and not derived here. The architecture activates eight
+        # routed experts of 256 and one shared, but turning that into a count
+        # means adding up parts of a file rather than reading a number its
+        # authors stand behind.
+        active_parameters_b: null
+        weights: https://huggingface.co/zai-org/GLM-5.2
+        weights_licence: MIT
+        weights_checked: 2026-08-07
+        checkpoint: z-ai/glm-5.2-20260616
+        role: second family
+        # The pin moved here on 2026-08-07, and the reason is throughput rather
+        # than price. The first endpoint answered a sustained run of rate
+        # limits part way through the second run, and the resumed pass advanced
+        # ten items in seven minutes. Three endpoints of the same quantization
+        # were then measured under this study's own request shape, twelve
+        # sequential items each: this one refused none of them, was the
+        # cheapest an item actually cost, and carries the highest uptime of the
+        # three. Its answers to the earlier pin are kept in the interim
+        # directory and are not scored, because a run whose items come from two
+        # providers is what the pin exists to prevent.
+        accepts: [temperature, seed, max_tokens, reasoning]
+        provider:
+          only: [alibaba]
+          allow_fallbacks: false
+          quantizations: [fp8]
+          require_parameters: true
+      - model: anthropic/claude-opus-5
+        name: Claude Opus 5
+        family: claude5
+        # Neither vendor states a parameter count for a commercial endpoint, so
+        # this stays null rather than a figure someone else estimated.
+        parameters_b: null
+        role: editor-requested frontier comparison
+        # Read from the OpenRouter catalogue's own model endpoint on 2026-08-14,
+        # not from memory: 5.00 dollars per million input tokens and 25.00 per
+        # million output. At the volume the two open-weights references above
+        # actually consumed, about 3 dollars.
+        #
+        # 2026-08-15: the pilot dry run refused every call with "No endpoints
+        # found that can handle the requested parameters" (404). The per-model
+        # endpoint catalogue (GET /models/anthropic/claude-opus-5/endpoints),
+        # queried the same day, shows the pinned provider tag "anthropic" does
+        # not list temperature among its supported_parameters; only two Azure
+        # endpoints do, and this block does not pin Azure. What the accepts
+        # list recorded on 2026-08-14 held for the endpoint that was read then;
+        # it does not hold for the endpoint this pin actually reaches now. The
+        # entry is corrected to what the pinned endpoint accepts today, checked
+        # against a live call with each parameter removed in turn rather than
+        # against the catalogue's description alone.
+        accepts: [max_tokens, reasoning]
+        provider:
+          only: [anthropic]
+          allow_fallbacks: false
+          require_parameters: true
+      - model: openai/gpt-5.6-sol
+        name: GPT-5.6 Sol
+        family: gpt56
+        parameters_b: null
+        role: editor-requested frontier comparison
+        # The same catalogue endpoint quotes 5.00 and 30.00 on the same date.
+        # This model takes a seed and no temperature; the entry above takes
+        # neither, since its pinned endpoint's supported_parameters carries no
+        # decoding-randomness knob at all (checked 2026-08-15). Sending a
+        # parameter a pinned endpoint refuses would, under the provider
+        # pinning this block uses, either error or be silently routed
+        # elsewhere, so the entries are not interchangeable at the runner.
+        accepts: [seed, max_tokens, reasoning]
+        provider:
+          only: [openai]
+          allow_fallbacks: false
+          require_parameters: true
+
+# ---------------------------------------------------------------------------
+# Measurement device (constraint C3)
+# ---------------------------------------------------------------------------
+device:
+  vram_gb: 16
+  deployment_threshold_gb: 8
+  offload_permitted: false
+  # The measuring instrument, recorded because constraint C3 makes every rate
+  # and every footprint a property of this card and of no other. Installed
+  # 2026-08-06, together with the host processor named below.
+  #
+  # Nothing scored has run on any other device. The probes and passes made
+  # before this date ran on a 6 GB card, which refused most of the pool for
+  # offload exactly as C3 requires; they are marked as rehearsals in their own
+  # logs, their answers were written under the interim rehearsal path, and no
+  # number from them enters the study. Every footprint measurement and the
+  # deployable-or-reference split are therefore made for the first time on this
+  # card, and the preflight is re-run before any scored run.
+  gpu: NVIDIA GeForce RTX 5060 Ti
+  gpu_memory_mib: 16311
+  driver_version: "595.84"
+  cpu: AMD Ryzen 7 5700X
+  installed_on: 2026-08-06
+  # The serving stack is part of the instrument, not a detail of the host. The
+  # first scored pass stopped because Ollama 0.30.6 dropped JSON schema
+  # enforcement for the Qwen 3.5 family whenever a request carried think:false,
+  # which every call in this study carries. Under 0.32.6 all twelve models
+  # honour the schema on the same request, checked model by model and again on
+  # the items the stopped pass could not parse. Every answer this study reports
+  # is produced under the version named here.
+  ollama_version: "0.32.6"
+  ollama_upgraded_on: 2026-08-06
+
+# ---------------------------------------------------------------------------
+# Run rules and the planned runs
+# ---------------------------------------------------------------------------
+run:
+  invalid_response_rate_stop: 0.15
+  # The rate is not read before this many answers exist. A rule that could stop
+  # a run on the third item would stop it on noise, and the parser may not be
+  # changed to get past it.
+  invalid_response_min_items: 40
+  responses_written_immediately: true
+
+  # Decoding conditions held identical across the pool, so that a difference
+  # between two models is a difference of model. They are conditions on every
+  # score and the article states them once.
+  #
+  # The context window is fixed rather than left to each server default: it is
+  # an order of magnitude larger than the longest prompt this study sends, and
+  # leaving it to the default would let one model's footprint and one model's
+  # truncation behaviour differ from another's for a reason that has nothing to
+  # do with the model.
+  #
+  # Reasoning traces are disabled for the same reason. A model allowed an
+  # unbounded thinking budget is not being compared with one that answers
+  # directly, and the deployment question this study asks is what a practitioner
+  # gets from a single constrained call.
+  options:
+    num_ctx: 4096
+    num_predict: 256
+    think: false
+    # Seconds a model stays resident after answering. It has to outlast the gap
+    # between two items, or the server reloads the model for every one of them
+    # and the run measures loading rather than inference. One model is resident
+    # at a time all the same: the runner unloads it explicitly when its runs
+    # finish, so the footprint measured for the next one is that model's own.
+    keep_alive: 600
+
+  # One model is resident at a time and the pool is walked from the smallest
+  # weights upward, so that a run that has to be stopped has already produced
+  # the cheap end of the range.
+  order_models_by: weights_gb
+
+  # The planned runs. Every model answers every one of them, and each is written
+  # to its own response file so that an interrupted run resumes by item.
+  #
+  # `items` names the set: the whole injected set, its residual class alone
+  # (both members of every M1 pair), or the natural set.
+  #
+  # The prompt is varied across the whole pool, as the plan requires, on the
+  # full view of each set. The four views of the ablation run under version 1
+  # alone: the ablation asks what happens when input is removed, and a second
+  # wording of the same question is not what it measures.
+  #
+  # `constrained` false is the decoding-constraint check. The stop rule is
+  # suspended for those runs and only for those: the share of unparseable
+  # answers is what that arm measures, so stopping on it would discard the
+  # measurement. Every other run stops at the configured rate.
+  planned:
+    - {name: injected_detect_v1, task: detect, items: injected,
+       prompt_version: 1, view: full, constrained: true, stop_on_invalid: true}
+    - {name: injected_detect_v2, task: detect, items: injected,
+       prompt_version: 2, view: full, constrained: true, stop_on_invalid: true}
+    - {name: m1_name_full_v1, task: name, items: injected_m1,
+       prompt_version: 1, view: full, constrained: true, stop_on_invalid: true}
+    - {name: m1_name_name_only_v1, task: name, items: injected_m1,
+       prompt_version: 1, view: name_only, constrained: true,
+       stop_on_invalid: true}
+    - {name: m1_name_tags_only_v1, task: name, items: injected_m1,
+       prompt_version: 1, view: tags_only, constrained: true,
+       stop_on_invalid: true}
+    - {name: m1_name_neither_v1, task: name, items: injected_m1,
+       prompt_version: 1, view: neither, constrained: true,
+       stop_on_invalid: true}
+    # The two reduced views asked again with the worked examples held at the
+    # full record. The gate asks whether a score moves with the input, and the
+    # runs above reduce the example beside the item, so a score that falls may
+    # have fallen because the demonstration stopped demonstrating anything.
+    # Held examples leave the item as the only thing the ablation changes, and
+    # the difference between the two readings is the measurement.
+    - {name: m1_name_name_only_held_v1, task: name, items: injected_m1,
+       prompt_version: 1, view: name_only, exemplar_view: full,
+       constrained: true, stop_on_invalid: true}
+    - {name: m1_name_tags_only_held_v1, task: name, items: injected_m1,
+       prompt_version: 1, view: tags_only, exemplar_view: full,
+       constrained: true, stop_on_invalid: true}
+    - {name: m1_name_full_v2, task: name, items: injected_m1,
+       prompt_version: 2, view: full, constrained: true, stop_on_invalid: true}
+    - {name: natural_name_v1, task: name, items: natural,
+       prompt_version: 1, view: full, constrained: true, stop_on_invalid: true}
+    - {name: natural_name_v2, task: name, items: natural,
+       prompt_version: 2, view: full, constrained: true, stop_on_invalid: true}
+    - {name: m1_name_full_v1_unconstrained, task: name, items: injected_m1,
+       prompt_version: 1, view: full, constrained: false,
+       stop_on_invalid: false}
+    - {name: natural_name_v1_unconstrained, task: name, items: natural,
+       prompt_version: 1, view: full, constrained: false,
+       stop_on_invalid: false}
+
+  # The runs added for the third venue, kept apart from the planned runs above so
+  # that every analysis reading those stays exactly as it was. The runner reads
+  # this list under `--plan redesign`.
+  #
+  # The replays repeat natural_name_v1 on the same 250 records. Four models were
+  # removed from the server and pulled again, and the old weights' digests do
+  # not survive, so identity is shown by behaviour: at temperature zero the
+  # replay is compared answer by answer with the stored run, and a model whose
+  # verdicts move is kept out of every new run. The host's server had also been
+  # upgraded after the reported runs, so the identity replay and every new run
+  # are asked under the configured release, served beside the host's own.
+  # Fixed on 2026-09-13 before any replay answer was compared. A model enters
+  # the redesign's runs when its replayed verdicts match the stored ones on at
+  # least this share of the 250 records; below it, the weights or the stack
+  # answer differently and its old and new scores are not one model's.
+  replay_min_verdict_agreement: 0.95
+  # The models the replay rule kept out of the new runs are asked them anyway and
+  # reported apart, as excluded by the rule and shown so that the reader can see
+  # the exclusion does not carry a result. They enter no pooled figure, no model
+  # rule and no comparison in the text. Fixed on 2026-09-13 before either model
+  # answered a control or extension item.
+  replay_excluded_shown: ["granite4.1:3b", "granite4.1:8b"]
+  redesign:
+    # Asked on 2026-09-13 under Ollama 0.32.14, the release the host had been
+    # upgraded to on 2026-08-16. Kept as the measurement of what a change of
+    # serving release alone does to the answers, and exempt from the stack check
+    # for that reason only.
+    - {name: natural_name_v1_replay, task: name, items: natural,
+       prompt_version: 1, view: full, constrained: true, stop_on_invalid: true,
+       stack_check: false}
+    # The same replay under the configured release, which is the identity test
+    # for every model before it enters a new run.
+    - {name: natural_name_v1_replay_0326, task: name, items: natural,
+       prompt_version: 1, view: full, constrained: true, stop_on_invalid: true}
+    - {name: m1c_name_full_v1, task: name, items: residual_control,
+       prompt_version: 1, view: full, constrained: true, stop_on_invalid: true}
+    - {name: natural_ext_name_v1, task: name, items: natural_extension,
+       prompt_version: 1, view: full, constrained: true, stop_on_invalid: true}
+    # The input-dependence gate on the control set, fixed 2026-09-13 before either
+    # run: the record reduced to its position, and to its name. A model whose
+    # control score survives the position-only view was not reading the record.
+    - {name: m1c_name_neither_v1, task: name, items: residual_control,
+       prompt_version: 1, view: neither, constrained: true, stop_on_invalid: true}
+    - {name: m1c_name_name_only_v1, task: name, items: residual_control,
+       prompt_version: 1, view: name_only, constrained: true, stop_on_invalid: true}
+    # Prompt selection on the development split (prompt_selection). Version 1's
+    # development answers are read from m1c_name_full_v1, so it is not asked again.
+    - {name: m1c_name_select_v5, task: name, items: residual_control_dev,
+       prompt_version: 5, view: full, constrained: true, stop_on_invalid: true}
+    - {name: m1c_name_select_v6, task: name, items: residual_control_dev,
+       prompt_version: 6, view: full, constrained: true, stop_on_invalid: true}
+    - {name: m1c_name_select_v7, task: name, items: residual_control_dev,
+       prompt_version: 7, view: full, constrained: true, stop_on_invalid: true}
+    - {name: m1c_name_select_v8, task: name, items: residual_control_dev,
+       prompt_version: 8, view: full, constrained: true, stop_on_invalid: true}
+    - {name: m1c_name_select_v9, task: name, items: residual_control_dev,
+       prompt_version: 9, view: full, constrained: true, stop_on_invalid: true}
+    - {name: m1c_name_select_v10, task: name, items: residual_control_dev,
+       prompt_version: 10, view: full, constrained: true, stop_on_invalid: true}
+    - {name: m1c_name_select_v11, task: name, items: residual_control_dev,
+       prompt_version: 11, view: full, constrained: true, stop_on_invalid: true}
+    - {name: m1c_name_select_v12, task: name, items: residual_control_dev,
+       prompt_version: 12, view: full, constrained: true, stop_on_invalid: true}
+    # The few-shot arm (few_shot), on the control set and the natural set.
+    - {name: m1c_name_fewshot_v3, task: name, items: residual_control,
+       prompt_version: 3, view: full, constrained: true, stop_on_invalid: true}
+    - {name: natural_name_fewshot_v3, task: name, items: natural,
+       prompt_version: 3, view: full, constrained: true, stop_on_invalid: true}
+    # The versions prompt selection kept (prompt_selection.json, committed before
+    # these runs existed), each asked of its own model only.
+    - {name: m1c_name_selected_v6, task: name, items: residual_control,
+       prompt_version: 6, view: full, constrained: true, stop_on_invalid: true}
+    - {name: natural_name_selected_v6, task: name, items: natural,
+       prompt_version: 6, view: full, constrained: true, stop_on_invalid: true}
+    - {name: m1c_name_selected_v10, task: name, items: residual_control,
+       prompt_version: 10, view: full, constrained: true, stop_on_invalid: true}
+    - {name: natural_name_selected_v10, task: name, items: natural,
+       prompt_version: 10, view: full, constrained: true, stop_on_invalid: true}
+    # The retrieval-augmented arm (retrieval_augmented), on the models its rule
+    # selects, over the control set and both parts of the natural set.
+    - {name: m1c_name_rag_v4, task: name, items: residual_control_rag,
+       prompt_version: 4, view: full, constrained: true, stop_on_invalid: true}
+    - {name: natural_name_rag_v4, task: name, items: natural_rag,
+       prompt_version: 4, view: full, constrained: true, stop_on_invalid: true}
+    - {name: natural_ext_name_rag_v4, task: name, items: natural_extension_rag,
+       prompt_version: 4, view: full, constrained: true, stop_on_invalid: true}
+
+# ---------------------------------------------------------------------------
+# Analysis
+# ---------------------------------------------------------------------------
+analysis:
+  interval: wilson
+  confidence: 0.95
+  detection_summary: youdens_j
+  paired_test: exact_mcnemar
+  significance_threshold: 0.001
+  cluster_unit: city
+  # Paired comparisons are tested on the discordant records and their size is
+  # read with the city resampled, because a record is not an independent draw:
+  # the corpus is stratified by city and difficulty travels with the city.
+  cluster_bootstrap_draws: 10000
+  # A percentile bootstrap needs enough clusters for its tails to mean
+  # anything. With three cities to a design cell the 2.5th and 97.5th
+  # percentiles are the smallest and largest city rate and nothing else, so a
+  # group under this many clusters reports the range of its cities instead of
+  # an interval, named as a range.
+  min_clusters_for_interval: 6
+  # How stable the ordering of systems on the natural set is, answering the
+  # first concern of the decision of 2026-09-11. Cities are resampled with
+  # replacement and every system is rescored on the same resample.
+  # What the 623 unlabelled natural-set records can show without a label.
+  # Fixed 2026-09-13 before any bound was computed. The most wrong names those
+  # records can hold is taken cell by cell from the upper Wilson bound of the
+  # wrong-name rate among the first 250's decided records, times the records of
+  # that cell; a model flagging more records than that cannot have precision above
+  # the ratio. Agreement among the kept models is Fleiss' kappa on their verdicts,
+  # on these records and on the control test split, where the truth is known to
+  # carry a signal the models share.
+  label_free:
+    run: natural_ext_name_v1
+    control_run: m1c_name_full_v1
+    control_split: test
+    rate_bound: wilson_upper_decided_first_250_by_cell
+  rank_stability:
+    replicates: 2000
+    seed: 42
+    runs: [natural_name_v1, natural_name_v1_replay_0326]
+
+  # -------------------------------------------------------------------------
+  # The size trend on the residual class. The rule it feeds was fixed on
+  # 2026-08-03, before any score existed: a significant positive trend of
+  # balanced accuracy with model size (p < 0.001) leaves open the possibility
+  # that the class yields to capacity, and a frontier reference is then added
+  # at revision; a flat or inconclusive trend adds none. This block fixes how
+  # the trend is read, so that no reading of it is chosen after the numbers.
+  # -------------------------------------------------------------------------
+  size_trend:
+    run: m1_name_full_v1
+    outcome: balanced_accuracy
+    # Size enters as a doubling rather than as a count of parameters. The pool
+    # spans a factor of thirteen, so a slope per billion parameters would be
+    # read off the largest models alone.
+    predictor: log2_parameters_b
+    # The pooled comparison the rule names: one row per answered item, weighted
+    # so that each model's weighted mean is its balanced accuracy, fitted by
+    # least squares with a variance clustered on the study's clustering unit
+    # and read on a t distribution with one degree of freedom per cluster less
+    # one.
+    estimator: weighted_least_squares
+    variance: cluster_robust
+    # Read beside the pooled fit rather than in place of it. The pooled fit
+    # treats the city as the independent unit, while size varies between
+    # models and not within a city, so the model-level fit is the conservative
+    # reading of the same trend and the rank correlation is the reading that
+    # assumes no functional form at all. The third asks whether the trend
+    # survives dropping the models the flag-rate and input-dependence gates
+    # refused, whose scores are the majority-class rate rather than a measured
+    # capability.
+    sensitivity:
+      - model_level_least_squares
+      - spearman_rank
+      - exclude_gate_failures
+
+  # -------------------------------------------------------------------------
+  # Scoring the natural set, fixed 2026-08-06, before any scored inference has
+  # run and therefore before any score this choice could be tuned against.
+  #
+  # A score on the natural set alone cannot separate two different findings: a
+  # model that cannot answer the residual question, and a question that the
+  # record does not answer. The natural set is therefore scored twice, and the
+  # difference between the two is the quantity that separates them.
+  #
+  # The third leg of the comparison already exists in the run plan. The
+  # injected M1 set carries the same question with a determinable answer, since
+  # the name shown belongs to a different place by construction. Read across
+  # the three, a model that fails on all of them fails for want of capacity,
+  # while a model that scores on the injected set and on the decidable core but
+  # falls on the full natural set is meeting a question real records do not
+  # settle. Both readings are reportable and neither is assumed here.
+  # -------------------------------------------------------------------------
+  natural_scoring:
+    sets:
+      # Every item carrying a definite adjudicated label. Items the two readers
+      # leave at cannot_say after adjudication have no ground truth and enter
+      # no scored comparison; their count and share are reported instead, since
+      # how much of the class no evidence settles is a finding about the class.
+      - name: adjudicated
+        labels_from: adjudicated
+        include_labels: [belongs, wrong]
+        description: >-
+          every natural-set item whose adjudicated label is definite; the
+          headline natural-set score
+      # The stricter subset: both readers reached the same definite label
+      # independently, before they met to adjudicate. Independent agreement is
+      # the evidence that the item is decidable at all, and it is taken from
+      # the readers' own files rather than from the adjudicated ones, so that
+      # no item enters the core because a conversation resolved it. A model is
+      # given neither the conversation nor the second reader.
+      - name: decidable_core
+        labels_from: independent
+        require_both_readers_agree: true
+        exclude_labels: [cannot_say]
+        description: >-
+          items both readers labelled the same way independently, with neither
+          reading cannot_say; the subset the task demonstrably admits an answer
+          to
+    # Reported for each set: the same measures the injected set carries, so
+    # that the three legs are read on one scale.
+    measures: [balanced_accuracy, youdens_j, flag_rate]
+    # Prevalence is a property of the corpus rather than of the draw, so it is
+    # reported raw within stratum and reweighted by the known inclusion
+    # probabilities. Scores are reported the same way.
+    reweight_to_corpus: true
+    # The comparison between the two sets is paired on the items they share,
+    # which is every item of the core, and is tested the same way as any other
+    # paired comparison in this study.
+    between_sets_test: exact_mcnemar
+    # Stated in the article rather than repaired, because it cannot be
+    # repaired: the readers judge whether a name belongs with evidence the
+    # model never sees, and the model is asked whether the name plausibly
+    # belongs. A name that is plausible and still wrong is scored against the
+    # model. That is the correct asymmetry for a validator that flags records
+    # for a human, which is why detection is summarized by Youden's J rather
+    # than by agreement with the adjudicated label.
+    state_question_asymmetry: true
+    # The adjudication meeting recorded a reason against each decision from a
+    # fixed list. The list was written badly: one of its four entries reads
+    # "one reader consulted no source", it was chosen on 19 of the 41 items,
+    # and no reading of those items records a reader who consulted nothing. The
+    # readers evidently meant that one reader consulted fewer sources, which the
+    # option does not say. The decisions themselves are unaffected, since the
+    # label and the reason are separate fields and every label was taken from
+    # the set the rule allows, which the instrument enforced. The field is
+    # deposited as recorded and no claim rests on it.
+    report_adjudication_reason: false
+
+# ---------------------------------------------------------------------------
+# The audit gates
+# The four gates have one home here: the article's table, the scoring script and
+# the deposit all read their names and their descriptions from this block rather
+# than restating them. The tag is the data's vocabulary and appears in
+# analysis/gates.csv; the name and the two descriptions are the reader's.
+# Two of the four are properties of the residual question and decide which model
+# may stand at the pipeline's model stage; the other two are properties of the
+# detection task and of the label set.
+# ---------------------------------------------------------------------------
+audit_gates:
+  baseline_dominance:
+    name: Baseline dominance
+    closes: a score earned by something cheaper than the ability credited with it
+    needs: the cheapest instrument capable of the same answer, compared record by record
+    scope: detection task
+  label_stability:
+    name: Label stability
+    closes: a score no firmer than the labels beneath it
+    needs: a second reading of the labels, independent of the ability under test
+    scope: label set
+  input_dependence:
+    name: Input dependence
+    closes: a score reached without reading the input the task is about
+    needs: one further run with that input withheld
+    scope: residual question
+  flag_rate_correction:
+    name: Flag-rate correction
+    closes: a recall indistinguishable from flagging at any rate
+    needs: the flag rate reported beside the recall
+    scope: residual question
+
+# ---------------------------------------------------------------------------
+# Manuscript budget (constraint C1)
+# Word counts are measured on the built PDF, not on the markdown sources.
+# ---------------------------------------------------------------------------
+manuscript:
+  # The editor of this journal returned the manuscript on 14 August 2026 with
+  # the instruction that it is far too long. The floor that stood here belonged
+  # to a reading of the venue's median length, and the editor overruled that
+  # reading, so it is gone rather than lowered. The target is what the article
+  # is written to; the limit is what the build refuses to pass.
+  #
+  # The venue's median of 14,629 words is measured on published articles, which
+  # have been through review and grew there. This budget is for a manuscript
+  # entering review, and it leaves the room that growth needs: an article
+  # submitted at 9,500 words can absorb three to four thousand words of
+  # reviewer-requested additions and still land near what this journal prints.
+  # Submitting near the published median would answer the editor's instruction
+  # with nothing and leave no room at all. The ceiling is therefore a property
+  # of this resubmission and is raised deliberately, with the reason recorded,
+  # if reviewer reports later ask for material that does not fit.
+  body_word_target: 10500
+  body_word_limit: 11000
+  body_word_tolerance: 0.01
+  # The editor asked for an abstract with fewer background sentences and more
+  # of the study's own numbers, and asked for it shorter rather than longer.
+  abstract_word_limit: 200
+  keywords_min: 1
+  keywords_max: 6
+  # The editor asks for highlights of about a sentence or two, 15 to 30 words
+  # each, stating what is unique about the research. The publisher's portal
+  # field has been enforcing 85 characters, which is about 13 words; where the
+  # two disagree the editor governs and the portal limit is applied at upload.
+  highlight_words_min: 15
+  highlight_words_max: 30
+  # The section budget, in source words. The constraint C1 states is measured on
+  # the built PDF and the two differ by about 1,720 words, which is what the
+  # display items and the captions add; these numbers are the allocation behind
+  # that total rather than a second constraint. They were planned before the
+  # sections were written and corrected afterwards to what three of them turned
+  # out to need, with the total held. A section drifting past the tolerance is
+  # not an error in itself: it is a prompt to move the allocation deliberately
+  # rather than by accident.
+  section_word_tolerance: 0.10
+  section_budgets:
+    # The allocation is in source words and the budget the editor set is on the
+    # built body. The two differ by a measured 1,865 words, which the display
+    # items, their captions and the class's own furniture print and nobody
+    # writes; the difference was measured on 2026-08-15 by counting the sources
+    # at 11,853 against a built body of 13,718, and it does not move as the
+    # prose shrinks. The sum below is 8,690, which is what a body of about
+    # 10,500 words costs.
+    #
+    # The allocation was rebalanced once, on 2026-08-17, when the method would
+    # not reach its first figure without losing the gates and the instruments,
+    # which are the study's own contribution and the place the editor's request
+    # for a state-of-the-art comparison added text. The method took 350 words
+    # and every other section gave a share of them back. The total did not move.
+    #
+    # Two allocations were cut on 2026-08-17, in the copy-editing pass the editor's
+    # eighth item asked for: the introduction gave up the objective list and the
+    # exclusion that the objectives section states, and the discussion gave up the
+    # three differences and the residue section, both of which restated implications
+    # made above them. Neither cut removed a claim or a citation.
+    02_introduction: 515
+    03_objectives: 310
+    04_related_work: 1168
+    05_problem: 604
+    06_data: 830
+    07_method: 1640
+    08_results: 2232
+    09_discussion: 973
+    10_limitations: 453
+    11_conclusion: 294
+
+  # A floor on figures and tables together, not a ceiling and not a quota of
+  # each. Ten is the least any article at this venue carries, against its median
+  # of 16.5. The floor was briefly written as eleven, which was arithmetic that
+  # counted a table the article already prints; the rule was always ten. An item
+  # is present because it makes a comparison the text would otherwise have to
+  # make in prose, never to reach a count.
+  display_items_min: 10

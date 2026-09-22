@@ -1,0 +1,3 @@
+set,split,threshold_kind,comparator_only_correct,baseline_only_correct,p_value,odds_ratio,odds_ratio_low,odds_ratio_high
+injected,reported,calibrated,111,102,0.5836922618268336,1.088235294117647,0.8324,1.4227
+injected,reported,oracle,127,114,0.4395941254506641,1.1140350877192982,0.8657,1.4336

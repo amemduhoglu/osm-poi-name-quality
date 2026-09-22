@@ -1,0 +1,88 @@
+{
+  "run": "m1_name_full_v1",
+  "measured_at": "2026-08-13T13:13:41+00:00",
+  "rule": "a frontier reference is added at revision if balanced accuracy on the residual class rises with model size at p < 0.001, and is not added if the trend is flat or inconclusive; fixed 2026-08-03, before any score existed",
+  "decisive_fit": "pooled",
+  "slope_per_doubling": 0.0776,
+  "p_value": 1.7367997070046903e-09,
+  "frontier_reference_required": true,
+  "models_refused_by_a_gate": [
+    "llama3.1:8b",
+    "openbmb/minicpm5:q4_K_M",
+    "qwen3.5:2b-q4_K_M"
+  ],
+  "scores": [
+    {
+      "model": "openbmb/minicpm5:q4_K_M",
+      "parameters_b": 1.1,
+      "balanced_accuracy": 0.4983,
+      "passes_gates": false
+    },
+    {
+      "model": "qwen3.5:2b-q4_K_M",
+      "parameters_b": 2.3,
+      "balanced_accuracy": 0.5017,
+      "passes_gates": false
+    },
+    {
+      "model": "granite4.1:3b",
+      "parameters_b": 3.4,
+      "balanced_accuracy": 0.6633,
+      "passes_gates": true
+    },
+    {
+      "model": "phi4-mini:latest",
+      "parameters_b": 3.8,
+      "balanced_accuracy": 0.6383,
+      "passes_gates": true
+    },
+    {
+      "model": "qwen3.5:4b",
+      "parameters_b": 4.7,
+      "balanced_accuracy": 0.7233,
+      "passes_gates": true
+    },
+    {
+      "model": "llama3.1:8b",
+      "parameters_b": 8.0,
+      "balanced_accuracy": 0.5,
+      "passes_gates": false
+    },
+    {
+      "model": "granite4.1:8b",
+      "parameters_b": 8.8,
+      "balanced_accuracy": 0.7417,
+      "passes_gates": true
+    },
+    {
+      "model": "qwen3.5:9b",
+      "parameters_b": 9.7,
+      "balanced_accuracy": 0.8033,
+      "passes_gates": true
+    },
+    {
+      "model": "gemma4:e2b",
+      "parameters_b": 5.1,
+      "balanced_accuracy": 0.5617,
+      "passes_gates": true
+    },
+    {
+      "model": "gemma4:12b",
+      "parameters_b": 11.9,
+      "balanced_accuracy": 0.7917,
+      "passes_gates": true
+    },
+    {
+      "model": "phi4:latest",
+      "parameters_b": 14.7,
+      "balanced_accuracy": 0.7567,
+      "passes_gates": true
+    },
+    {
+      "model": "gemma4:e4b",
+      "parameters_b": 8.0,
+      "balanced_accuracy": 0.735,
+      "passes_gates": true
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+run,model,name,split,invalid,items,positives,recall,false_positive_rate,flag_rate,balanced_accuracy,youdens_j,youdens_j_low,youdens_j_high,excluded_by
+m1c_name_full_v1,granite4.1:3b,Granite 4.1 3B,all,0,600,300,0.5033,0.2333,0.3683,0.635,0.27,0.194,0.3415,replay_min_verdict_agreement
+m1c_name_full_v1,granite4.1:3b,Granite 4.1 3B,train,0,300,150,0.52,0.2333,0.3767,0.6433,0.2867,0.1782,0.3857,replay_min_verdict_agreement
+m1c_name_full_v1,granite4.1:3b,Granite 4.1 3B,dev,0,120,60,0.5,0.2667,0.3833,0.6167,0.2333,0.0593,0.3887,replay_min_verdict_agreement
+m1c_name_full_v1,granite4.1:3b,Granite 4.1 3B,test,0,180,90,0.4778,0.2111,0.3444,0.6333,0.2667,0.1285,0.3913,replay_min_verdict_agreement
+m1c_name_full_v1,granite4.1:8b,Granite 4.1 8B,all,0,600,300,0.8433,0.4567,0.65,0.6933,0.3867,0.3141,0.4532,replay_min_verdict_agreement
+m1c_name_full_v1,granite4.1:8b,Granite 4.1 8B,train,0,300,150,0.8533,0.44,0.6467,0.7067,0.4133,0.31,0.5039,replay_min_verdict_agreement
+m1c_name_full_v1,granite4.1:8b,Granite 4.1 8B,dev,0,120,60,0.7667,0.5,0.6333,0.6333,0.2667,0.0944,0.4182,replay_min_verdict_agreement
+m1c_name_full_v1,granite4.1:8b,Granite 4.1 8B,test,0,180,90,0.8778,0.4556,0.6667,0.7111,0.4222,0.2899,0.5343,replay_min_verdict_agreement

@@ -1,0 +1,121 @@
+{
+  "built_on": "2026-09-13",
+  "seed": 42,
+  "config_commit": "2e8c904f99057bb97819b5a8700599b036156397",
+  "corpus_extraction_date": "2026-08-02",
+  "items": 600,
+  "corrupted": 300,
+  "clean": 300,
+  "splits_items": {
+    "dev": 120,
+    "test": 180,
+    "train": 300
+  },
+  "cities": {
+    "Vancouver": {
+      "records": 14782,
+      "withheld": 7391,
+      "visible": 7391,
+      "donors": 2820,
+      "pairs": 25
+    },
+    "London": {
+      "records": 62165,
+      "withheld": 31082,
+      "visible": 31083,
+      "donors": 11498,
+      "pairs": 25
+    },
+    "Cork": {
+      "records": 4507,
+      "withheld": 2253,
+      "visible": 2254,
+      "donors": 1009,
+      "pairs": 25
+    },
+    "Cebu": {
+      "records": 8091,
+      "withheld": 4045,
+      "visible": 4046,
+      "donors": 1419,
+      "pairs": 25
+    },
+    "Nairobi": {
+      "records": 14203,
+      "withheld": 7101,
+      "visible": 7102,
+      "donors": 2382,
+      "pairs": 25
+    },
+    "Accra": {
+      "records": 9432,
+      "withheld": 4716,
+      "visible": 4716,
+      "donors": 1901,
+      "pairs": 25
+    },
+    "Munich": {
+      "records": 29393,
+      "withheld": 14696,
+      "visible": 14697,
+      "donors": 6974,
+      "pairs": 25
+    },
+    "Rotterdam": {
+      "records": 11631,
+      "withheld": 5815,
+      "visible": 5816,
+      "donors": 2934,
+      "pairs": 25
+    },
+    "Brno": {
+      "records": 10544,
+      "withheld": 5272,
+      "visible": 5272,
+      "donors": 2369,
+      "pairs": 25
+    },
+    "Cuenca": {
+      "records": 8636,
+      "withheld": 4318,
+      "visible": 4318,
+      "donors": 2204,
+      "pairs": 25
+    },
+    "Surabaya": {
+      "records": 7373,
+      "withheld": 3686,
+      "visible": 3687,
+      "donors": 773,
+      "pairs": 25
+    },
+    "İzmir": {
+      "records": 7867,
+      "withheld": 3933,
+      "visible": 3934,
+      "donors": 1373,
+      "pairs": 25
+    }
+  },
+  "settings": {
+    "items": 300,
+    "withheld_share": 0.5,
+    "seed": 42,
+    "clean_half_filtered": true,
+    "exclude_injected_set_records": true,
+    "splits": {
+      "train": 0.5,
+      "dev": 0.2,
+      "test": 0.3
+    },
+    "acceptance": {
+      "shortcuts": [
+        "single_record",
+        "corpus",
+        "name_length_oracle"
+      ],
+      "max_youdens_j": 0.1
+    }
+  },
+  "shown_names_folded_unique": 597
+}

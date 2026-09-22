@@ -1,0 +1,116 @@
+{
+  "by_half": [
+    {
+      "half": "corrupted",
+      "feature": "carries_category_token",
+      "items": 300,
+      "carrying": 0,
+      "share": 0.0,
+      "share_low": 0.0,
+      "share_high": 0.0126
+    },
+    {
+      "half": "corrupted",
+      "feature": "brand_tagged",
+      "items": 300,
+      "carrying": 37,
+      "share": 0.1233,
+      "share_low": 0.0908,
+      "share_high": 0.1654
+    },
+    {
+      "half": "corrupted",
+      "feature": "repeated_in_city",
+      "items": 300,
+      "carrying": 300,
+      "share": 1.0,
+      "share_low": 0.9874,
+      "share_high": 1.0
+    },
+    {
+      "half": "corrupted",
+      "feature": "name_chars_below_donor_minimum",
+      "items": 300,
+      "carrying": 0,
+      "share": 0.0,
+      "share_low": "",
+      "share_high": ""
+    },
+    {
+      "half": "clean",
+      "feature": "carries_category_token",
+      "items": 300,
+      "carrying": 131,
+      "share": 0.4367,
+      "share_low": 0.3817,
+      "share_high": 0.4932
+    },
+    {
+      "half": "clean",
+      "feature": "brand_tagged",
+      "items": 300,
+      "carrying": 44,
+      "share": 0.1467,
+      "share_low": 0.1111,
+      "share_high": 0.1912
+    },
+    {
+      "half": "clean",
+      "feature": "repeated_in_city",
+      "items": 300,
+      "carrying": 79,
+      "share": 0.2633,
+      "share_low": 0.2167,
+      "share_high": 0.3159
+    },
+    {
+      "half": "clean",
+      "feature": "name_chars_below_donor_minimum",
+      "items": 300,
+      "carrying": 20,
+      "share": 0.0667,
+      "share_low": "",
+      "share_high": ""
+    }
+  ],
+  "shortcut_from_the_construction": {
+    "true_positive": 300,
+    "false_negative": 0,
+    "true_negative": 146,
+    "false_positive": 154,
+    "recall": 1.0,
+    "false_positive_rate": 0.5133,
+    "balanced_accuracy": 0.7433,
+    "youdens_j": 0.4867,
+    "youdens_j_low": 0.4292,
+    "youdens_j_high": 0.543
+  },
+  "corpus_shortcut_from_the_construction": {
+    "true_positive": 300,
+    "false_negative": 0,
+    "true_negative": 221,
+    "false_positive": 79,
+    "recall": 1.0,
+    "false_positive_rate": 0.2633,
+    "balanced_accuracy": 0.8683,
+    "youdens_j": 0.7367,
+    "youdens_j_low": 0.6826,
+    "youdens_j_high": 0.7833
+  },
+  "note": "The first shortcut reads the name's length and its category token, both of which one record shows. The second reads whether the name is repeated in its city, which the donor's own surviving record makes true of every injected name and of no injected name only. Neither reads anything about the place, so what they score is the construction and not the residual question. The second bounds what a corpus-level string rule can reach on this class from the construction alone, which is the evidence the screen baseline reads.",
+  "name_length_oracle": {
+    "feature": "name_chars",
+    "cut": 13,
+    "direction": "at_least",
+    "true_positive": 200,
+    "false_negative": 100,
+    "true_negative": 121,
+    "false_positive": 179,
+    "recall": 0.6667,
+    "false_positive_rate": 0.5967,
+    "balanced_accuracy": 0.535,
+    "youdens_j": 0.07,
+    "youdens_j_low": -0.0072,
+    "youdens_j_high": 0.146
+  }
+}

@@ -1,0 +1,9 @@
+half,feature,items,carrying,share,share_low,share_high
+corrupted,carries_category_token,300,0,0.0,0.0,0.0126
+corrupted,brand_tagged,300,0,0.0,0.0,0.0126
+corrupted,repeated_in_city,300,0,0.0,0.0,0.0126
+corrupted,name_chars_below_donor_minimum,300,0,0.0,,
+clean,carries_category_token,300,0,0.0,0.0,0.0126
+clean,brand_tagged,300,0,0.0,0.0,0.0126
+clean,repeated_in_city,300,0,0.0,0.0,0.0126
+clean,name_chars_below_donor_minimum,300,0,0.0,,

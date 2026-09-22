@@ -1,0 +1,13 @@
+city,country,language,maturity,hypothesis_maturity,lat,lon,named,named_per_km2,attribute_completeness
+Vancouver,CA,english,mature,mature,49.2827,-123.1207,14782,47.05,41.69
+London,GB,english,mature,mature,51.5074,-0.1278,62165,197.88,35.38
+Cork,IE,english,mature,mature,51.8985,-8.4756,4507,14.35,31.22
+Cebu,PH,english,developing,developing,10.3157,123.8854,8091,25.75,9.48
+Nairobi,KE,english,developing,developing,-1.2864,36.8172,14202,45.21,12.83
+Accra,GH,english,developing,developing,5.6037,-0.187,9432,30.02,19.35
+Munich,DE,non_english,mature,mature,48.1351,11.582,29392,93.56,48.04
+Rotterdam,NL,non_english,mature,mature,51.9244,4.4777,11631,37.02,44.57
+Brno,CZ,non_english,mature,mature,49.1951,16.6068,10544,33.56,36.68
+Cuenca,EC,non_english,developing,developing,-2.9001,-79.0059,8636,27.49,8.12
+Surabaya,ID,non_english,developing,developing,-7.2575,112.7521,7373,23.47,8.17
+İzmir,TR,non_english,developing,developing,38.4237,27.1428,7867,25.04,9.24

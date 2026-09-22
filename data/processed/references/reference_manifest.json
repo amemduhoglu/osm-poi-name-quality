@@ -1,0 +1,48 @@
+{
+  "gazetteers": {
+    "geonames": {
+      "url": "https://download.geonames.org/export/dump/cities500.zip",
+      "dataset": "cities500",
+      "licence": "CC-BY-4.0",
+      "access_date": "2026-08-02",
+      "countries": [
+        "CA",
+        "CZ",
+        "DE",
+        "EC",
+        "GB",
+        "GH",
+        "ID",
+        "IE",
+        "KE",
+        "NL",
+        "PH",
+        "TR"
+      ],
+      "places": 45128
+    },
+    "wikidata": {
+      "url": "https://query.wikidata.org/sparql",
+      "licence": "CC0-1.0",
+      "settlement_classes": [
+        "Q515",
+        "Q3957",
+        "Q532",
+        "Q5084",
+        "Q486972",
+        "Q188509",
+        "Q123705"
+      ],
+      "radius_km": 60.0,
+      "access_date": "2026-08-02",
+      "places": 12215
+    }
+  },
+  "calling_codes": {
+    "source": "libphonenumber",
+    "package": "phonenumbers",
+    "version": "9.0.36",
+    "licence": "Apache-2.0"
+  },
+  "rows": 57343
+}

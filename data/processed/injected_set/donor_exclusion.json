@@ -1,0 +1,10 @@
+{
+  "items_redrawn": 300,
+  "category_token": {
+    "abstain": 177,
+    "flag": 120,
+    "pass": 3
+  },
+  "settled_share": 0.4,
+  "note": "Share of residual-class items a category-token rule would settle if the donor pool did not exclude category-indicative names. Every other eligibility rule is held identical."
+}

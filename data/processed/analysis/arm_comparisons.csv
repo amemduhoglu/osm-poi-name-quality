@@ -1,0 +1,15 @@
+arm,arm_model,base_model,set,arm_run,base_run,items,positives,arm_youdens_j,arm_youdens_j_low,arm_youdens_j_high,base_youdens_j,base_youdens_j_low,base_youdens_j_high,arm_flag_rate,base_flag_rate,arm_only_correct,base_only_correct,p_value,odds_ratio,arm_invalid
+retrieval_augmented,gemma4:e2b,gemma4:e2b,control_test,m1c_name_rag_v4,m1c_name_full_v1,180,90,0.0111,-0.0308,0.0603,0.1889,0.0795,0.296,0.9944,0.8278,7,23,0.005223,0.3043,0
+retrieval_augmented,gemma4:e2b,gemma4:e2b,natural,natural_name_rag_v4,natural_name_v1_replay_0326,224,29,0.0205,-0.0971,0.0515,0.1376,-0.0319,0.2311,0.9821,0.7768,3,43,0.0,0.0698,0
+retrieval_augmented,qwen3.5:9b,qwen3.5:9b,control_test,m1c_name_rag_v4,m1c_name_full_v1,180,90,0.5333,0.4047,0.6361,0.6222,0.4967,0.7159,0.6444,0.3889,20,28,0.312327,0.7143,0
+retrieval_augmented,qwen3.5:9b,qwen3.5:9b,natural,natural_name_rag_v4,natural_name_v1_replay_0326,224,29,0.0902,-0.0995,0.2681,0.0149,-0.0839,0.187,0.4732,0.125,13,67,0.0,0.194,0
+few_shot,gemma4:e2b,gemma4:e2b,control_test,m1c_name_fewshot_v3,m1c_name_full_v1,180,90,0.0111,-0.1147,0.1365,0.1889,0.0795,0.296,0.75,0.8278,5,21,0.002494,0.2381,0
+few_shot,gemma4:e2b,gemma4:e2b,natural,natural_name_fewshot_v3,natural_name_v1_replay_0326,224,29,0.1749,-0.0035,0.2823,0.1376,-0.0319,0.2311,0.7098,0.7768,23,10,0.035082,2.3,0
+few_shot,qwen3.5:9b,qwen3.5:9b,control_test,m1c_name_fewshot_v3,m1c_name_full_v1,180,90,0.2556,0.1668,0.3544,0.6222,0.4967,0.7159,0.1278,0.3889,7,40,1e-06,0.175,0
+few_shot,qwen3.5:9b,qwen3.5:9b,natural,natural_name_fewshot_v3,natural_name_v1_replay_0326,224,29,0.0191,-0.0214,0.1567,0.0149,-0.0839,0.187,0.0179,0.125,21,3,0.000277,7.0,0
+prompt_selection,gemma4:e2b,gemma4:e2b,control_test,m1c_name_selected_v10,m1c_name_full_v1,180,90,0.1444,-0.0009,0.2815,0.1889,0.0795,0.296,0.4611,0.8278,33,37,0.720203,0.8919,0
+prompt_selection,gemma4:e2b,gemma4:e2b,natural,natural_name_selected_v10,natural_name_v1_replay_0326,224,29,0.0226,-0.1559,0.2113,0.1376,-0.0319,0.2311,0.4286,0.7768,69,17,0.0,4.0588,0
+prompt_selection,qwen3.5:9b,qwen3.5:9b,control_test,m1c_name_selected_v6,m1c_name_full_v1,180,90,0.6444,0.5149,0.7367,0.6222,0.4967,0.7159,0.5111,0.3889,12,10,0.831812,1.2,0
+prompt_selection,qwen3.5:9b,qwen3.5:9b,natural,natural_name_selected_v6,natural_name_v1_replay_0326,224,29,0.0246,-0.1199,0.2142,0.0149,-0.0839,0.187,0.2545,0.125,6,27,0.000324,0.2222,0
+low_rank_adaptation,poi-audit/qwen3.5-4b-lora-m1c:latest,qwen3.5:4b,control_test,m1c_name_full_v1,m1c_name_full_v1,180,90,0.6667,0.5431,0.7549,0.4333,0.3009,0.5448,0.4111,0.6611,35,14,0.003802,2.5,0
+low_rank_adaptation,poi-audit/qwen3.5-4b-lora-m1c:latest,qwen3.5:4b,natural,natural_name_v1_replay_0326,natural_name_v1_replay_0326,224,29,-0.049,-0.1216,0.1064,0.1554,-0.0367,0.3279,0.1116,0.4509,62,16,0.0,3.875,0

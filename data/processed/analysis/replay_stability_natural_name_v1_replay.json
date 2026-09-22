@@ -1,0 +1,139 @@
+{
+  "compared_at": "2026-09-12T22:43:58+00:00",
+  "stored_run": "natural_name_v1",
+  "replay_run": "natural_name_v1_replay",
+  "replay_server_versions": [
+    "None"
+  ],
+  "stored_stack": "0.32.6",
+  "minimum_verdict_agreement": 0.95,
+  "models": [
+    {
+      "model": "openbmb/minicpm5:q4_K_M",
+      "name": "MiniCPM 5 1B",
+      "items": 250,
+      "changed": 100,
+      "verdict_agreement": 0.6,
+      "raw_identical": 0.064,
+      "prompt_tokens_identical": 1.0,
+      "kept": false,
+      "youdens_j_stored": -0.1927,
+      "youdens_j_replay": 0.0
+    },
+    {
+      "model": "qwen3.5:2b-q4_K_M",
+      "name": "Qwen 3.5 2B",
+      "items": 250,
+      "changed": 5,
+      "verdict_agreement": 0.98,
+      "raw_identical": 0.764,
+      "prompt_tokens_identical": 1.0,
+      "kept": true,
+      "youdens_j_stored": 0.0103,
+      "youdens_j_replay": 0.0154
+    },
+    {
+      "model": "granite4.1:3b",
+      "name": "Granite 4.1 3B",
+      "items": 250,
+      "changed": 92,
+      "verdict_agreement": 0.632,
+      "raw_identical": 0.624,
+      "prompt_tokens_identical": 1.0,
+      "kept": false,
+      "youdens_j_stored": -0.0019,
+      "youdens_j_replay": 0.1475
+    },
+    {
+      "model": "phi4-mini:latest",
+      "name": "Phi-4 mini",
+      "items": 250,
+      "changed": 69,
+      "verdict_agreement": 0.724,
+      "raw_identical": 0.596,
+      "prompt_tokens_identical": 1.0,
+      "kept": false,
+      "youdens_j_stored": 0.0334,
+      "youdens_j_replay": 0.1027
+    },
+    {
+      "model": "qwen3.5:4b",
+      "name": "Qwen 3.5 4B",
+      "items": 250,
+      "changed": 12,
+      "verdict_agreement": 0.952,
+      "raw_identical": 0.732,
+      "prompt_tokens_identical": 1.0,
+      "kept": true,
+      "youdens_j_stored": 0.176,
+      "youdens_j_replay": 0.1811
+    },
+    {
+      "model": "granite4.1:8b",
+      "name": "Granite 4.1 8B",
+      "items": 250,
+      "changed": 39,
+      "verdict_agreement": 0.844,
+      "raw_identical": 0.844,
+      "prompt_tokens_identical": 1.0,
+      "kept": false,
+      "youdens_j_stored": 0.1229,
+      "youdens_j_replay": 0.0674
+    },
+    {
+      "model": "qwen3.5:9b",
+      "name": "Qwen 3.5 9B",
+      "items": 250,
+      "changed": 12,
+      "verdict_agreement": 0.952,
+      "raw_identical": 0.496,
+      "prompt_tokens_identical": 1.0,
+      "kept": true,
+      "youdens_j_stored": -0.0057,
+      "youdens_j_replay": -0.0094
+    },
+    {
+      "model": "gemma4:e2b",
+      "name": "Gemma 4 e2b",
+      "items": 250,
+      "changed": 17,
+      "verdict_agreement": 0.932,
+      "raw_identical": 0.924,
+      "prompt_tokens_identical": 1.0,
+      "kept": false,
+      "youdens_j_stored": 0.1721,
+      "youdens_j_replay": 0.1324
+    },
+    {
+      "model": "gemma4:12b",
+      "name": "Gemma 4 12B",
+      "items": 250,
+      "changed": 6,
+      "verdict_agreement": 0.976,
+      "raw_identical": 0.976,
+      "prompt_tokens_identical": 1.0,
+      "kept": true,
+      "youdens_j_stored": -0.0387,
+      "youdens_j_replay": 0.0009
+    },
+    {
+      "model": "gemma4:e4b",
+      "name": "Gemma 4 e4b",
+      "items": 250,
+      "changed": 6,
+      "verdict_agreement": 0.976,
+      "raw_identical": 0.976,
+      "prompt_tokens_identical": 1.0,
+      "kept": true,
+      "youdens_j_stored": 0.2025,
+      "youdens_j_replay": 0.1973
+    }
+  ],
+  "kept": [
+    "qwen3.5:2b-q4_K_M",
+    "qwen3.5:4b",
+    "qwen3.5:9b",
+    "gemma4:12b",
+    "gemma4:e4b"
+  ]
+}

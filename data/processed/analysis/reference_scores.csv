@@ -1,0 +1,17 @@
+reference,measure,items,positives,balanced_accuracy,youdens_j,flag_rate,flag_rate_low,flag_rate_high,gate_p_value,passes_input_dependence
+Qwen 3.5 397B,"residual class, full view",600,300,0.8367,0.6733,0.4433,0.4041,0.4833,4.1924771570643486e-39,True
+Qwen 3.5 397B,"residual class, position alone",600,300,0.5,0.0,0.0033,0.0009,0.0121,,
+Qwen 3.5 397B,"natural set, adjudicated",224,29,0.5324,0.0647,0.1161,0.0805,0.1646,,
+Qwen 3.5 397B,"natural set, decidable core",206,21,0.5412,0.0824,0.1165,0.0796,0.1675,,
+GLM 5.2,"residual class, full view",600,300,0.8467,0.6933,0.39,0.3518,0.4296,9.338831797225191e-42,True
+GLM 5.2,"residual class, position alone",600,300,0.5,0.0,0.2333,0.2013,0.2688,,
+GLM 5.2,"natural set, adjudicated",224,29,0.521,0.0419,0.067,0.041,0.1075,,
+GLM 5.2,"natural set, decidable core",206,21,0.5417,0.0834,0.068,0.0409,0.1108,,
+Claude Opus 5,"residual class, full view",600,300,0.8767,0.7533,0.4167,0.3779,0.4565,1.1073585996153473e-55,True
+Claude Opus 5,"residual class, position alone",600,300,0.5,0.0,0.0,0.0,0.0064,,
+Claude Opus 5,"natural set, adjudicated",224,29,0.5242,0.0485,0.0268,0.0123,0.0572,,
+Claude Opus 5,"natural set, decidable core",206,21,0.5368,0.0736,0.0291,0.0134,0.0621,,
+GPT-5.6 Sol,"residual class, full view",600,300,0.8717,0.7433,0.435,0.3959,0.475,3.9022272931155315e-50,True
+GPT-5.6 Sol,"residual class, position alone",600,300,0.4983,-0.0033,0.005,0.0017,0.0146,,
+GPT-5.6 Sol,"natural set, adjudicated",224,29,0.5389,0.0778,0.0357,0.0182,0.0689,,
+GPT-5.6 Sol,"natural set, decidable core",206,21,0.5341,0.0682,0.034,0.0166,0.0685,,

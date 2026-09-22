@@ -1,0 +1,449 @@
+{
+  "built_on": "2026-08-03",
+  "seed": 42,
+  "corpus_extraction_date": "2026-08-02",
+  "frame": {
+    "definition": "every corpus record carrying a name",
+    "records": 188624
+  },
+  "allocation": "equal_per_city",
+  "strata_disjoint": true,
+  "screen": {
+    "kind": "string_and_dictionary",
+    "models_permitted": false,
+    "allocation": "equal_per_rule",
+    "rule_priority": [
+      "gazetteer_place_name",
+      "duplicate_distant_name",
+      "category_token_contradiction"
+    ],
+    "rules": {
+      "duplicate_distant_name": {
+        "min_distance_km": 2.0,
+        "require_different_category": true,
+        "require_different_category_key": true,
+        "max_records_sharing_name": 3,
+        "exclude_brand_tagged": true
+      },
+      "category_token_contradiction": {
+        "token_dictionary": "data/processed/category_tokens.csv",
+        "require_different_category_key": true
+      },
+      "gazetteer_place_name": {
+        "absent_within_km": 25,
+        "min_name_chars": 4,
+        "exclude_brand_tagged": true
+      }
+    },
+    "first_pass_rules": {
+      "duplicate_distant_name": {
+        "min_distance_km": 2.0,
+        "require_different_category": true,
+        "require_different_category_key": false,
+        "max_records_sharing_name": null,
+        "exclude_brand_tagged": false
+      },
+      "category_token_contradiction": {
+        "token_dictionary": "data/processed/category_tokens.csv",
+        "require_different_category_key": false
+      },
+      "gazetteer_place_name": {
+        "absent_within_km": 25,
+        "min_name_chars": 4,
+        "exclude_brand_tagged": false
+      }
+    },
+    "positive": {
+      "first_pass": 32455,
+      "final": 9635
+    },
+    "positive_share": {
+      "first_pass": 0.172062,
+      "final": 0.05108
+    },
+    "owned_by_rule": {
+      "gazetteer_place_name": 1111,
+      "duplicate_distant_name": 1316,
+      "category_token_contradiction": 7208
+    },
+    "stratum_b_per_rule": {
+      "gazetteer_place_name": 67,
+      "duplicate_distant_name": 66,
+      "category_token_contradiction": 67
+    }
+  },
+  "gazetteer": {
+    "sources": [
+      "geonames",
+      "wikidata"
+    ],
+    "places": 57343
+  },
+  "drawn": {
+    "A": 200,
+    "B": 200,
+    "total": 400
+  },
+  "by_city": {
+    "Vancouver": {
+      "frame": 14782,
+      "screen_positive": 800,
+      "stratum_a": {
+        "quota": 17,
+        "drawn": 17,
+        "pool": 14782,
+        "inclusion_probability": 0.00115005
+      },
+      "stratum_b": {
+        "gazetteer_place_name": {
+          "quota": 6,
+          "drawn": 6,
+          "pool": 37,
+          "inclusion_probability": 0.16216216
+        },
+        "duplicate_distant_name": {
+          "quota": 6,
+          "drawn": 6,
+          "pool": 57,
+          "inclusion_probability": 0.10526316
+        },
+        "category_token_contradiction": {
+          "quota": 5,
+          "drawn": 5,
+          "pool": 706,
+          "inclusion_probability": 0.00708215
+        }
+      }
+    },
+    "London": {
+      "frame": 62165,
+      "screen_positive": 3665,
+      "stratum_a": {
+        "quota": 17,
+        "drawn": 17,
+        "pool": 62165,
+        "inclusion_probability": 0.00027347
+      },
+      "stratum_b": {
+        "gazetteer_place_name": {
+          "quota": 6,
+          "drawn": 6,
+          "pool": 408,
+          "inclusion_probability": 0.01470588
+        },
+        "duplicate_distant_name": {
+          "quota": 5,
+          "drawn": 5,
+          "pool": 676,
+          "inclusion_probability": 0.00739645
+        },
+        "category_token_contradiction": {
+          "quota": 5,
+          "drawn": 5,
+          "pool": 2579,
+          "inclusion_probability": 0.00193874
+        }
+      }
+    },
+    "Cork": {
+      "frame": 4507,
+      "screen_positive": 237,
+      "stratum_a": {
+        "quota": 16,
+        "drawn": 16,
+        "pool": 4507,
+        "inclusion_probability": 0.00355003
+      },
+      "stratum_b": {
+        "gazetteer_place_name": {
+          "quota": 5,
+          "drawn": 5,
+          "pool": 25,
+          "inclusion_probability": 0.2
+        },
+        "duplicate_distant_name": {
+          "quota": 5,
+          "drawn": 5,
+          "pool": 22,
+          "inclusion_probability": 0.22727273
+        },
+        "category_token_contradiction": {
+          "quota": 6,
+          "drawn": 6,
+          "pool": 189,
+          "inclusion_probability": 0.03174603
+        }
+      }
+    },
+    "Cebu": {
+      "frame": 8091,
+      "screen_positive": 483,
+      "stratum_a": {
+        "quota": 17,
+        "drawn": 17,
+        "pool": 8091,
+        "inclusion_probability": 0.0021011
+      },
+      "stratum_b": {
+        "gazetteer_place_name": {
+          "quota": 5,
+          "drawn": 5,
+          "pool": 29,
+          "inclusion_probability": 0.17241379
+        },
+        "duplicate_distant_name": {
+          "quota": 6,
+          "drawn": 6,
+          "pool": 10,
+          "inclusion_probability": 0.6
+        },
+        "category_token_contradiction": {
+          "quota": 6,
+          "drawn": 6,
+          "pool": 443,
+          "inclusion_probability": 0.01354402
+        }
+      }
+    },
+    "Nairobi": {
+      "frame": 14203,
+      "screen_positive": 760,
+      "stratum_a": {
+        "quota": 17,
+        "drawn": 17,
+        "pool": 14203,
+        "inclusion_probability": 0.00119693
+      },
+      "stratum_b": {
+        "gazetteer_place_name": {
+          "quota": 5,
+          "drawn": 5,
+          "pool": 41,
+          "inclusion_probability": 0.12195122
+        },
+        "duplicate_distant_name": {
+          "quota": 5,
+          "drawn": 5,
+          "pool": 50,
+          "inclusion_probability": 0.1
+        },
+        "category_token_contradiction": {
+          "quota": 6,
+          "drawn": 6,
+          "pool": 667,
+          "inclusion_probability": 0.0089955
+        }
+      }
+    },
+    "Accra": {
+      "frame": 9432,
+      "screen_positive": 488,
+      "stratum_a": {
+        "quota": 16,
+        "drawn": 16,
+        "pool": 9432,
+        "inclusion_probability": 0.00169635
+      },
+      "stratum_b": {
+        "gazetteer_place_name": {
+          "quota": 5,
+          "drawn": 5,
+          "pool": 20,
+          "inclusion_probability": 0.25
+        },
+        "duplicate_distant_name": {
+          "quota": 6,
+          "drawn": 6,
+          "pool": 41,
+          "inclusion_probability": 0.14634146
+        },
+        "category_token_contradiction": {
+          "quota": 5,
+          "drawn": 5,
+          "pool": 425,
+          "inclusion_probability": 0.01176471
+        }
+      }
+    },
+    "Munich": {
+      "frame": 29393,
+      "screen_positive": 1195,
+      "stratum_a": {
+        "quota": 17,
+        "drawn": 17,
+        "pool": 29393,
+        "inclusion_probability": 0.00057837
+      },
+      "stratum_b": {
+        "gazetteer_place_name": {
+          "quota": 6,
+          "drawn": 6,
+          "pool": 159,
+          "inclusion_probability": 0.03773585
+        },
+        "duplicate_distant_name": {
+          "quota": 5,
+          "drawn": 5,
+          "pool": 181,
+          "inclusion_probability": 0.02762431
+        },
+        "category_token_contradiction": {
+          "quota": 6,
+          "drawn": 6,
+          "pool": 853,
+          "inclusion_probability": 0.007034
+        }
+      }
+    },
+    "Rotterdam": {
+      "frame": 11631,
+      "screen_positive": 487,
+      "stratum_a": {
+        "quota": 16,
+        "drawn": 16,
+        "pool": 11631,
+        "inclusion_probability": 0.00137563
+      },
+      "stratum_b": {
+        "gazetteer_place_name": {
+          "quota": 6,
+          "drawn": 6,
+          "pool": 108,
+          "inclusion_probability": 0.05555556
+        },
+        "duplicate_distant_name": {
+          "quota": 5,
+          "drawn": 5,
+          "pool": 82,
+          "inclusion_probability": 0.06097561
+        },
+        "category_token_contradiction": {
+          "quota": 6,
+          "drawn": 6,
+          "pool": 296,
+          "inclusion_probability": 0.02027027
+        }
+      }
+    },
+    "Brno": {
+      "frame": 10544,
+      "screen_positive": 416,
+      "stratum_a": {
+        "quota": 16,
+        "drawn": 16,
+        "pool": 10544,
+        "inclusion_probability": 0.00151745
+      },
+      "stratum_b": {
+        "gazetteer_place_name": {
+          "quota": 5,
+          "drawn": 5,
+          "pool": 79,
+          "inclusion_probability": 0.06329114
+        },
+        "duplicate_distant_name": {
+          "quota": 6,
+          "drawn": 6,
+          "pool": 66,
+          "inclusion_probability": 0.09090909
+        },
+        "category_token_contradiction": {
+          "quota": 6,
+          "drawn": 6,
+          "pool": 270,
+          "inclusion_probability": 0.02222222
+        }
+      }
+    },
+    "Cuenca": {
+      "frame": 8636,
+      "screen_positive": 414,
+      "stratum_a": {
+        "quota": 17,
+        "drawn": 17,
+        "pool": 8636,
+        "inclusion_probability": 0.0019685
+      },
+      "stratum_b": {
+        "gazetteer_place_name": {
+          "quota": 6,
+          "drawn": 6,
+          "pool": 110,
+          "inclusion_probability": 0.05454545
+        },
+        "duplicate_distant_name": {
+          "quota": 6,
+          "drawn": 6,
+          "pool": 68,
+          "inclusion_probability": 0.08823529
+        },
+        "category_token_contradiction": {
+          "quota": 5,
+          "drawn": 5,
+          "pool": 235,
+          "inclusion_probability": 0.0212766
+        }
+      }
+    },
+    "Surabaya": {
+      "frame": 7373,
+      "screen_positive": 311,
+      "stratum_a": {
+        "quota": 17,
+        "drawn": 17,
+        "pool": 7373,
+        "inclusion_probability": 0.00230571
+      },
+      "stratum_b": {
+        "gazetteer_place_name": {
+          "quota": 6,
+          "drawn": 6,
+          "pool": 18,
+          "inclusion_probability": 0.33333333
+        },
+        "duplicate_distant_name": {
+          "quota": 5,
+          "drawn": 5,
+          "pool": 15,
+          "inclusion_probability": 0.33333333
+        },
+        "category_token_contradiction": {
+          "quota": 6,
+          "drawn": 6,
+          "pool": 276,
+          "inclusion_probability": 0.02173913
+        }
+      }
+    },
+    "İzmir": {
+      "frame": 7867,
+      "screen_positive": 379,
+      "stratum_a": {
+        "quota": 17,
+        "drawn": 17,
+        "pool": 7867,
+        "inclusion_probability": 0.00216093
+      },
+      "stratum_b": {
+        "gazetteer_place_name": {
+          "quota": 6,
+          "drawn": 6,
+          "pool": 75,
+          "inclusion_probability": 0.08
+        },
+        "duplicate_distant_name": {
+          "quota": 6,
+          "drawn": 6,
+          "pool": 46,
+          "inclusion_probability": 0.13043478
+        },
+        "category_token_contradiction": {
+          "quota": 5,
+          "drawn": 5,
+          "pool": 258,
+          "inclusion_probability": 0.01937984
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,168 @@
+{
+  "compared_at": "2026-09-12T23:06:43+00:00",
+  "stored_run": "natural_name_v1",
+  "replay_run": "natural_name_v1_replay_0326",
+  "replay_server_versions": [
+    "0.32.6"
+  ],
+  "stored_stack": "0.32.6",
+  "minimum_verdict_agreement": 0.95,
+  "models": [
+    {
+      "model": "openbmb/minicpm5:q4_K_M",
+      "name": "MiniCPM 5 1B",
+      "items": 250,
+      "changed": 1,
+      "verdict_agreement": 0.996,
+      "raw_identical": 0.744,
+      "prompt_tokens_identical": 1.0,
+      "kept": true,
+      "youdens_j_stored": -0.1927,
+      "youdens_j_replay": -0.1583
+    },
+    {
+      "model": "qwen3.5:2b-q4_K_M",
+      "name": "Qwen 3.5 2B",
+      "items": 250,
+      "changed": 5,
+      "verdict_agreement": 0.98,
+      "raw_identical": 0.98,
+      "prompt_tokens_identical": 1.0,
+      "kept": true,
+      "youdens_j_stored": 0.0103,
+      "youdens_j_replay": 0.0154
+    },
+    {
+      "model": "granite4.1:3b",
+      "name": "Granite 4.1 3B",
+      "items": 250,
+      "changed": 20,
+      "verdict_agreement": 0.92,
+      "raw_identical": 0.884,
+      "prompt_tokens_identical": 1.0,
+      "kept": false,
+      "youdens_j_stored": -0.0019,
+      "youdens_j_replay": 0.0796
+    },
+    {
+      "model": "phi4-mini:latest",
+      "name": "Phi-4 mini",
+      "items": 250,
+      "changed": 9,
+      "verdict_agreement": 0.964,
+      "raw_identical": 0.844,
+      "prompt_tokens_identical": 1.0,
+      "kept": true,
+      "youdens_j_stored": 0.0334,
+      "youdens_j_replay": 0.018
+    },
+    {
+      "model": "qwen3.5:4b",
+      "name": "Qwen 3.5 4B",
+      "items": 250,
+      "changed": 8,
+      "verdict_agreement": 0.968,
+      "raw_identical": 0.932,
+      "prompt_tokens_identical": 1.0,
+      "kept": true,
+      "youdens_j_stored": 0.176,
+      "youdens_j_replay": 0.1554
+    },
+    {
+      "model": "llama3.1:8b",
+      "name": "Llama 3.1 8B",
+      "items": 250,
+      "changed": 0,
+      "verdict_agreement": 1.0,
+      "raw_identical": 1.0,
+      "prompt_tokens_identical": 1.0,
+      "kept": true,
+      "youdens_j_stored": 0.0,
+      "youdens_j_replay": 0.0
+    },
+    {
+      "model": "granite4.1:8b",
+      "name": "Granite 4.1 8B",
+      "items": 250,
+      "changed": 16,
+      "verdict_agreement": 0.936,
+      "raw_identical": 0.932,
+      "prompt_tokens_identical": 1.0,
+      "kept": false,
+      "youdens_j_stored": 0.1229,
+      "youdens_j_replay": 0.1303
+    },
+    {
+      "model": "qwen3.5:9b",
+      "name": "Qwen 3.5 9B",
+      "items": 250,
+      "changed": 10,
+      "verdict_agreement": 0.96,
+      "raw_identical": 0.852,
+      "prompt_tokens_identical": 1.0,
+      "kept": true,
+      "youdens_j_stored": -0.0057,
+      "youdens_j_replay": 0.0149
+    },
+    {
+      "model": "gemma4:e2b",
+      "name": "Gemma 4 e2b",
+      "items": 250,
+      "changed": 10,
+      "verdict_agreement": 0.96,
+      "raw_identical": 0.952,
+      "prompt_tokens_identical": 1.0,
+      "kept": true,
+      "youdens_j_stored": 0.1721,
+      "youdens_j_replay": 0.1376
+    },
+    {
+      "model": "gemma4:12b",
+      "name": "Gemma 4 12B",
+      "items": 250,
+      "changed": 4,
+      "verdict_agreement": 0.984,
+      "raw_identical": 0.984,
+      "prompt_tokens_identical": 1.0,
+      "kept": true,
+      "youdens_j_stored": -0.0387,
+      "youdens_j_replay": -0.049
+    },
+    {
+      "model": "phi4:latest",
+      "name": "Phi-4",
+      "items": 250,
+      "changed": 4,
+      "verdict_agreement": 0.984,
+      "raw_identical": 0.984,
+      "prompt_tokens_identical": 1.0,
+      "kept": true,
+      "youdens_j_stored": 0.1183,
+      "youdens_j_replay": 0.0545
+    },
+    {
+      "model": "gemma4:e4b",
+      "name": "Gemma 4 e4b",
+      "items": 250,
+      "changed": 4,
+      "verdict_agreement": 0.984,
+      "raw_identical": 0.984,
+      "prompt_tokens_identical": 1.0,
+      "kept": true,
+      "youdens_j_stored": 0.2025,
+      "youdens_j_replay": 0.1526
+    }
+  ],
+  "kept": [
+    "openbmb/minicpm5:q4_K_M",
+    "qwen3.5:2b-q4_K_M",
+    "phi4-mini:latest",
+    "qwen3.5:4b",
+    "llama3.1:8b",
+    "qwen3.5:9b",
+    "gemma4:e2b",
+    "gemma4:12b",
+    "phi4:latest",
+    "gemma4:e4b"
+  ]
+}

@@ -1,0 +1,58 @@
+[
+  {
+    "reference": "Qwen 3.5 397B",
+    "model": "qwen/qwen3.5-397b-a17b",
+    "weights": "https://huggingface.co/Qwen/Qwen3.5-397B-A17B",
+    "weights_licence": "Apache-2.0",
+    "weights_checked": "2026-08-07",
+    "parameters_b": 397.0,
+    "active_parameters_b": 17.0,
+    "serving_quantizations": [
+      "fp8"
+    ],
+    "providers_that_answered": [
+      "DeepInfra"
+    ]
+  },
+  {
+    "reference": "GLM 5.2",
+    "model": "z-ai/glm-5.2",
+    "weights": "https://huggingface.co/zai-org/GLM-5.2",
+    "weights_licence": "MIT",
+    "weights_checked": "2026-08-07",
+    "parameters_b": 753.3,
+    "active_parameters_b": null,
+    "serving_quantizations": [
+      "fp8"
+    ],
+    "providers_that_answered": [
+      "Alibaba"
+    ]
+  },
+  {
+    "reference": "Claude Opus 5",
+    "model": "anthropic/claude-opus-5",
+    "weights": null,
+    "weights_licence": null,
+    "weights_checked": "",
+    "parameters_b": null,
+    "active_parameters_b": null,
+    "serving_quantizations": [],
+    "providers_that_answered": [
+      "Anthropic"
+    ]
+  },
+  {
+    "reference": "GPT-5.6 Sol",
+    "model": "openai/gpt-5.6-sol",
+    "weights": null,
+    "weights_licence": null,
+    "weights_checked": "",
+    "parameters_b": null,
+    "active_parameters_b": null,
+    "serving_quantizations": [],
+    "providers_that_answered": [
+      "OpenAI"
+    ]
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "G1 every planned run complete": {
+    "passes": true,
+    "problems": []
+  },
+  "G2 nothing offloaded": {
+    "passes": true,
+    "problems": []
+  },
+  "G3 constrained runs under the ceiling": {
+    "passes": true,
+    "problems": []
+  },
+  "G4 efficiency summary covers the pool": {
+    "passes": true,
+    "problems": []
+  }
+}

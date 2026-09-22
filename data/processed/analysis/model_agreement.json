@@ -1,0 +1,28 @@
+{
+  "models": [
+    "gemma4:12b",
+    "gemma4:e2b",
+    "gemma4:e4b",
+    "llama3.1:8b",
+    "openbmb/minicpm5:q4_K_M",
+    "phi4-mini:latest",
+    "phi4:latest",
+    "qwen3.5:2b-q4_K_M",
+    "qwen3.5:4b",
+    "qwen3.5:9b"
+  ],
+  "extension": 0.0131,
+  "control_test": 0.1188,
+  "cell_upper_bounds": {
+    "english, mature": 0.0997,
+    "non_english, mature": 0.1618,
+    "non_english, developing": 0.3277,
+    "english, developing": 0.4476
+  },
+  "extension_composition": {
+    "non_english, mature": 110,
+    "non_english, developing": 203,
+    "english, developing": 211,
+    "english, mature": 99
+  }
+}

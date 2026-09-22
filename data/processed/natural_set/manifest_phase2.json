@@ -1,0 +1,107 @@
+{
+  "built_on": "2026-09-13",
+  "seed": 42,
+  "corpus_extraction_date": "2026-08-02",
+  "expected_wrong_from_first_draw": 48.6395,
+  "size": 473,
+  "cell_quotas": {
+    "english, developing": 166,
+    "non_english, developing": 165,
+    "english, mature": 71,
+    "non_english, mature": 71
+  },
+  "expected_wrong_after_phase2": 120.051,
+  "settings": {
+    "stratum": "C",
+    "target_wrong_all_labelled": 120,
+    "cell_shares": {
+      "english, developing": 0.35,
+      "non_english, developing": 0.35,
+      "english, mature": 0.15,
+      "non_english, mature": 0.15
+    },
+    "wrong_per_labelled_record": {
+      "english, developing": 0.2037,
+      "non_english, developing": 0.1875,
+      "english, mature": 0.0282,
+      "non_english, mature": 0.0656
+    },
+    "observed_wrong_first_250": 29,
+    "first_item_number": 401,
+    "seed": 42
+  },
+  "by_city": {
+    "Cebu": {
+      "cell": "english, developing",
+      "quota": 55,
+      "pool": 8057,
+      "inclusion_probability": 0.00682636
+    },
+    "Nairobi": {
+      "cell": "english, developing",
+      "quota": 55,
+      "pool": 14170,
+      "inclusion_probability": 0.00388144
+    },
+    "Accra": {
+      "cell": "english, developing",
+      "quota": 56,
+      "pool": 9400,
+      "inclusion_probability": 0.00595745
+    },
+    "Cuenca": {
+      "cell": "non_english, developing",
+      "quota": 55,
+      "pool": 8602,
+      "inclusion_probability": 0.00639386
+    },
+    "Surabaya": {
+      "cell": "non_english, developing",
+      "quota": 55,
+      "pool": 7339,
+      "inclusion_probability": 0.00749421
+    },
+    "İzmir": {
+      "cell": "non_english, developing",
+      "quota": 55,
+      "pool": 7833,
+      "inclusion_probability": 0.00702158
+    },
+    "Vancouver": {
+      "cell": "english, mature",
+      "quota": 23,
+      "pool": 14748,
+      "inclusion_probability": 0.00155953
+    },
+    "London": {
+      "cell": "english, mature",
+      "quota": 24,
+      "pool": 62132,
+      "inclusion_probability": 0.00038627
+    },
+    "Cork": {
+      "cell": "english, mature",
+      "quota": 24,
+      "pool": 4475,
+      "inclusion_probability": 0.00536313
+    },
+    "Munich": {
+      "cell": "non_english, mature",
+      "quota": 24,
+      "pool": 29359,
+      "inclusion_probability": 0.00081747
+    },
+    "Rotterdam": {
+      "cell": "non_english, mature",
+      "quota": 24,
+      "pool": 11598,
+      "inclusion_probability": 0.00206932
+    },
+    "Brno": {
+      "cell": "non_english, mature",
+      "quota": 23,
+      "pool": 10511,
+      "inclusion_probability": 0.00218818
+    }
+  }
+}

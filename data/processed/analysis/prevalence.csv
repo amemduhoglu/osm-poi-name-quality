@@ -1,0 +1,18 @@
+grouping,group,decided,wrong,cannot_say,raw_prevalence,raw_low,raw_high,weighted_prevalence,bound_low,bound_high,weighted_low,weighted_high,spread,clusters
+all,corpus,224,29,26,0.1295,0.0917,0.1797,0.0654,0.0588,0.161,0.0216,0.1779,cluster bootstrap,12
+design cell,"english, developing",38,11,16,0.2895,0.17,0.4476,0.3211,0.2287,0.5166,0.1585,0.593,city range,3
+design cell,"english, mature",69,2,2,0.029,0.008,0.0997,0.0023,0.0021,0.071,0.0,0.0029,city range,3
+design cell,"non_english, developing",58,12,6,0.2069,0.1225,0.3277,0.167,0.1557,0.2233,0.1183,0.1856,city range,3
+design cell,"non_english, mature",59,4,2,0.0678,0.0267,0.1618,0.0297,0.0272,0.109,0.0018,0.1453,city range,3
+city,Accra,13,4,5,0.3077,0.1268,0.5763,0.593,0.3657,0.749,,,none,1
+city,Brno,22,1,0,0.0455,0.0081,0.218,0.0021,0.0021,0.0021,,,none,1
+city,Cebu,12,2,5,0.1667,0.047,0.448,0.1585,0.1309,0.3049,,,none,1
+city,Cork,22,1,0,0.0455,0.0081,0.218,0.0013,0.0013,0.0013,,,none,1
+city,Cuenca,22,8,3,0.3636,0.1973,0.5705,0.1856,0.1701,0.2535,,,none,1
+city,London,22,1,1,0.0455,0.0081,0.218,0.0029,0.0027,0.0761,,,none,1
+city,Munich,19,1,1,0.0526,0.0094,0.2464,0.0018,0.0016,0.1067,,,none,1
+city,Nairobi,13,5,6,0.3846,0.1771,0.6448,0.2745,0.1968,0.4798,,,none,1
+city,Rotterdam,18,2,1,0.1111,0.031,0.328,0.1453,0.1279,0.2477,,,none,1
+city,Surabaya,16,1,0,0.0625,0.0111,0.2833,0.1183,0.1183,0.1183,,,none,1
+city,Vancouver,25,0,1,0.0,0.0,0.1332,0.0,0.0,0.072,,,none,1
+city,İzmir,20,3,3,0.15,0.0524,0.3604,0.1788,0.1624,0.2542,,,none,1

@@ -1,0 +1,21 @@
+model,name,view,full_youdens_j,view_youdens_j,view_flag_rate,full_only_correct,view_only_correct,p_value,passes
+openbmb/minicpm5:q4_K_M,MiniCPM 5 1B,neither,0.0,0.0,0.0,60,60,1.0,False
+openbmb/minicpm5:q4_K_M,MiniCPM 5 1B,name_only,0.0,0.0,0.0,60,60,1.0,
+qwen3.5:2b-q4_K_M,Qwen 3.5 2B,neither,-0.0111,0.0,0.0,88,89,1.0,False
+qwen3.5:2b-q4_K_M,Qwen 3.5 2B,name_only,-0.0111,-0.0333,0.1056,80,78,0.9366240696485013,
+phi4-mini:latest,Phi-4 mini,neither,0.2333,0.0,0.0667,48,27,0.02029840699010744,False
+phi4-mini:latest,Phi-4 mini,name_only,0.2333,0.0,0.0556,42,21,0.011141407415305074,
+qwen3.5:4b,Qwen 3.5 4B,neither,0.4333,0.0,0.0,79,40,0.000445310676917158,True
+qwen3.5:4b,Qwen 3.5 4B,name_only,0.4333,0.0556,0.25,72,38,0.001533052576472405,
+llama3.1:8b,Llama 3.1 8B,neither,0.0,0.0,0.0,0,0,1.0,False
+llama3.1:8b,Llama 3.1 8B,name_only,0.0,0.0,0.0,0,0,1.0,
+qwen3.5:9b,Qwen 3.5 9B,neither,0.6222,0.0,0.0,63,7,2.2750760151658833e-12,True
+qwen3.5:9b,Qwen 3.5 9B,name_only,0.6222,-0.0222,0.0222,64,6,2.44272646814786e-13,
+gemma4:e2b,Gemma 4 e2b,neither,0.1889,0.0,1.0,24,7,0.003326892852783203,False
+gemma4:e2b,Gemma 4 e2b,name_only,0.1889,-0.0111,0.9056,29,11,0.006426576095691416,
+gemma4:12b,Gemma 4 12B,neither,0.5667,0.0,0.0,60,9,2.2444496451277593e-10,True
+gemma4:12b,Gemma 4 12B,name_only,0.5667,0.0111,0.1056,58,8,1.7951476752580547e-10,
+phi4:latest,Phi-4,neither,0.5444,0.0,0.0,55,6,5.380614009897755e-11,True
+phi4:latest,Phi-4,name_only,0.5444,0.0222,0.0222,53,6,1.7539187463500028e-10,
+gemma4:e4b,Gemma 4 e4b,neither,0.4444,0.0333,0.9833,44,7,1.2115257419509362e-07,True
+gemma4:e4b,Gemma 4 e4b,name_only,0.4444,-0.0222,0.5222,49,7,7.455210310203242e-09,
