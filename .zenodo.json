@@ -1,0 +1,20 @@
+{
+  "title": "Point-of-interest name quality in OpenStreetMap: evaluating rule, gazetteer and language-model checks against four gates (released code and data)",
+  "description": "Code and data behind the article of the same name: the configuration, the package, the pipeline and analysis scripts, the prompts, the tests, the item sets, the labels, every model response as it arrived, and the analysis outputs every printed value is read from.",
+  "upload_type": "dataset",
+  "license": "MIT",
+  "access_right": "open",
+  "creators": [
+    {
+      "name": "Memduhoğlu, Abdulkadir",
+      "orcid": "0000-0002-9072-869X"
+    }
+  ],
+  "keywords": [
+    "OpenStreetMap",
+    "points of interest",
+    "data quality",
+    "language models",
+    "volunteered geographic information"
+  ]
+}
