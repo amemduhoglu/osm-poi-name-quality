@@ -1,5 +1,5 @@
 {
-  "title": "Point-of-interest name quality in OpenStreetMap: evaluating rule, gazetteer and language-model checks against four gates (released code and data)",
+  "title": "Point-of-interest name quality in OpenStreetMap: evaluating rules, open gazetteers and large language models against four validity gates (released code and data)",
   "description": "Code and data behind the article of the same name: the configuration, the package, the pipeline and analysis scripts, the prompts, the tests, the item sets, the labels, every model response as it arrived, and the analysis outputs every printed value is read from.",
   "upload_type": "dataset",
   "license": "MIT",
@@ -14,7 +14,7 @@
     "OpenStreetMap",
     "points of interest",
     "data quality",
-    "language models",
+    "large language models",
     "volunteered geographic information"
   ]
 }
