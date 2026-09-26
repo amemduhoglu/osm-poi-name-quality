@@ -1,8 +1,8 @@
-# Point-of-interest name quality in OpenStreetMap: evaluating rules, open gazetteers and large language models against four validity gates (released code and data)
+# Point-of-interest name quality in OpenStreetMap: evaluating rule, gazetteer and language-model checks against four gates (released code and data)
 
 This archive holds what a reader needs to re-derive every number in the article
 and nothing else. It was built by `scripts/build_archive.py` from the study's
-working repository on 2026-09-22.
+working repository on 2026-09-26.
 
 ## Reproducing the article's numbers
 
